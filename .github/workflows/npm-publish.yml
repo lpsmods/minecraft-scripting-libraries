@@ -61,7 +61,22 @@ jobs:
           tar -czf "artifacts/${PKG_NAME}_v${VERSION}.tar.gz" \
             -C "libraries/$PKG_NAME" .
 
+      - name: Collect release assets
+        run: |
+          PKG_FULL=${{ steps.tag.outputs.name }}
+          PKG_NAME="${PKG_FULL#@*/}"
+
+          mkdir -p release
+
+          # copy tarball
+          cp artifacts/*.tar.gz release/
+
+          # copy exact dist files
+          cp "libraries/$PKG_NAME/dist/$PKG_NAME.js" release/
+          cp "libraries/$PKG_NAME/dist/$PKG_NAME.min.js" release/
+
       - name: Upload release asset
         uses: softprops/action-gh-release@v2
         with:
-          files: artifacts/*.tar.gz
+          files: release/**
+          
