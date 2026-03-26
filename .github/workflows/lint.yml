@@ -21,3 +21,6 @@ jobs:
 
       - name: Run ESLint in all workspaces
         run: npm run lint --workspaces
+
+      - name: Build all packages
+        run: npm run build --workspaces
