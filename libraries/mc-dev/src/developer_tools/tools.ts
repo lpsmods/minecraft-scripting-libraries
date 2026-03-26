@@ -1,13 +1,12 @@
+import { Block, EquipmentSlot, ItemStack, Player, RawMessage } from "@minecraft/server";
 import {
   ChunkTickEvent,
   DirectionUtils,
   EntityTickEvent,
-  Identifier,
   PlayerChunkLoadEvent,
   PlayerChunkUnloadEvent,
-  Settings,
 } from "@lpsmods/mc-utils";
-import { Block, EquipmentSlot, ItemStack, Player, RawMessage } from "@minecraft/server";
+import { Identifier, Settings, TextUtils } from "@lpsmods/mc-common";
 
 export interface DevToolOptions {
   name?: string;
@@ -176,7 +175,7 @@ class BlockInfoTool extends DevTool {
 
     if (this.store.get("dimension")) {
       const dimId = Identifier.parse(block.dimension.id).path;
-      texts.push({ text: `Dimension: §7${dimId.toTitleCase()}§r` });
+      texts.push({ text: `Dimension: §7${TextUtils.smartTitleCase(dimId)}§r` });
     }
 
     if (this.store.get("position")) {
@@ -283,11 +282,11 @@ class PlayerInfoTool extends DevTool {
 
     if (this.store.get("dimension")) {
       const dimId = Identifier.parse(dim.id).path;
-      texts.push({ text: `Dimension: §7${dimId.toTitleCase()}§r` });
+      texts.push({ text: `Dimension: §7${TextUtils.smartTitleCase(dimId)}§r` });
     }
     if (this.store.get("biome")) {
       const b = dim.getBiome({ x, y, z }).id.replace("minecraft:", "");
-      texts.push({ text: `Biome: §7${b.toTitleCase()}§r` });
+      texts.push({ text: `Biome: §7${TextUtils.smartTitleCase(b)}§r` });
     }
     if (this.store.get("position")) {
       const text = `Position: ${this.store.get("position_coloring") ? `§c${x.toFixed(2)}§7, §a${y.toFixed(2)}§7, §9${z.toFixed(2)}§r` : `§7${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)}§r`}`;
