@@ -10,32 +10,12 @@ import {
   world,
 } from "@minecraft/server";
 import { Vector3Utils } from "@minecraft/math";
-import { DataStorage, VersionedDataStorage, Hasher } from "@lpsmods/mc-common";
+import { DataStorage, VersionedDataStorage } from "@lpsmods/mc-common";
 
 import { Random } from "../utils/random";
-import { WorldUtils } from "../world/utils";
+import { ChunkUtils } from "./utils";
 
 // import * as debug from "@minecraft/debug-utilities";
-
-function updateChunkData(chunk: Chunk): DataStorage {
-  const k = Hasher.stringify(chunk.location) ?? "unknown";
-  const old1 = world.getDynamicProperty(k) as string;
-  const old2 = world.getDynamicProperty(`mcutils:chunk.${k}`);
-  const nData = new VersionedDataStorage(`${chunk.dimension.id}.chunk.${k}`, 2, { gzip: true });
-
-  // Old id
-  if (old2) {
-    const l = new VersionedDataStorage(`mcutils:chunk.${k}`, 2);
-    nData.update(l.read());
-  }
-
-  // Update legacy (not versioned)
-  if (old1) {
-    const data = JSON.parse(old1);
-    nData.update(data);
-  }
-  return nData;
-}
 
 /**
  * Defines a chunk the world.
@@ -48,7 +28,29 @@ export class Chunk {
   constructor(dimension: Dimension, location: VectorXZ) {
     this.dimension = dimension;
     this.location = { x: Math.floor(location.x), z: Math.floor(location.z) };
-    this.store = updateChunkData(this);
+    this.store = this.updateChunkData();
+  }
+
+  private updateChunkData(): DataStorage {
+    const k = `${this.x},${this.z}`;
+    const old1 = world.getDynamicProperty(k) as string;
+    const old2 = world.getDynamicProperty(`mcutils:chunk.${k}`);
+    const newData = new VersionedDataStorage(`${this.dimension.id}.chunk.${k}`, 2, { gzip: ChunkUtils.gzip });
+
+    // Old id
+    if (old2) {
+      console.debug("Updating chunk format " + k);
+      const l = new VersionedDataStorage(`mcutils:chunk.${k}`, 2);
+      newData.update(l.read());
+    }
+
+    // Update legacy (not versioned)
+    if (old1) {
+      console.debug("Updating chunk format " + k);
+      const data = JSON.parse(old1);
+      newData.update(data);
+    }
+    return newData;
   }
 
   get origin(): Vector3 {
@@ -99,7 +101,6 @@ export class Chunk {
    * @returns {boolean}
    */
   isSlimeChunk(): boolean {
-    const seed = WorldUtils.getSeed();
     const { x: chunkX, z: chunkZ } = this.location;
 
     const n =
@@ -107,7 +108,7 @@ export class Chunk {
         BigInt(chunkX * 5947611) +
         BigInt(chunkZ * chunkZ) * BigInt(4392871) +
         BigInt(chunkZ * 389711)) ^
-      BigInt(seed);
+      BigInt(world.seed);
 
     const rand = new Random(n);
     return rand.nextInt(10) === 0;
@@ -201,18 +202,31 @@ export class Chunk {
     return this.dimension.isChunkLoaded(this.getCenter());
   }
 
+  // /**
+  //  * Force this chunk to tick.
+  //  * @param {string} name
+  //  * @returns {string}
+  //  */
   // forceLoad(name?: string): string {
   //   if (!name) {
-  //     name = randomId(4);
+  //     name = this.store.rootId;
   //   }
-  //   this.dimension.runCommand(
-  //     `tickingarea add ${this.from.x} ${this.from.y} ${this.from.z} ${this.to.x} ${this.to.y} ${this.to.z} ${name} true`
-  //   );
+  //   if (world.tickingAreaManager.hasTickingArea(name)) return name;
+  //   world.tickingAreaManager.createTickingArea(name, {dimension: this.dimension, from: this.from, to: this.to});
   //   return name;
   // }
 
-  // removeForceLoad(name: string): void {
-  //   this.dimension.runCommand(`tickingarea remove ${name}`);
+  // /**
+  //  * Stop this chunk from being force loaded.
+  //  * @param {string} name
+  //  * @returns {void}
+  //  */
+  // removeForceLoad(name?: string): void {
+  //   if (!name) {
+  //     name = this.store.rootId;
+  //   }
+  //   if (!world.tickingAreaManager.hasTickingArea(name)) return;
+  //   world.tickingAreaManager.removeTickingArea(name);
   // }
 
   // ENTITY
@@ -252,16 +266,25 @@ export class Chunk {
   }
 
   /**
-   * Get all topmost blocks in this chunk.
+   * Get all topmost blocks in this chunk. In x -> z order.
    * @returns {Block[]}
    */
   getTopmostBlocks(): Block[] {
     const results = [];
     for (let x = this.from.x; x <= this.to.x; x++) {
-      for (let z = this.from.z; z <= this.to.z; z++) {
-        const block = this.dimension.getTopmostBlock({ x: x, z: z });
-        if (!block) continue;
-        results.push(block);
+      for (let z2 = this.from.z; z2 <= this.to.z; z2++) {
+        const top = this.dimension.getTopmostBlock({ x, z: z2 });
+        if (!top) continue;
+        let surface = top;
+        for (let dy = 1; dy <= 3; dy++) {
+          const above = this.dimension.getBlock({ x, y: top.location.y + dy, z: z2 });
+          if (!above || above.typeId === "minecraft:air") break;
+          if (above.typeId === "minecraft:water" || above.typeId === "minecraft:flowing_water") {
+            surface = above;
+            break;
+          }
+        }
+        results.push(surface);
       }
     }
     return results;
