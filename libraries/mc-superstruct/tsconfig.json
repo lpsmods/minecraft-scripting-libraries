@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2024",
+    "target": "es2021",
     "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["es2021"],
+    "strict": true,
     "outDir": "./dist",
     "rootDir": "src",
-    "strict": true,
     "skipLibCheck": false,
-    "esModuleInterop": false,
-    "moduleResolution": "node",
-    "lib": ["es2024"]
+    "types": ["@minecraft/server", "@minecraft/server-ui"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
