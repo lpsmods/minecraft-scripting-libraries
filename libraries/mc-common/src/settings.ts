@@ -5,8 +5,8 @@ import { ModalForm, ModalFormHandler } from "./ui";
 import { DynamicObject, VersionedDataStorage } from "./data";
 
 export interface SettingDescriptor {
-  value?: PropertyValue;
   type: "string" | "number" | "boolean" | "Vector3";
+  value?: PropertyValue;
   min?: number;
   max?: number;
   values?: string[];
@@ -24,7 +24,7 @@ export class Settings {
   readonly id: string;
   readonly store: VersionedDataStorage;
   readonly options: SettingsOptions;
-  descriptor = new Map<string, SettingDescriptor>();
+  descriptor: Record<string, SettingDescriptor>;
 
   constructor(id: string, options?: SettingsOptions) {
     this.id = id;
@@ -33,31 +33,32 @@ export class Settings {
       object: this.options?.object,
       gzip: this.options?.gzip,
     });
+    this.descriptor = {};
   }
 
-  getDescriptor(): Map<string, SettingDescriptor> {
+  getDescriptor(): Record<string, SettingDescriptor> {
     return this.descriptor;
   }
 
   defineProperty(name: string, descriptor: SettingDescriptor): void {
-    this.getDescriptor().set(name, descriptor);
+    this.descriptor[name] = descriptor;
   }
 
   get(name: string, fallbackValue?: any): any {
-    const prop = this.getDescriptor().get(name);
+    const prop = this.getDescriptor()[name];
     if (!prop) throw new Error(`${name} is not defined!`);
     return this.store.get(name) ?? fallbackValue ?? prop.value;
   }
 
   set(name: string, value?: any): void {
-    if (!this.getDescriptor().has(name)) {
+    if (this.getDescriptor()[name] === undefined) {
       throw new Error(`${name} is not defined!`);
     }
     return this.store.set(name, value);
   }
 
   reset(): void {
-    for (const k of this.getDescriptor().keys()) {
+    for (const k of Object.keys(this.getDescriptor())) {
       this.set(k);
     }
   }
@@ -77,7 +78,7 @@ export class Settings {
       },
     };
 
-    for (const [k, prop] of this.getDescriptor().entries()) {
+    for (const [k, prop] of Object.entries(this.getDescriptor())) {
       const label = prop.title ?? k;
       const tooltip = prop.description;
       switch (prop.type) {
@@ -135,24 +136,31 @@ export class Settings {
   }
 }
 
+export interface PlayerSettingsOptions {
+  id?: string;
+  formatVersion?: number;
+  object?: DynamicObject;
+  gzip?: boolean;
+}
+
 /**
  * Per player settings.
  */
 export class PlayerSettings extends Settings {
   readonly player: Player;
-  static descriptor = new Map<string, SettingDescriptor>();
+  static descriptor: Record<string, SettingDescriptor> = {};
 
-  constructor(player: Player, formatVersion?: number, id?: string) {
-    super(id ?? "mcutils:settings", { formatVersion, object: player });
+  constructor(player: Player, options?: PlayerSettingsOptions) {
+    super(options?.id ?? "mcutils:settings", options);
     this.player = player;
   }
 
-  getDescriptor(): Map<string, SettingDescriptor> {
+  getDescriptor(): Record<string, SettingDescriptor> {
     return PlayerSettings.descriptor;
   }
 
   static defineProperty(name: string, descriptor: SettingDescriptor): void {
-    this.descriptor.set(name, descriptor);
+    this.descriptor[name] = descriptor;
   }
 
   show(title?: string): void;
