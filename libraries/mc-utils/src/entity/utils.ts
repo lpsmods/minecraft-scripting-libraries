@@ -9,6 +9,7 @@ import {
 } from "@minecraft/server";
 import { forAllDimensions } from "../utils";
 import { DirectionUtils } from "../utils/direction";
+import { Vector3Utils } from "@minecraft/math";
 
 export abstract class EntityUtils {
   /**
@@ -34,7 +35,7 @@ export abstract class EntityUtils {
    * @returns {Direction}
    */
   static getFacingDirection(entity: Entity): Direction {
-    return DirectionUtils.rot2dir(entity.getRotation());
+    return DirectionUtils.fromRotation(entity.getRotation());
   }
 
   /**
@@ -54,5 +55,25 @@ export abstract class EntityUtils {
     const equ = entity.getComponent("equippable");
     if (!equ) return;
     return equ.getEquipment(EquipmentSlot.Mainhand);
+  }
+
+  /**
+   * Check if the entity has moved since the last call.
+   * @param {Entity} entity
+   * @returns {boolean}
+   */
+  static isMoving(entity: Entity): boolean {
+    if (entity.isSwimming || entity.isSprinting || entity.isFalling) return true;
+    const value = (entity.getDynamicProperty("mcutils:prev_location") as string) ?? "0,0,0";
+    if (!value) throw new Error("Invalid prev_location value");
+    const prevPos = Vector3Utils.fromString(value);
+    if (!prevPos) throw new Error("Invalid prev_location value");
+    const pos = entity.location;
+    pos.x = Math.round(pos.x * 100) / 100;
+    pos.y = Math.round(pos.y * 100) / 100;
+    pos.z = Math.round(pos.z * 100) / 100;
+    if (Vector3Utils.equals(prevPos, pos)) return false;
+    entity.setDynamicProperty("mcutils:prev_location", Vector3Utils.toString(pos));
+    return true;
   }
 }
