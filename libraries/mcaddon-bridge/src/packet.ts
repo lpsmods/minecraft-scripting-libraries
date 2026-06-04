@@ -175,7 +175,7 @@ export class Packet {
         return;
 
       case "response": // src
-        PacketEvents.response.apply(new PacketResponseEvent(id, data));
+        PacketEvents.response.apply(new PacketResponseEvent(id, data.body));
         return;
       default:
         throw new Error(`'${data.headers.type}' is not a valid packet type!`);
