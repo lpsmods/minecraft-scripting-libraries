@@ -1,15 +1,16 @@
 import { StartupEvent, system } from "@minecraft/server";
-import { DevCommand } from "./command";
+import { DevCommand, MacroCommand } from "./command";
 import { DeveloperTools } from "./developer_tools";
 
-export function initializeDev(environment: string = "development"): void {
+export function initializeDev(environment: string = "development", namespace: string = "mcdev"): void {
   if (environment !== "development") return;
   // Initialize
-  new DeveloperTools();
+  const devTools = new DeveloperTools({ namespace: namespace });
 
   // Register command.
   function startup(event: StartupEvent): void {
     DevCommand.register(event.customCommandRegistry);
+    MacroCommand.register(event.customCommandRegistry);
   }
 
   system.beforeEvents.startup.subscribe(startup);
