@@ -33,7 +33,7 @@ jobs:
 
       - name: Run tests
         run: npm run test --workspaces
-        
+
       - name: Run eslint
         run: npm run lint --workspaces
 
@@ -88,4 +88,3 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: release/**
-          
