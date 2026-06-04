@@ -37,3 +37,8 @@ export * from "./wall";
 export * from "./viscosity";
 export * from "./tile_entity";
 export * from "./food";
+export * from "./tnt";
+export * from "./entity_sensor";
+export * from "./support_check";
+export * from "./climbable";
+export * from "./dimension_portal";
