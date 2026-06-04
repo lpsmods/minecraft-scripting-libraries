@@ -12,9 +12,13 @@ export function uuid(): string {
   });
 }
 
-export function errorPacket(message: string): PacketData {
-  const res = new PacketData();
-  res.set("error", true);
-  res.set("message", message);
-  return res;
+export function errorPacket(message: unknown): PacketData {
+  // const res = new PacketData();
+  // res.set("error", true);
+  // res.set("message", String(message));
+  // return res;
+  return {
+    error: true,
+    message: String(message),
+  };
 }
