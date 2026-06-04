@@ -27,6 +27,8 @@ export class PowderSnowComponent extends BlockBaseComponent implements BlockCust
 
   /**
    * Vanilla powder snow block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
