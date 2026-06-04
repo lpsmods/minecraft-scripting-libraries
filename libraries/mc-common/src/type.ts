@@ -62,18 +62,18 @@ export class Typing {
   static get(value: any): TypingTypes | undefined {
     const type = typeof value;
     if (Array.isArray(value)) return TypingTypes.Array;
-    if (value instanceof Container) return TypingTypes.Container;
-    if (value instanceof Block) return TypingTypes.Block;
-    if (value instanceof ItemStack) return TypingTypes.ItemStack;
-    if (value instanceof Entity) return TypingTypes.Entity;
-    if (value instanceof Dimension) return TypingTypes.Dimension;
-    if (value instanceof BlockType) return TypingTypes.BlockType;
-    if (value instanceof ItemType) return TypingTypes.ItemType;
-    if (value instanceof EntityType) return TypingTypes.EntityType;
-    if (value instanceof EffectType) return TypingTypes.EffectType;
-    if (value instanceof DimensionType) return TypingTypes.DimensionType;
-    if (value instanceof EnchantmentType) return TypingTypes.EnchantmentType;
-    if (value instanceof BlockPermutation) return TypingTypes.BlockPermutation;
+    if (isInstanceOf(value, Container)) return TypingTypes.Container;
+    if (isInstanceOf(value, Block)) return TypingTypes.Block;
+    if (isInstanceOf(value, ItemStack)) return TypingTypes.ItemStack;
+    if (isInstanceOf(value, Entity)) return TypingTypes.Entity;
+    if (isInstanceOf(value, Dimension)) return TypingTypes.Dimension;
+    if (isInstanceOf(value, BlockType)) return TypingTypes.BlockType;
+    if (isInstanceOf(value, ItemType)) return TypingTypes.ItemType;
+    if (isInstanceOf(value, EntityType)) return TypingTypes.EntityType;
+    if (isInstanceOf(value, EffectType)) return TypingTypes.EffectType;
+    if (isInstanceOf(value, DimensionType)) return TypingTypes.DimensionType;
+    if (isInstanceOf(value, EnchantmentType)) return TypingTypes.EnchantmentType;
+    if (isInstanceOf(value, BlockPermutation)) return TypingTypes.BlockPermutation;
     switch (type) {
       case "bigint":
         return TypingTypes.BigInt;
@@ -92,6 +92,10 @@ export class Typing {
         return TypingTypes.Undefined;
     }
   }
+}
+
+function isInstanceOf(value: any, constructor: any): boolean {
+  return typeof constructor === "function" && value instanceof constructor;
 }
 
 /**
