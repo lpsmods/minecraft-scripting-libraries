@@ -6,7 +6,7 @@ import {
   CustomComponentParameters,
   Direction,
 } from "@minecraft/server";
-import { create, object, Struct } from "superstruct";
+import { defaulted, number, object, Struct } from "superstruct";
 
 import { BlockBaseComponent, NeighborUpdateEvent } from "./base";
 import { FallingBlockEvent, FallingBlockHandler } from "../entity/falling_block_handler";
@@ -15,16 +15,20 @@ import { isEntity } from "../validation";
 
 export interface FallingBlockOptions {
   entity: string;
+  y_rotation_offset: number;
 }
 
 export class FallingBlockComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("falling_block");
   struct: Struct<any, any> = object({
     entity: isEntity,
+    y_rotation_offset: defaulted(number(), 0),
   });
 
   /**
    * Vanilla falling block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
@@ -33,8 +37,8 @@ export class FallingBlockComponent extends BlockBaseComponent implements BlockCu
   }
 
   fall(block: Block, args: CustomComponentParameters): void {
-    const options = create(args.params, this.struct) as FallingBlockOptions;
-    FallingBlockHandler.create(this, args, block, options.entity);
+    const options = this.struct.create(args.params) as FallingBlockOptions;
+    FallingBlockHandler.create(this, block, options);
   }
 
   // CUSTOM EVENTS
@@ -62,7 +66,7 @@ export class FallingBlockComponent extends BlockBaseComponent implements BlockCu
   }
 
   onTick(event: BlockComponentTickEvent, args: CustomComponentParameters): void {
-    this.baseTick(event, args);
+    this.neighborTick(event, args);
   }
 
   onPlace(event: BlockComponentOnPlaceEvent, args: CustomComponentParameters): void {
