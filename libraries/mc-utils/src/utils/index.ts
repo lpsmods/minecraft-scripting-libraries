@@ -4,4 +4,5 @@ export * from "./direction";
 export * from "./molang";
 export * from "./random";
 export * from "./dynamic_light";
+export * from "./autosave";
 export * from "./misc";
