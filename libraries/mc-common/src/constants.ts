@@ -1,4 +1,4 @@
-import { Vector3, RGB } from "@minecraft/server";
+import { Vector3, RGB, RGBA } from "@minecraft/server";
 
 export type PropertyValue = string | number | boolean | Vector3 | undefined;
 
@@ -6,15 +6,44 @@ export const MAX_EFFECT = 20000000;
 
 export const CENTER_ENTITY = { x: 0.5, y: 0, z: 0.5 };
 
+export type Color = RGBA | RGB;
+
+/**
+ * @deprecated Use Colors.BLACK instead.
+ */
 export const BLACK: RGB = { red: 0, green: 0, blue: 0 };
 
+/**
+ * @deprecated Use Colors.WHITE instead.
+ */
 export const WHITE: RGB = { red: 1, green: 1, blue: 1 };
 
+/**
+ * @deprecated Use Colors.RED instead.
+ */
 export const RED: RGB = { red: 1, green: 0, blue: 0 };
 
+/**
+ * @deprecated Use Colors.GREEN instead.
+ */
 export const GREEN: RGB = { red: 0, green: 1, blue: 0 };
 
+/**
+ * @deprecated Use Colors.BLUE instead.
+ */
 export const BLUE: RGB = { red: 0, green: 0, blue: 1 };
+
+export namespace Colors {
+  export const Black: RGBA = { red: 0, green: 0, blue: 0, alpha: 1 };
+  export const White: RGBA = { red: 1, green: 1, blue: 1, alpha: 1 };
+  export const Red: RGBA = { red: 1, green: 0, blue: 0, alpha: 1 };
+  export const Green: RGBA = { red: 0, green: 1, blue: 0, alpha: 1 };
+  export const Blue: RGBA = { red: 0, green: 0, blue: 1, alpha: 1 };
+  export const Magenta: RGBA = { red: 1, green: 0, blue: 1, alpha: 1 };
+  export const Yellow: RGBA = { red: 1, green: 1, blue: 0, alpha: 1 };
+  export const Cyan: RGBA = { red: 0, green: 1, blue: 1, alpha: 1 };
+  export const Clear: RGBA = { ...Colors.Black, alpha: 0 };
+}
 
 export const REPLACEABLE_BLOCKS = [
   "vine",
