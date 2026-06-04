@@ -2,11 +2,11 @@
  * Generic random functions.
  */
 
-import { BlockVolume, Vector3 } from "@minecraft/server";
+import { BlockVolume, Vector3, world } from "@minecraft/server";
 import { MathUtils } from "@lpsmods/mc-common";
 
 export class Random {
-  private seed: bigint = BigInt(0);
+  private seed: bigint = BigInt(world.seed);
 
   constructor(seed: bigint | number) {
     this.setSeed(seed);
