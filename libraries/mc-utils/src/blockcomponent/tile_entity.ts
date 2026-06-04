@@ -33,7 +33,7 @@ export class TileEntityComponent extends BlockBaseComponent implements BlockCust
     this.onPlayerBreak = this.onPlayerBreak.bind(this);
   }
 
-  private createEntity(block: Block, entityType: string): Entity {
+  createEntity(block: Block, entityType: string): Entity {
     const entity = block.dimension.spawnEntity(entityType, Vector3Utils.add(block.location, CENTER_ENTITY));
     entity.setDynamicProperty("common:tile.block", block.typeId);
     entity.nameTag = block.localizationKey;
