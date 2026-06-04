@@ -41,6 +41,24 @@ export class ErrorUtils {
   static tryPos<T>(callback: () => T): T | undefined {
     return this.wrapCatchAll<T>([LocationInUnloadedChunkError, LocationOutOfWorldBoundariesError], callback);
   }
+
+  private static errors = new Set();
+
+  /**
+   * Only allows one error to be thrown. Useful for loops with errors.
+   * @param {string} key
+   * @param callback
+   * @returns {T}
+   */
+  static errorOnce<T>(key: string, callback: () => T): T | undefined {
+    try {
+      return callback();
+    } catch (err) {
+      if (this.errors.has(key)) return;
+      this.errors.add(key);
+      throw err;
+    }
+  }
 }
 
 export interface ValidationIssue {
