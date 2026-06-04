@@ -3,6 +3,7 @@ import { Block, BlockType, BlockTypes, ItemUseAfterEvent, ItemUseBeforeEvent, sy
 import { Registry } from "./registry";
 import { ItemUtils } from "../item";
 import { BlockUtils } from "../block";
+import { EntityUtils } from "../entity";
 
 let initialized = false;
 
@@ -71,6 +72,7 @@ function axe(event: ItemUseBeforeEvent): void {
         if (options.onConvert) options.onConvert(source, event);
         source.dimension.playSound(options.waxOffSound ?? "copper.wax.off", source.location);
         BlockUtils.setType(source, k);
+        ItemUtils.decrementStack(event.source);
       });
       return;
     }
@@ -89,6 +91,7 @@ function honeycomb(event: ItemUseBeforeEvent): void {
     if (options.onConvert) options.onConvert(source, event);
     source.dimension.playSound(options.waxOnSound ?? "copper.wax.on", source.location);
     BlockUtils.setType(source, options.block);
+    ItemUtils.decrementStack(event.source);
   });
 }
 
