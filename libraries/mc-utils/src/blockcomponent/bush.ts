@@ -51,6 +51,8 @@ export class BushComponent extends BlockBaseComponent implements BlockCustomComp
 
   /**
    * Vanilla bush block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
