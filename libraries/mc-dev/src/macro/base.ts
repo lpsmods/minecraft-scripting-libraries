@@ -39,7 +39,7 @@ export class Macros {
   }
 
   static saveMacro(macro: MacroData): void {
-    const macros = this.getAll().filter((m) => m.id === macro.id);
+    const macros = this.getAll().filter((m) => m.id !== macro.id);
     macros.push(macro);
     DataUtils.setDynamicProperty(world, "macros", macros);
   }
