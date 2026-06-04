@@ -1,4 +1,4 @@
-import { Player } from "@minecraft/server";
+import { Player, ShutdownEvent, StartupEvent, system, world, WorldLoadAfterEvent } from "@minecraft/server";
 import {
   ChunkEvents,
   ChunkTickEvent,
@@ -9,23 +9,28 @@ import {
 } from "@lpsmods/mc-utils";
 import { ActionButton, ActionForm, ActionFormHandler } from "@lpsmods/mc-common";
 
-import { DevTool } from "./tools";
+import { DevTool } from "./tools/base";
 
 let initialized = false;
 
 export type DeveloperToolsConfig = { [key: string]: boolean };
 
+export interface DeveloperToolsOptions {
+  textDisplayId?: string;
+  namespace?: string;
+}
+
 export class DeveloperTools extends PlayerHandler {
   static instance: DeveloperTools | undefined = undefined;
   delay: number = 0;
   // particleDrawer: ParticleDrawer;
-  textDisplayId?: string;
+  devOptions: DeveloperToolsOptions;
 
-  constructor(textDisplayId?: string) {
+  constructor(options: DeveloperToolsOptions) {
     super();
     this.onTick = this.onTick.bind(this);
     // this.particleDrawer = new ParticleDrawer("overworld");
-    this.textDisplayId = textDisplayId;
+    this.devOptions = options ?? {};
     if (!initialized) init();
     DeveloperTools.instance = this;
   }
@@ -89,6 +94,12 @@ export class DeveloperTools extends PlayerHandler {
       if (tool.onChunkTick) tool.onChunkTick(event);
     }
   }
+
+  loadAll(event: WorldLoadAfterEvent): void {
+    for (const tool of DevTool.all.values()) {
+      tool.load(event);
+    }
+  }
 }
 
 function init() {
@@ -107,5 +118,10 @@ function init() {
   ChunkEvents.loadedTick.subscribe((event) => {
     if (!DeveloperTools.instance) return;
     DeveloperTools.instance.onChunkTick(event);
+  });
+
+  world.afterEvents.worldLoad.subscribe((event) => {
+    if (!DeveloperTools.instance) return;
+    DeveloperTools.instance.loadAll(event);
   });
 }
