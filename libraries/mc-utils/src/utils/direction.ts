@@ -20,10 +20,28 @@ export abstract class DirectionUtils {
    * @param {Vector2} rotation
    * @returns {Direction}
    */
-  static rot2dir(rotation: Vector2): Direction {
+  static fromRotation(rotation: Vector2): Direction {
     const { x: pitch, y: yaw } = rotation;
     if (pitch <= -45) return Direction.Up;
     if (pitch >= 45) return Direction.Down;
+    const norm = (((yaw % 360) + 540) % 360) - 180;
+    if (norm >= -45 && norm < 45) return Direction.South;
+    if (norm >= 45 && norm < 135) return Direction.West;
+    if (norm >= -135 && norm < -45) return Direction.East;
+    return Direction.North;
+  }
+  /**
+   * @deprecated Use fromRotation instead.
+   */
+  static rot2dir = DirectionUtils.fromRotation;
+
+  /**
+   * Like `fromRotation` but ignores vertical pitch. Always returns a horizontal direction.
+   * @param {Vector2} rotation
+   * @returns {Direction}
+   */
+  static fromHorizontalRotation(rotation: Vector2): Direction {
+    const { y: yaw } = rotation;
     const norm = (((yaw % 360) + 540) % 360) - 180;
     if (norm >= -45 && norm < 45) return Direction.South;
     if (norm >= 45 && norm < 135) return Direction.West;
@@ -76,20 +94,25 @@ export abstract class DirectionUtils {
   }
 
   /**
-   * Rotates the Y direction counterclockwise.
+   * Rotates the Y direction counterclockwise to the left.
    * @param {string} dir
    * @returns {Direction}
    */
-  static rotateYCounterclockwise(dir: string | undefined): Direction | string {
-    return this.getOpposite(this.rotateY(dir));
+  static rotateYLeft(dir: string | undefined): Direction | string {
+    return this.opposite(this.rotateYRight(dir));
   }
 
   /**
-   * Rotates the Y direction clockwise.
+   * @deprecated Use rotateYLeft instead.
+   */
+  static rotateYCounterclockwise = DirectionUtils.rotateYLeft;
+
+  /**
+   * Rotates the Y direction clockwise to the right.
    * @param {string} dir
    * @returns {Direction}
    */
-  static rotateY(dir: string | undefined): Direction {
+  static rotateYRight(dir: string | undefined): Direction {
     if (!dir) {
       return Direction.North;
     }
@@ -109,12 +132,17 @@ export abstract class DirectionUtils {
   }
 
   /**
+   * @deprecated Use rotateYRight instead.
+   */
+  static rotateY = DirectionUtils.rotateYRight;
+
+  /**
    * Returns the primary cardinal direction from one location to another.
    * @param {Vector3} origin
    * @param {Vector3} target
    * @returns {Direction|undefined}
    */
-  static relDir(origin: Vector3, target: Vector3): Direction | undefined {
+  static directionTo(origin: Vector3, target: Vector3): Direction | undefined {
     const dx = target.x - origin.x;
     const dy = target.y - origin.y;
     const dz = target.z - origin.z;
@@ -129,11 +157,33 @@ export abstract class DirectionUtils {
   }
 
   /**
+   * @deprecated Use getDirectionTo instead.
+   */
+  static relDir = DirectionUtils.directionTo;
+
+  /**
+   * Returns the primary cardinal direction from one location to another,
+   * ignoring vertical (up/down) differences.
+   * @param {Vector3} origin
+   * @param {Vector3} target
+   * @returns {Direction|undefined}
+   */
+  static horizontalDirectionTo(origin: Vector3, target: Vector3): Direction | undefined {
+    const dx = target.x - origin.x;
+    const dz = target.z - origin.z;
+    if (dx === 0 && dz === 0) return undefined;
+    if (Math.abs(dx) >= Math.abs(dz)) {
+      return dx > 0 ? Direction.West : Direction.East;
+    }
+    return dz > 0 ? Direction.North : Direction.South;
+  }
+
+  /**
    * Get the opposite direction.
    * @param {string|number} dir
    * @returns {Direction}
    */
-  static getOpposite(dir: string | number | undefined): Direction | string {
+  static opposite(dir: string | number | undefined): Direction | string {
     if (!dir) {
       return Direction.North;
     }
@@ -163,16 +213,21 @@ export abstract class DirectionUtils {
   }
 
   /**
+   * @deprecated Use opposite instead.
+   */
+  static getOpposite = DirectionUtils.opposite;
+
+  /**
    * Convert direction to an axis.
-   * @param {string} dir
+   * @param {string} direction
    * @returns {string}
    */
-  static toAxis(dir: string | undefined): string {
-    if (!dir) {
+  static toAxis(direction: string | undefined): string {
+    if (!direction) {
       return "x";
     }
-    if (typeof dir == "number") dir = DirectionUtils.fromNumber(dir);
-    switch (dir.toLowerCase()) {
+    if (typeof direction == "number") direction = DirectionUtils.fromNumber(direction);
+    switch (direction.toLowerCase()) {
       case "north":
       case "south":
         return "x";
@@ -191,19 +246,20 @@ export abstract class DirectionUtils {
 
   /**
    * Convert a direction to offset location.
-   * @param {string|number} dir
+   * @param {string|number} direction
    * @returns {Vector3}
    */
-  static toOffset(dir: string | number | undefined): Vector3 {
-    if (!dir) {
+  static toOffset(direction: string | number | undefined): Vector3 {
+    if (!direction) {
       return { x: 0, y: 0, z: -1 };
     }
-    if (typeof dir == "number") dir = DirectionUtils.fromNumber(dir);
-    switch (dir.toLowerCase()) {
+    if (typeof direction == "number") direction = DirectionUtils.fromNumber(direction);
+    // https://github.com/Mojang/minecraft-scripting-libraries/issues/124
+    switch (direction.toLowerCase()) {
       case "north":
-        return VECTOR3_NORTH;
-      case "south":
         return VECTOR3_SOUTH;
+      case "south":
+        return VECTOR3_NORTH;
       case "east":
         return VECTOR3_EAST;
       case "west":
@@ -222,16 +278,16 @@ export abstract class DirectionUtils {
   }
 
   /**
-   * Convert a direction to rotation.
-   * @param {string|number} dir
+   * Convert a direction to rotation. (in degrees)
+   * @param {string|number} direction
    * @returns {Vector2}
    */
-  static toRotation(dir: string | number | undefined): Vector2 {
-    if (!dir) {
+  static toRotation(direction: string | number | undefined): Vector2 {
+    if (!direction) {
       return VECTOR2_ZERO;
     }
-    if (typeof dir == "number") dir = DirectionUtils.fromNumber(dir);
-    switch (dir.toLowerCase()) {
+    if (typeof direction == "number") direction = DirectionUtils.fromNumber(direction);
+    switch (direction.toLowerCase()) {
       case "north":
         return { x: 0, y: 180 };
       case "south":
@@ -283,6 +339,47 @@ export abstract class DirectionUtils {
       default:
         throw new Error("Unsupported direction: " + direction);
     }
+
+    return {
+      x: (local.x ?? 0) * left.x + (local.y ?? 0) * up.x + (local.z ?? 0) * forward.x,
+      y: (local.x ?? 0) * left.y + (local.y ?? 0) * up.y + (local.z ?? 0) * forward.y,
+      z: (local.x ?? 0) * left.z + (local.y ?? 0) * up.z + (local.z ?? 0) * forward.z,
+    };
+  }
+
+  /**
+   * Returns world offset vector from a local (^ ^ ^) offset and rotation
+   * @param local Local offset in ^ ^ ^ space
+   * @param rotation Rotation in degrees {pitch, yaw}
+   * @returns Offset in world space
+   */
+  static offsetFromRotation(local: Partial<Vector3>, rotation: Vector2): Vector3 {
+    const yawRad = (rotation.y * Math.PI) / 180;
+    const pitchRad = (rotation.x * Math.PI) / 180;
+
+    const sinYaw = Math.sin(yawRad);
+    const cosYaw = Math.cos(yawRad);
+    const sinPitch = Math.sin(pitchRad);
+    const cosPitch = Math.cos(pitchRad);
+
+    // Calculate basis vectors for the rotated local coordinate system
+    const forward: Vector3 = {
+      x: -sinYaw * cosPitch,
+      y: -sinPitch,
+      z: cosYaw * cosPitch,
+    };
+
+    const left: Vector3 = {
+      x: -cosYaw,
+      y: 0,
+      z: -sinYaw,
+    };
+
+    const up: Vector3 = {
+      x: -sinYaw * sinPitch,
+      y: 1,
+      z: cosYaw * sinPitch,
+    };
 
     return {
       x: (local.x ?? 0) * left.x + (local.y ?? 0) * up.x + (local.z ?? 0) * forward.x,
