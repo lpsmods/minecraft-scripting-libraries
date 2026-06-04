@@ -58,26 +58,37 @@ export class GuideBookEntity extends EntityHandler {
     this.onBeforeInteract = this.onBeforeInteract.bind(this);
   }
 
-  turnPage(entity: Entity, player: Player): void {
-    const page = entity.getProperty(this.guideOptions.propertyName ?? "mcutils:page") as number;
-    const next = player.isSneaking ? page - 1 : page + 1;
-    if (!MathUtils.inRange(next, 0, this.guideOptions.maxPages ?? 50)) return;
-    const event = new TurnPageEntityEvent(entity, player, page, next);
+  turnPage(entity: Entity, player: Player, page: number): boolean {
+    const prevPage = entity.getProperty(this.guideOptions.propertyName ?? "mcutils:page") as number;
+    // const next = player.isSneaking ? page - 1 : page + 1;
+    if (!MathUtils.inRange(page, 0, this.guideOptions.maxPages ?? 50)) return false;
+    const event = new TurnPageEntityEvent(entity, player, prevPage, page);
     if (this.onTurnPage) this.onTurnPage(event);
-    if (event.cancel) return;
+    if (event.cancel) return false;
     if (this.guideOptions.flipAnimation) entity.playAnimation(this.guideOptions.flipAnimation);
     entity.setProperty(
       this.guideOptions.propertyName ?? "mcutils:page",
-      clampNumber(next, 0, this.guideOptions.maxPages ?? 50),
+      clampNumber(page, 0, this.guideOptions.maxPages ?? 50),
     );
+    return true;
   }
 
-  drop(target: Entity, entity: Entity): void {
-    if (target instanceof Player && target.getGameMode() !== GameMode.Creative) {
+  drop(player: Entity | undefined, entity: Entity) {
+    if (player && player instanceof Player && player.getGameMode() !== GameMode.Creative) {
       const stack = new ItemStack(this.guideOptions.itemId ?? "book");
       entity.dimension.spawnItem(stack, entity.location);
     }
     entity.remove();
+  }
+
+  nextPage(entity: Entity, player: Player): boolean {
+    const page = entity.getProperty(this.guideOptions.propertyName ?? "mcutils:page") as number;
+    return this.turnPage(entity, player, page + 1);
+  }
+
+  prevPage(entity: Entity, player: Player): boolean {
+    const page = entity.getProperty(this.guideOptions.propertyName ?? "mcutils:page") as number;
+    return this.turnPage(entity, player, page - 1);
   }
 
   // EVENTS
@@ -89,7 +100,11 @@ export class GuideBookEntity extends EntityHandler {
 
   onBeforeInteract(event: PlayerInteractWithEntityBeforeEvent): void {
     system.run(() => {
-      this.turnPage(event.target, event.player);
+      if (event.player.isSneaking) {
+        this.prevPage(event.target, event.player);
+        return;
+      }
+      this.nextPage(event.target, event.player);
     });
   }
 
