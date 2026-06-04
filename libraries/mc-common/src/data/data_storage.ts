@@ -181,16 +181,26 @@ export class DataStorage {
     }
   }
 
-  remove() {
+  /**
+   * Delete all data.
+   */
+  remove(): void {
     this.clear();
     DataStorage.instances.delete(this.rootId);
   }
 
+  /**
+   * Reads the data.
+   * @returns {any}
+   */
   read(): any {
     if (this.onRead) this.onRead();
     return DataUtils.getDynamicProperty(this.object, this.rootId, {});
   }
 
+  /**
+   * Saves the data.
+   */
   write(data: any): void {
     if (this.onWrite) this.onWrite();
     return DataUtils.setDynamicProperty(this.object, this.rootId, data, this.options.gzip);
@@ -231,6 +241,8 @@ export interface VersionedDataSchema {
   callback: (data: { [key: string]: PropertyValue }) => void;
 }
 
+// TODO: Cache gzipped data storage.
+
 export class VersionedDataStorage extends DataStorage {
   readonly formatVersion: number;
   schemas = new Map<string, VersionedDataSchema>();
@@ -241,9 +253,9 @@ export class VersionedDataStorage extends DataStorage {
    * @param {number} formatVersion The current data version.
    * @param {DataStorageOptions} options
    */
-  constructor(rootId: string, formatVersion: number, options?: DataStorageOptions) {
+  constructor(rootId: string, formatVersion?: number, options?: DataStorageOptions) {
     super(rootId, options);
-    this.formatVersion = formatVersion;
+    this.formatVersion = formatVersion ?? 1;
   }
 
   read(): any {
