@@ -6,7 +6,7 @@ import { TextUtils } from "../text";
 
 function t(text: string | RawMessage): string | RawMessage {
   if (typeof text !== "string") return text;
-  const content = text.charAt(0) == "#" ? { translate: text.toString().slice(1) } : text;
+  const content = text.charAt(0) == "#" ? { translate: text.toString().slice(1) } : { translate: text };
   return TextUtils.renderMarkdown(content);
 }
 
@@ -44,27 +44,27 @@ export class ModalFormOnSubmit extends ModalFormEvent {
 
 export type TextOption = {
   type: "text";
-  label: string;
+  label: string | RawMessage;
   condition?: (event: ModalFormEvent) => boolean;
-  tooltip?: string;
+  tooltip?: string | RawMessage;
   value?: string;
   placeholder?: string;
 };
 
 export type DropdownOption = {
   type: "dropdown";
-  label: string;
+  label: string | RawMessage;
   values: string[] | { [key: string]: string | RawMessage };
   condition?: (event: ModalFormEvent) => boolean;
   value?: number | string;
-  tooltip?: string;
+  tooltip?: string | RawMessage;
 };
 
 export type SliderOption = {
   type: "slider";
-  label: string;
+  label: string | RawMessage;
   condition?: (event: ModalFormEvent) => boolean;
-  tooltip?: string;
+  tooltip?: string | RawMessage;
   value?: number;
   step?: number;
   min?: number;
@@ -73,13 +73,37 @@ export type SliderOption = {
 
 export type ToggleOption = {
   type: "toggle";
-  label: string;
+  label: string | RawMessage;
   condition?: (event: ModalFormEvent) => boolean;
-  tooltip?: string;
+  tooltip?: string | RawMessage;
   value?: boolean;
 };
 
-export type ModalOptions = TextOption | DropdownOption | SliderOption | ToggleOption;
+export type DividerOption = {
+  type: "divider";
+  condition?: (event: ModalFormEvent) => boolean;
+};
+
+export type LabelOption = {
+  type: "label";
+  text: string | RawMessage;
+  condition?: (event: ModalFormEvent) => boolean;
+};
+
+export type HeaderOption = {
+  type: "header";
+  text: string | RawMessage;
+  condition?: (event: ModalFormEvent) => boolean;
+};
+
+export type ModalOptions =
+  | TextOption
+  | DropdownOption
+  | SliderOption
+  | ToggleOption
+  | DividerOption
+  | LabelOption
+  | HeaderOption;
 
 export interface ModalForm {
   title?: string | RawMessage;
@@ -159,7 +183,7 @@ export class ModalFormHandler {
     }
 
     ui.dropdown(t(option.label), items, {
-      defaultValueIndex: index,
+      defaultValueIndex: index == -1 ? 0 : index,
       tooltip: option.tooltip ? t(option.tooltip) : undefined,
     });
   }
@@ -179,17 +203,34 @@ export class ModalFormHandler {
     });
   }
 
+  private buildDivider(ui: ModalFormData, option?: any) {
+    ui.divider();
+  }
+
+  private buildHeader(ui: ModalFormData, option: any) {
+    ui.header(option.text);
+  }
+
+  private buildLabel(ui: ModalFormData, option: any) {
+    ui.label(option.text);
+  }
+
   private buildOption(ui: ModalFormData, option: ModalOptions): void {
-    switch (option.type ?? "text") {
-      case "text":
-        return this.buildText(ui, option as TextOption);
-      case "dropdown":
-        return this.buildDropdown(ui, option as DropdownOption);
-      case "slider":
-        return this.buildSlider(ui, option as SliderOption);
-      case "toggle":
-        return this.buildToggle(ui, option as ToggleOption);
-    }
+    const methodName = `build${TextUtils.titleCase(option.type ?? "text")}`;
+    const func = (this as unknown as Record<string, Function>)[methodName];
+    if (typeof func !== "function") return;
+    func.call(this, ui, option as any);
+    // TODO: Remove snippet
+    // switch (option.type ?? "text") {
+    //   case "text":
+    //     return this.buildText(ui, option as TextOption);
+    //   case "dropdown":
+    //     return this.buildDropdown(ui, option as DropdownOption);
+    //   case "slider":
+    //     return this.buildSlider(ui, option as SliderOption);
+    //   case "toggle":
+    //     return this.buildToggle(ui, option as ToggleOption);
+    // }
   }
 
   private build(ui: ModalFormData, event: ModalFormEvent): string[] {
@@ -229,18 +270,23 @@ export class ModalFormHandler {
 
     // Show
     const res = ui.show(player);
-    res.then((res) => {
-      if (res.canceled || res.formValues === undefined) return this.form.onClose ? this.form.onClose(event) : undefined;
-      const results: FormResult = {};
-      for (const i in keys) {
-        const v = res.formValues[i];
-        const k = keys[i];
-        results[k] = v;
-      }
-      const submit = new ModalFormOnSubmit(ui, player, results, ctx);
-      if (this.saveValues) this.#write(results);
-      if (this.form.onSubmit) this.form.onSubmit(submit);
-    });
+    res
+      .then((res) => {
+        if (res.canceled || res.formValues === undefined)
+          return this.form.onClose ? this.form.onClose(event) : undefined;
+        const results: FormResult = {};
+        for (const i in keys) {
+          const v = res.formValues[i];
+          const k = keys[i];
+          results[k] = v;
+        }
+        const submit = new ModalFormOnSubmit(ui, player, results, ctx);
+        if (this.saveValues) this.#write(results);
+        if (this.form.onSubmit) this.form.onSubmit(submit);
+      })
+      .catch((err) => {
+        console.warn(`Modal form error: ${String(err)}`);
+      });
     return true;
   }
 
