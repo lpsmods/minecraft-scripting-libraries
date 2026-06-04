@@ -31,6 +31,8 @@ export class ButtonComponent implements BlockCustomComponent {
 
   /**
    * Vanilla button block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     this.onTick = this.onTick.bind(this);
