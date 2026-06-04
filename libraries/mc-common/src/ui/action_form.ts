@@ -126,13 +126,17 @@ export class ActionFormHandler {
 
     // Show
     const res = ui.show(player);
-    res.then((res) => {
-      if (this.form.onClose) this.form.onClose(event);
-      if (res.canceled) return;
-      if (res.selection === undefined) return;
-      const btn = btns[res.selection];
-      if (btn.onClick) btn.onClick(event);
-    });
+    res
+      .then((res) => {
+        if (this.form.onClose) this.form.onClose(event);
+        if (res.canceled) return;
+        if (res.selection === undefined) return;
+        const btn = btns[res.selection];
+        if (btn.onClick) btn.onClick(event);
+      })
+      .catch((err) => {
+        console.warn(`Action form error: ${String(err)}`);
+      });
     return true;
   }
 
