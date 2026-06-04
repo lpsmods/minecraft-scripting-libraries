@@ -101,7 +101,7 @@ export abstract class ItemUtils {
   }
 
   /**
-   * Deals damage or decreases an item stack.
+   * @deprecated Use `useIgnitable` instead.
    * @param {Player} player
    * @param {ItemStack} itemStack
    * @param {Vector3} soundLocation
@@ -118,6 +118,31 @@ export abstract class ItemUtils {
       ItemUtils.applyDamage(player, itemStack, 1);
       return;
     }
+  }
+
+  /**
+   * Checks if the player is holding an ignitable. If so it removes/damages the stack and returns `true`.
+   * @param {Player} player
+   * @param {Vector3} soundLocation
+   * @param {EquipmentSlot} slot
+   */
+  static useIgnitable(player: Player, soundLocation?: Vector3, slot?: EquipmentSlot): boolean {
+    const equ = player.getComponent("equippable");
+    if (!equ) return false;
+    const itemStack = equ.getEquipment(slot ?? EquipmentSlot.Mainhand);
+    if (!itemStack || !ItemUtils.holding(player, "#ignitable", slot)) return false;
+
+    // Make more dynamic
+    // TODO: #is_tool
+    const bl = itemStack.matches("flint_and_steel") || itemStack.hasComponent("durability");
+    if (bl) {
+      player.dimension.playSound("fire.ignite", soundLocation ?? player.location);
+      ItemUtils.applyDamage(player, itemStack, 1);
+      return true;
+    }
+    player.dimension.playSound("mob.ghast.fireball", soundLocation ?? player.location);
+    ItemUtils.decrementStack(player, EquipmentSlot.Mainhand);
+    return true;
   }
 
   /**
@@ -240,7 +265,7 @@ export abstract class ItemUtils {
       return itemStack.hasTag(tag) || CustomTags.items.matches(tag, itemStack.typeId);
     }
     if (itemPredicate.charAt(0) === "!") {
-      return !itemStack.matches(itemPredicate.slice(1), states);
+      return !ItemUtils.matches(itemStack, itemPredicate.slice(1), states);
     }
     return itemStack.matches(itemPredicate, states);
   }
