@@ -10,11 +10,11 @@ import {
   world,
 } from "@minecraft/server";
 import { Vector3Utils } from "@minecraft/math";
-import { Hasher, ErrorUtils } from "@lpsmods/mc-common";
+import { Hasher, ErrorUtils, EventSignal } from "@lpsmods/mc-common";
 
-import { EventSignal } from "./utils";
 import { forAllDimensions } from "../utils";
 import { ChunkUtils } from "../chunk";
+import { EntityUtils } from "../entity";
 
 export abstract class EntityEvent {
   constructor(entity: Entity) {
@@ -277,12 +277,8 @@ function movedTick(event: EntityTickEvent): void {
   const value = (event.entity.getDynamicProperty("mcutils:prev_location") as string) ?? "0,0,0";
   const prevPos = Vector3Utils.fromString(value);
   if (!prevPos) return;
+  if (!EntityUtils.isMoving(event.entity)) return;
   const pos = event.entity.location;
-  pos.x = Math.round(pos.x * 100) / 100;
-  pos.y = Math.round(pos.y * 100) / 100;
-  pos.z = Math.round(pos.z * 100) / 100;
-  if (Vector3Utils.equals(prevPos, pos)) return;
-  event.entity.setDynamicProperty("mcutils:prev_location", Vector3Utils.toString(pos));
   const movedEvent = new EntityMovedEvent(event.entity, prevPos);
   EntityEvents.moved.apply(movedEvent);
 
@@ -315,10 +311,32 @@ function movedTick(event: EntityTickEvent): void {
   });
 }
 
+function hasMountEvents(): boolean {
+  if (!EntityEvents.dismount.isEmpty) return true;
+  return false;
+}
+
+function hasMoveEvents(): boolean {
+  if (!EntityEvents.moved.isEmpty) return true;
+  if (!EntityEvents.leaveBlock.isEmpty) return true;
+  if (!EntityEvents.enterBlock.isEmpty) return true;
+  if (!EntityEvents.stepOn.isEmpty) return true;
+  if (!EntityEvents.stepOff.isEmpty) return true;
+  return false;
+}
+
+function hasTickEvents(): boolean {
+  if (!EntityEvents.tick.isEmpty) return true;
+  if (!EntityEvents.inBlockTick.isEmpty) return true;
+  if (!EntityEvents.fallOn.isEmpty) return true;
+
+  return hasMountEvents() || hasMoveEvents();
+}
+
 function entityTick(event: EntityTickEvent): void {
-  mountTick(event);
+  if (hasMountEvents()) mountTick(event);
   EntityEvents.tick.apply(event);
-  movedTick(event);
+  if (hasMoveEvents()) movedTick(event);
 
   // in block
   let block = undefined;
@@ -344,6 +362,7 @@ function entityTick(event: EntityTickEvent): void {
 }
 
 function tick(): void {
+  if (!hasTickEvents()) return;
   try {
     forAllDimensions((dim) => {
       for (const entity of dim.getEntities()) {
