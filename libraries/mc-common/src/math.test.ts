@@ -23,12 +23,12 @@ describe("Math Utils", () => {
     expect(MathUtils.expandRegion(FROM, TO, 1)).toEqual(result);
   });
 
-  // it("is origin in volume", () => {
-  //   const originA = { x: 1, y: 1, z: 1 };
-  //   const originB = { x: 0, y: -10, z: 0 };
-  //   expect(MathUtils.isInRect(originA, FROM, TO)).toBe(true);
-  //   expect(MathUtils.isInRect(originB, FROM, TO)).toBe(false);
-  // });
+  it("is origin in volume", () => {
+    const originA = { x: 1, y: 1, z: 1 };
+    const originB = { x: 0, y: -10, z: 0 };
+    expect(MathUtils.isInRect(originA, FROM, TO)).toBe(true);
+    expect(MathUtils.isInRect(originB, FROM, TO)).toBe(false);
+  });
 
   it("Returns volume with min and max", () => {
     const result = { maxX: 5, maxY: 5, maxZ: 5, minX: 0, minY: 0, minZ: 0 };
