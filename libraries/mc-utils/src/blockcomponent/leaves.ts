@@ -26,6 +26,8 @@ export class LeavesComponent implements BlockCustomComponent {
 
   /**
    * Vanilla leaves block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     this.onRandomTick = this.onRandomTick.bind(this);
