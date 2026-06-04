@@ -14,19 +14,50 @@ export interface ProgressBarStyle {
 }
 
 export abstract class ProgressBarStyles {
+  /**
+   * Renders:
+   * ```md
+   * Name
+   * [##########----------]
+   * ```
+   */
   static readonly Default: ProgressBarStyle = {
     fill: "#",
     empty: "-",
     leftCap: "[",
     rightCap: "]",
   };
+
+  /**
+   * Renders:
+   * ```md
+   * Name
+   * <■■■■■■■■■■□□□□□□□□□□>
+   * ```
+   */
   static readonly Modern: ProgressBarStyle = {
     fill: "■",
     empty: "□",
     leftCap: "<",
     rightCap: ">",
   };
+
+  /**
+   * Renders:
+   * ```md
+   * Name
+   * --------------------
+   * ```
+   */
   static readonly Thin: ProgressBarStyle = { fill: "-", empty: "-" };
+
+  /**
+   * Renders:
+   * ```md
+   * Name
+   * ███████████████
+   * ```
+   */
   static readonly Square: ProgressBarStyle = {
     fill: "█",
     empty: "█",
@@ -98,22 +129,55 @@ export abstract class ProgressBarColors {
   };
 }
 
+// indeterminate - Renders a pixel going left to right for loading.
 export class ProgressBar extends Ticking {
   static stack = new Map<string, ProgressBar>();
   readonly id: string;
+
+  /**
+   * The text to display above the progress bar.
+   */
   name?: RawMessage;
-  visible: boolean = true;
+
+  /**
+   * The style of the progress bar. Defaults to {@link ProgressbarStyles.Default}.
+   */
   style: ProgressBarStyle = ProgressBarStyles.Default;
+
+  /**
+   * The color of the progress bar. Defaults to {@link ProgressBarColors.Gray}.
+   */
   color: ProgressBarColor = ProgressBarColors.Gray;
+
+  /**
+   * The maximum value. Defaults to 100.
+   */
   maxValue: number = 100;
 
   constructor(id: string, name?: RawMessage) {
     super();
     this.id = id;
     this.name = name;
+    this.enabled = true;
     ProgressBar.stack.set(id, this);
   }
 
+  /**
+   * Change the visibility of the progress bar. Defaults to true.
+   *
+   * Alias for {@link Ticking.enabled}
+   */
+  get visible(): boolean {
+    return this.enabled;
+  }
+
+  set visible(v: boolean) {
+    this.enabled = v;
+  }
+
+  /**
+   * The current progress value.
+   */
   get value(): number {
     return (world.getDynamicProperty(`progressbar:${this.id}`) as number) ?? 0;
   }
@@ -146,7 +210,8 @@ export class ProgressBar extends Ticking {
     const emptyStr = se.repeat(sw).slice(0, (sw - filledCells) * se.length);
     const bar = `${this.color.leftCap}${slc}§r${this.color.fill}${fillStr}§r${this.color.empty}${emptyStr}§r${this.color.rightCap}${src}§r`;
     const per = Math.round(clampNumber((this.value / this.maxValue) * 100, 0, 100));
-    return this.style.showPercent ? `${bar} ${per}%` : bar;
+    const percentStr = per.toString().padStart(3, " ");
+    return this.style.showPercent ? `${bar} ${percentStr}%` : bar;
   }
 
   render(player: Player): void {
