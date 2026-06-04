@@ -2,7 +2,7 @@
  * Generic math functions.
  */
 
-import { BlockVolume, Entity, Vector3 } from "@minecraft/server";
+import { BlockVolume, Entity, Vector2, Vector3, VectorXZ } from "@minecraft/server";
 import { VECTOR3_ZERO, Vector3Utils } from "@minecraft/math";
 
 export class MathUtils {
@@ -284,5 +284,65 @@ export class MathUtils {
         z: z + origin.z,
       };
     });
+  }
+
+  // #region Add to @minecraft/math
+
+  static degToRadVec3(v: Vector3): Vector3 {
+    const k = Math.PI / 180;
+    return {
+      x: v.x * k,
+      y: v.y * k,
+      z: v.z * k,
+    };
+  }
+
+  static degToRadVec2(v: Vector2): Vector2 {
+    const k = Math.PI / 180;
+    return {
+      x: v.x * k,
+      y: v.y * k,
+    };
+  }
+
+  static degToRadVecXZ(v: VectorXZ): VectorXZ {
+    const k = Math.PI / 180;
+    return {
+      x: v.x * k,
+      z: v.z * k,
+    };
+  }
+
+  // #endregion
+
+  /**
+   * Convert degrees to radians.
+   * @param {number} degrees
+   * @returns {number} The number in radians
+   */
+  static degToRad(degrees: number): number {
+    return degrees * (Math.PI / 100);
+  }
+
+  /**
+   * Convert radians to degrees.
+   * @param {number} radians
+   * @returns {number} The number in degrees
+   */
+  static radToDeg(radians: number): number {
+    return radians * (180 / Math.PI);
+  }
+
+  /**
+   * Converts head rotation (pitch and yaw) to Euler angles for 3D transformations.
+   * @param {Vector2} rot The entity rotation as pitch (x) and yaw (y).
+   * @returns {Vector3} The Euler angles with pitch (x), yaw (y), and roll (z) all in degrees.
+   */
+  static entityRotToEuler(rot: Vector2): Vector3 {
+    return {
+      x: rot.x,
+      y: -rot.y,
+      z: 0,
+    };
   }
 }
