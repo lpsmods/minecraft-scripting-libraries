@@ -35,18 +35,22 @@ export class TextDisplayHandler extends EntityHandler {
     ui.button("Center", Icon.DownArrow);
     ui.button("§cLock", Icon.LockColor);
     ui.button("§cRemove", Icon.Trash);
-    ui.show(event.player).then((res) => {
-      switch (res.selection) {
-        case 0:
-          return this.rename(event);
-        case 1:
-          return this.center(event.target);
-        case 2:
-          return this.lock(event.target);
-        case 3:
-          return event.target.remove();
-      }
-    });
+    ui.show(event.player)
+      .then((res) => {
+        switch (res.selection) {
+          case 0:
+            return this.rename(event);
+          case 1:
+            return this.center(event.target);
+          case 2:
+            return this.lock(event.target);
+          case 3:
+            return event.target.remove();
+        }
+      })
+      .catch((err) => {
+        console.warn(`Text display error: ${String(err)}`);
+      });
   }
 
   private rename(event: PlayerInteractWithEntityAfterEvent): void {
@@ -54,11 +58,15 @@ export class TextDisplayHandler extends EntityHandler {
     ui.title("Rename");
     ui.textField("Name", "", { defaultValue: event.target.nameTag });
     ui.submitButton("Save");
-    ui.show(event.player).then((res) => {
-      const value = res.formValues?.toString();
-      if (!value) return;
-      event.target.nameTag = TextUtils.renderMarkdown(value).toString();
-    });
+    ui.show(event.player)
+      .then((res) => {
+        const value = res.formValues?.toString();
+        if (!value) return;
+        event.target.nameTag = TextUtils.renderMarkdown(value).toString();
+      })
+      .catch((err) => {
+        console.warn(`Text display error: ${String(err)}`);
+      });
   }
 
   private center(entity: Entity): void {
