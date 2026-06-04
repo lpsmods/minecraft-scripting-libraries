@@ -6,10 +6,16 @@ import { PlayerSettings } from "../settings";
 import { DataUtils } from "../data";
 import { Icon } from "./icons";
 
+/**
+ * Interface describing a page button.
+ */
 export interface PageButton extends ActionButton {
   pageId?: string;
 }
 
+/**
+ * Interface describing a page data.
+ */
 export interface PageData {
   title?: string | RawMessage;
   body?: string | RawMessage;
@@ -44,6 +50,9 @@ export interface PageData {
   keywords?: string[];
 }
 
+/**
+ * Options for configuring the back button.
+ */
 export interface BackButtonOptions {
   label?: string;
   icon?: string;
@@ -53,6 +62,9 @@ export interface BackButtonOptions {
   bottom_divider?: boolean;
 }
 
+/**
+ * Options for configuring the search.
+ */
 export interface SearchOptions {
   include_buttons?: boolean;
   include_titles?: boolean;
@@ -64,6 +76,9 @@ export interface SearchOptions {
   result_body?: string;
 }
 
+/**
+ * Options for configuring the paged action form.
+ */
 export interface PagedActionFormOptions {
   /**
    * When true it will validate the form when opened.
@@ -83,8 +98,14 @@ export interface PagedActionFormOptions {
   "mcutils:search"?: SearchOptions;
 }
 
+/**
+ * Type definition for a pages.
+ */
 export type Pages = { [key: string]: PageData };
 
+/**
+ * Event payload for paged action form callbacks.
+ */
 export class PagedActionFormEvent {
   constructor(player: Player, pages: Pages, pageId?: string, options?: PagedActionFormOptions, ctx?: any) {
     this.player = player;
@@ -119,6 +140,9 @@ export class PagedActionFormEvent {
 
 // CUSTOM PAGES
 
+/**
+ * Provides custom page behavior.
+ */
 export abstract class CustomPage {
   static readonly pageId: string;
   ui?: PagedActionForm;
@@ -127,6 +151,9 @@ export abstract class CustomPage {
   abstract show(event: PagedActionFormEvent): void;
 }
 
+/**
+ * Provides player settings page behavior.
+ */
 export class PlayerSettingsPage extends CustomPage {
   static readonly pageId = "mcutils:player_settings";
 
@@ -263,10 +290,16 @@ export class PlayerSettingsPage extends CustomPage {
 //   }
 // }
 
+/**
+ * Options for configuring the paged action form.
+ */
 export interface PagedActionFormOptions {
   id?: string;
 }
 
+/**
+ * Provides paged action form behavior.
+ */
 export class PagedActionForm {
   private static lastId: number = 0;
   readonly id: string;

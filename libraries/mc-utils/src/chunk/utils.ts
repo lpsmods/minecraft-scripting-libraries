@@ -2,6 +2,9 @@ import { Block, Dimension, Entity, Vector3, VectorXZ, world } from "@minecraft/s
 
 import { Chunk } from "./base";
 
+/**
+ * Utility helpers for chunk.
+ */
 export class ChunkUtils {
   /**
    * Whether to gzip chunk data before saving it to dynamic properties.

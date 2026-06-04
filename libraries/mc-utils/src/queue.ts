@@ -1,6 +1,9 @@
 import { system, world } from "@minecraft/server";
 import { DataUtils, PropertyValue } from "@lpsmods/mc-common";
 
+/**
+ * Provides queue job behavior.
+ */
 export class QueueJob<T> {
   readonly queue: Queue<T>;
   readonly item: T;
@@ -11,12 +14,18 @@ export class QueueJob<T> {
   }
 }
 
+/**
+ * Options for configuring the queue.
+ */
 export interface QueueOptions {
   size?: number;
   id?: string;
   persistent?: boolean;
 }
 
+/**
+ * Provides queue behavior.
+ */
 export class Queue<T> {
   private static lastId = 0;
   static all = new Map<string, Queue<any>>();

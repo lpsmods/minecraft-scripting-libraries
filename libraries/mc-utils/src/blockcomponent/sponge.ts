@@ -13,6 +13,9 @@ import { isBlock } from "../validation";
 import { BlockBaseComponent, NeighborUpdateEvent } from "./base";
 import { BlockUtils } from "../block/utils";
 
+/**
+ * Options for configuring the sponge.
+ */
 export interface SpongeOptions {
   block?: string;
   liquid_block: string;
@@ -21,6 +24,9 @@ export interface SpongeOptions {
   sound_event: string;
 }
 
+/**
+ * Custom component that implements sponge behavior.
+ */
 export class SpongeComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("sponge");
   struct: Struct<any, any> = object({

@@ -11,6 +11,9 @@ import { BlockBaseComponent } from "./base";
 import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the toggleable.
+ */
 export interface ToggleableOptions {
   toggle_state: keyof BlockStateSuperset;
   true_sound_event: string;
@@ -19,6 +22,9 @@ export interface ToggleableOptions {
 }
 
 // TODO: Make it toggled by redstone
+/**
+ * Custom component that implements toggleable behavior.
+ */
 export class ToggleableComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("toggleable");
   struct: Struct<any, any> = object({

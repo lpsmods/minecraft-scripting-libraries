@@ -1,11 +1,17 @@
 import { Player } from "@minecraft/server";
 import { DataStorage } from "@lpsmods/mc-common";
 
+/**
+ * Interface describing a cooldown data.
+ */
 export interface CooldownData {
   started: number;
   cooldownTicks: number;
 }
 
+/**
+ * Provides cooldown manager behavior.
+ */
 export class CooldownManager {
   private static getStorage(player: Player) {
     return new DataStorage("mcutils:cooldown_manager", { object: player });

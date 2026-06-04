@@ -4,10 +4,16 @@
 
 import { Entity, EntityDamageCause } from "@minecraft/server";
 
+/**
+ * Options for configuring the attack.
+ */
 export interface AttackOptions {
   cause?: EntityDamageCause;
 }
 
+/**
+ * Utility helpers for attack.
+ */
 export class AttackUtils {
   /**
    * Deal damage in a radius.

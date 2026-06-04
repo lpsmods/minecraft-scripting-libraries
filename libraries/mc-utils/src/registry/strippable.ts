@@ -7,6 +7,9 @@ import { EntityUtils } from "../entity";
 
 let initialized = false;
 
+/**
+ * Options for configuring the strippable.
+ */
 export interface StrippableOptions {
   /**
    * The stripped block. (like stripped_oak_log)
@@ -17,6 +20,9 @@ export interface StrippableOptions {
   onConvert?: (block: Block, event: ItemUseAfterEvent) => void;
 }
 
+/**
+ * Registry for strippable block.
+ */
 export class StrippableBlockRegistry extends Registry<StrippableOptions> {
   /**
    * Register a new strippable block interaction.

@@ -10,11 +10,17 @@ import {
 import { VECTOR2_ZERO, Vector3Utils } from "@minecraft/math";
 import { Ticking, MathUtils } from "@lpsmods/mc-common";
 
+/**
+ * Options for configuring the world border.
+ */
 export interface WorldBorderOptions {
   canBreakBlocks?: boolean;
   canPlaceBlocks?: boolean;
 }
 
+/**
+ * Provides world border behavior.
+ */
 export class WorldBorder extends Ticking {
   center: Vector2;
   width: number;

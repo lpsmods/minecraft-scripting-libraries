@@ -12,6 +12,9 @@ import { BlockBaseComponent, NeighborUpdateEvent } from "./base";
 import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the cross collision.
+ */
 export interface CrossCollisionOptions {
   north_state: keyof BlockStateSuperset;
   east_state: keyof BlockStateSuperset;
@@ -19,6 +22,9 @@ export interface CrossCollisionOptions {
   west_state: keyof BlockStateSuperset;
 }
 
+/**
+ * Custom component that implements cross collision behavior.
+ */
 export class CrossCollisionComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("cross_collision");
   struct: Struct<any, any> = object({

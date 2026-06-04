@@ -7,6 +7,9 @@ import { differenceArray, removeItems } from "../utils";
 import { EntityEvents } from "./entity";
 import { ChunkUtils } from "../chunk";
 
+/**
+ * Event payload for chunk callbacks.
+ */
 export abstract class ChunkEvent {
   constructor(chunk: Chunk) {
     this.chunk = chunk;
@@ -17,6 +20,9 @@ export abstract class ChunkEvent {
   readonly dimension: Dimension;
 }
 
+/**
+ * Event payload for player chunk callbacks.
+ */
 export abstract class PlayerChunkEvent extends ChunkEvent {
   constructor(chunk: Chunk, player: Player) {
     super(chunk);
@@ -26,6 +32,9 @@ export abstract class PlayerChunkEvent extends ChunkEvent {
   readonly player: Player;
 }
 
+/**
+ * Event payload for player chunk load callbacks.
+ */
 export class PlayerChunkLoadEvent extends PlayerChunkEvent {
   constructor(chunk: Chunk, player: Player, initial: boolean) {
     super(chunk, player);
@@ -35,22 +44,37 @@ export class PlayerChunkLoadEvent extends PlayerChunkEvent {
   readonly initial: boolean;
 }
 
+/**
+ * Event payload for player chunk unload callbacks.
+ */
 export class PlayerChunkUnloadEvent extends PlayerChunkEvent {}
 
+/**
+ * Event payload for chunk tick callbacks.
+ */
 export class ChunkTickEvent extends ChunkEvent {}
 
+/**
+ * Event signal for subscribing to player chunk load events.
+ */
 export class PlayerChunkLoadEventSignal extends EventSignal<PlayerChunkLoadEvent> {
   subscribe(callback: (event: PlayerChunkLoadEvent) => void): (event: PlayerChunkLoadEvent) => void {
     return super.subscribe(callback);
   }
 }
 
+/**
+ * Event signal for subscribing to player chunk unload events.
+ */
 export class PlayerChunkUnloadEventSignal extends EventSignal<PlayerChunkUnloadEvent> {
   subscribe(callback: (event: PlayerChunkUnloadEvent) => void): (event: PlayerChunkUnloadEvent) => void {
     return super.subscribe(callback);
   }
 }
 
+/**
+ * Event signal for subscribing to player chunk tick events.
+ */
 export class PlayerChunkTickEventSignal extends EventSignal<ChunkTickEvent> {
   subscribe(callback: (event: ChunkTickEvent) => void): (event: ChunkTickEvent) => void {
     return super.subscribe(callback);

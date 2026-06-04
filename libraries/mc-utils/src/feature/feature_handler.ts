@@ -17,6 +17,9 @@ import { RandomUtils } from "../utils/random";
 
 let initialized = false;
 
+/**
+ * Event payload for feature callbacks.
+ */
 export abstract class FeatureEvent {
   constructor(handle: FeatureHandler, dimension: Dimension, location: Vector3, options?: CustomFeatureOptions) {
     this.handle = handle;
@@ -31,8 +34,14 @@ export abstract class FeatureEvent {
   readonly options: CustomFeatureOptions;
 }
 
+/**
+ * Event payload for feature place callbacks.
+ */
 export class FeaturePlaceEvent extends FeatureEvent {}
 
+/**
+ * Event payload for feature rule callbacks.
+ */
 export abstract class FeatureRuleEvent {
   constructor(handle: FeatureHandler, dimension: Dimension, location: Vector3, options?: CustomFeatureRuleOptions) {
     this.handle = handle;
@@ -47,10 +56,19 @@ export abstract class FeatureRuleEvent {
   readonly options: CustomFeatureRuleOptions;
 }
 
+/**
+ * Event payload for feature rule place callbacks.
+ */
 export class FeatureRulePlaceEvent extends FeatureRuleEvent {}
 
+/**
+ * Event payload for feature rule can place callbacks.
+ */
 export class FeatureRuleCanPlaceEvent extends FeatureRulePlaceEvent {}
 
+/**
+ * Handler for feature.
+ */
 export class FeatureHandler extends EntityHandler {
   static handles = new Set<FeatureHandler>();
   featurePropertyName: string;

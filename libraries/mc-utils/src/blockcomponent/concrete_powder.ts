@@ -6,10 +6,16 @@ import { BlockBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Options for configuring the concrete powder.
+ */
 export interface ConcretePowderOptions {
   block?: string;
 }
 
+/**
+ * Custom component that implements concrete powder behavior.
+ */
 export class ConcretePowderComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("concrete_powder");
   struct: Struct<any, any> = object({

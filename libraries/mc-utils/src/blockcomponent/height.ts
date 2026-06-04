@@ -12,12 +12,18 @@ import { getInteractSound } from "../utils";
 import { AddonUtils } from "../utils/addon";
 import { ItemUtils } from "../item";
 
+/**
+ * Options for configuring the height.
+ */
 export interface HeightOptions {
   layers_state: keyof BlockStateSuperset;
   max_layers: number;
   sound_event?: string;
 }
 
+/**
+ * Custom component that implements height behavior.
+ */
 export class HeightComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("height");
   struct: Struct<any, any> = object({

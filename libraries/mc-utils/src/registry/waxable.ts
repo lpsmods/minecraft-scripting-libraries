@@ -7,6 +7,9 @@ import { EntityUtils } from "../entity";
 
 let initialized = false;
 
+/**
+ * Options for configuring the waxable block.
+ */
 export interface WaxableBlockOptions {
   /**
    * The waxed copper block. (like waxed_copper)
@@ -17,6 +20,9 @@ export interface WaxableBlockOptions {
   waxOffSound?: string;
 }
 
+/**
+ * Registry for waxable block.
+ */
 export class WaxableBlockRegistry extends Registry<WaxableBlockOptions> {
   /**
    * Register a new waxable block interaction.

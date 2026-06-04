@@ -14,6 +14,9 @@ import { ItemUtils } from "../item/utils";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Options for configuring the layered cauldron.
+ */
 export interface LayeredCauldronOptions {
   block: string;
   level_state: keyof BlockStateSuperset;
@@ -21,6 +24,9 @@ export interface LayeredCauldronOptions {
   interactions?: string[];
 }
 
+/**
+ * Provides layered cauldron interaction behavior.
+ */
 export class LayeredCauldronInteraction {
   constructor(input: string, output: string, level: string) {
     this.input = input;
@@ -69,6 +75,9 @@ export class LayeredCauldronInteraction {
   }
 }
 
+/**
+ * Custom component that implements layered cauldron behavior.
+ */
 export class LayeredCauldronComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("layered_cauldron");
   struct: Struct<any, any> = object({

@@ -7,6 +7,9 @@ import { EntityUtils } from "../entity";
 
 let initialized = false;
 
+/**
+ * Options for configuring the oxidizable.
+ */
 export interface OxidizableOptions {
   /**
    * The oxidized block. (like exposed_copper)
@@ -16,6 +19,9 @@ export interface OxidizableOptions {
   onConvert?: (block: Block, event: ItemUseAfterEvent) => void;
 }
 
+/**
+ * Registry for oxidizable blocks.
+ */
 export class OxidizableBlocksRegistry extends Registry<OxidizableOptions> {
   /**
    * Register a new oxidizable block interaction.

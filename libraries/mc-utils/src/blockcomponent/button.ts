@@ -11,6 +11,9 @@ import { create, defaulted, number, object, optional, string, Struct } from "sup
 import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the button.
+ */
 export interface ButtonOptions {
   powered_state: keyof BlockStateSuperset;
   delay?: number;
@@ -18,6 +21,9 @@ export interface ButtonOptions {
   click_off_sound_event?: string;
 }
 
+/**
+ * Custom component that implements button behavior.
+ */
 export class ButtonComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("button");
   struct: Struct<any, any> = object({

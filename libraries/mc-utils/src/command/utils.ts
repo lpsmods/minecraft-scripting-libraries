@@ -19,6 +19,9 @@ export enum CommandMessage {
   EntityDifferentDimension = "commands.generic.entity.differentDimension",
 }
 
+/**
+ * Utility helpers for custom command.
+ */
 export class CustomCommandUtils {
   static getSource(ctx: CustomCommandOrigin): Entity | Block | undefined {
     switch (ctx.sourceType) {

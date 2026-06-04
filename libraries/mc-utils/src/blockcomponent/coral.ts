@@ -7,11 +7,17 @@ import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Options for configuring the coral.
+ */
 export interface CoralOptions {
   delay: number;
   block?: string;
 }
 
+/**
+ * Custom component that implements coral behavior.
+ */
 export class CoralComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("coral");
   struct: Struct<any, any> = object({

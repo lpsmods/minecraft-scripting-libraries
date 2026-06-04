@@ -13,13 +13,22 @@ import { DevTool } from "./tools/base";
 
 let initialized = false;
 
+/**
+ * Type definition for a developer tools config.
+ */
 export type DeveloperToolsConfig = { [key: string]: boolean };
 
+/**
+ * Options for configuring the developer tools.
+ */
 export interface DeveloperToolsOptions {
   textDisplayId?: string;
   namespace?: string;
 }
 
+/**
+ * Provides developer tools behavior.
+ */
 export class DeveloperTools extends PlayerHandler {
   static instance: DeveloperTools | undefined = undefined;
   delay: number = 0;

@@ -18,11 +18,17 @@ import { AddonUtils } from "../utils/addon";
 import { BlockBaseComponent } from "./base";
 import { EntityInBlockTickEvent } from "../event";
 
+/**
+ * Options for configuring the bush.
+ */
 export interface BushOptions {
   growth_state: keyof BlockStateSuperset;
   loot_tables?: string[];
 }
 
+/**
+ * Provides harvest loot table behavior.
+ */
 export class HarvestLootTable {
   readonly growth: number;
   readonly lootTable: string;
@@ -42,6 +48,9 @@ export class HarvestLootTable {
   }
 }
 
+/**
+ * Custom component that implements bush behavior.
+ */
 export class BushComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("bush");
   struct: Struct<any, any> = object({

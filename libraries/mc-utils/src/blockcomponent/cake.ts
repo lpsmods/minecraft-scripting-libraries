@@ -11,6 +11,9 @@ import { ItemUtils } from "../item/utils";
 import { AddonUtils } from "../utils/addon";
 import { PlayerUtils } from "../entity";
 
+/**
+ * Provides cake interaction behavior.
+ */
 export class CakeInteraction {
   readonly item: string;
   readonly block: string;
@@ -30,6 +33,9 @@ export class CakeInteraction {
   }
 }
 
+/**
+ * Options for configuring the cake.
+ */
 export interface CakeOptions {
   slice_state: keyof BlockStateSuperset;
   max_slices: number;
@@ -38,6 +44,9 @@ export interface CakeOptions {
   interactions: string[];
 }
 
+/**
+ * Custom component that implements cake behavior.
+ */
 export class CakeComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("cake");
   struct: Struct<any, any> = object({

@@ -11,12 +11,18 @@ import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Options for configuring the frosted ice.
+ */
 export interface FrostedIceOptions {
   age_state: keyof BlockStateSuperset;
   max_age: number;
   converts_to: string;
 }
 
+/**
+ * Custom component that implements frosted ice behavior.
+ */
 export class FrostedIceComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("frosted_ice");
   struct: Struct<any, any> = object({

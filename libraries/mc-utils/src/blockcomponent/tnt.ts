@@ -11,11 +11,17 @@ import { AddonUtils } from "../utils/addon";
 import { ItemUtils } from "../item";
 import { BlockUtils } from "../block/utils";
 
+/**
+ * Options for configuring the tnt block.
+ */
 export interface TntBlockOptions {
   entity: string;
   y_rotation_offset: number;
 }
 
+/**
+ * Custom component that implements tnt block behavior.
+ */
 export class TntBlockComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("tnt");
   struct: Struct<any, any> = object({

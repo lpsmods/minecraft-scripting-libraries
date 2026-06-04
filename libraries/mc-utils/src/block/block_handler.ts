@@ -22,6 +22,9 @@ import { PlayerUtils } from "../entity/player_utils";
 
 let initialized = false;
 
+/**
+ * Handler for block.
+ */
 export abstract class BlockHandler {
   static all = new Map<string, BlockHandler>();
 

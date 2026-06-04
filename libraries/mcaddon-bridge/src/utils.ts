@@ -12,6 +12,9 @@ export function uuid(): string {
   });
 }
 
+/**
+ * Runs the error packet helper.
+ */
 export function errorPacket(message: unknown): PacketData {
   // const res = new PacketData();
   // res.set("error", true);

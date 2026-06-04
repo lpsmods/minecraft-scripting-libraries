@@ -17,6 +17,9 @@ import { BlockBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 import { isItem } from "../validation";
 
+/**
+ * Options for configuring the candle.
+ */
 export interface CandleOptions {
   candles_state: keyof BlockStateSuperset;
   lit_state: keyof BlockStateSuperset;
@@ -26,6 +29,9 @@ export interface CandleOptions {
   flame_positions: string[];
 }
 
+/**
+ * Provides candle flame position behavior.
+ */
 export class CandleFlamePosition {
   readonly candles: number;
   readonly location: Vector3;
@@ -50,6 +56,9 @@ export class CandleFlamePosition {
 }
 
 // TODO: Ambient sounds
+/**
+ * Custom component that implements candle behavior.
+ */
 export class CandleComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("candle");
   struct: Struct<any, any> = object({

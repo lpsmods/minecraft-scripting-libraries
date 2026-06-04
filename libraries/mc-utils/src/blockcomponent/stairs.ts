@@ -13,12 +13,18 @@ import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 import { DirectionUtils } from "../utils/direction";
 
+/**
+ * Options for configuring the stairs.
+ */
 export interface StairsOptions {
   direction_state: keyof BlockStateSuperset;
   half_state: keyof BlockStateSuperset;
   shape_state: keyof BlockStateSuperset;
 }
 
+/**
+ * Custom component that implements stairs behavior.
+ */
 export class StairsComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("stairs");
   struct: Struct<any, any> = object({

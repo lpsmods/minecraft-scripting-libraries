@@ -2,10 +2,19 @@ import { ScriptEventCommandMessageAfterEvent, system } from "@minecraft/server";
 import { uuid } from "./utils";
 import { DataUtils, EventSignal } from "@lpsmods/mc-common";
 
+/**
+ * Packet payload data keyed by string.
+ */
 export type pData = { [key: string]: any };
 
+/**
+ * Structured data for the packet.
+ */
 export type PacketData = { [key: string]: any };
 
+/**
+ * Event payload for packet callbacks.
+ */
 export class PacketEvent {
   readonly id: string;
   readonly packet: PacketData;
@@ -16,6 +25,9 @@ export class PacketEvent {
   }
 }
 
+/**
+ * Event payload for packet receive callbacks.
+ */
 export class PacketReceiveEvent extends PacketEvent {
   response: any;
 
@@ -25,16 +37,25 @@ export class PacketReceiveEvent extends PacketEvent {
   }
 }
 
+/**
+ * Options for configuring the packet receive event.
+ */
 export interface PacketReceiveEventOptions {
   namespaces?: string[];
 }
 
+/**
+ * Event payload for packet response callbacks.
+ */
 export class PacketResponseEvent extends PacketEvent {
   constructor(id: string, packet: PacketData) {
     super(id, packet);
   }
 }
 
+/**
+ * Options for configuring the packet response event.
+ */
 export interface PacketResponseEventOptions {
   namespaces?: string[];
 }
@@ -44,6 +65,9 @@ export interface PacketResponseEventOptions {
 //   options?: PacketReceiveEventOptions;
 // }
 
+/**
+ * Event signal for subscribing to packet receive events.
+ */
 export class PacketReceiveEventSignal extends EventSignal<PacketReceiveEvent, PacketReceiveEventOptions> {
   // private listeners: PacketListener[] = [];
   // constructor() {}
@@ -71,6 +95,9 @@ export class PacketReceiveEventSignal extends EventSignal<PacketReceiveEvent, Pa
   // }
 }
 
+/**
+ * Event signal for subscribing to packet response events.
+ */
 export class PacketResponseEventSignal extends EventSignal<PacketResponseEvent, PacketResponseEventOptions> {
   // private listeners: PacketListener[] = [];
   // constructor() {}
@@ -98,6 +125,9 @@ export class PacketResponseEventSignal extends EventSignal<PacketResponseEvent, 
   // }
 }
 
+/**
+ * Provides packet behavior.
+ */
 export class Packet {
   static readonly sender = uuid(); // per addon
 
@@ -153,6 +183,9 @@ export class Packet {
   }
 }
 
+/**
+ * Provides packet events behavior.
+ */
 export class PacketEvents {
   /**
    * This event fires when a packet is received.

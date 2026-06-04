@@ -3,6 +3,9 @@ import { Id, Identifier, COLORS } from "@lpsmods/mc-common";
 
 import { Registry } from "./registry";
 
+/**
+ * Registry for custom tag.
+ */
 export abstract class CustomTagRegistry<T> extends Registry<string[]> {
   register(name: string, object: (T | string)[], replace: boolean = false): string[] | undefined {
     if (replace || !this.has(name)) {
@@ -49,14 +52,23 @@ export abstract class CustomTagRegistry<T> extends Registry<string[]> {
   }
 }
 
+/**
+ * Provides custom item tags behavior.
+ */
 export class CustomItemTags extends CustomTagRegistry<ItemType> {
   static readonly registryId = "item_tags";
 }
 
+/**
+ * Provides custom block tags behavior.
+ */
 export class CustomBlockTags extends CustomTagRegistry<BlockType> {
   static readonly registryId = "block_tags";
 }
 
+/**
+ * Provides custom tags behavior.
+ */
 export class CustomTags {
   static readonly items = new CustomItemTags();
   static readonly blocks = new CustomBlockTags();

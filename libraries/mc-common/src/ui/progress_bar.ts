@@ -4,6 +4,9 @@ import { clampNumber } from "@minecraft/math";
 import { Ticking } from "../ticking";
 import { ChatColor } from "../constants";
 
+/**
+ * Interface describing a progress bar style.
+ */
 export interface ProgressBarStyle {
   fill: string;
   empty: string;
@@ -13,6 +16,9 @@ export interface ProgressBarStyle {
   scale?: number;
 }
 
+/**
+ * Provides progress bar styles behavior.
+ */
 export abstract class ProgressBarStyles {
   /**
    * Renders:
@@ -65,6 +71,9 @@ export abstract class ProgressBarStyles {
   };
 }
 
+/**
+ * Interface describing a progress bar color.
+ */
 export interface ProgressBarColor {
   fill: string | ChatColor;
   empty: string | ChatColor;
@@ -72,6 +81,9 @@ export interface ProgressBarColor {
   rightCap: string | ChatColor;
 }
 
+/**
+ * Provides progress bar colors behavior.
+ */
 export abstract class ProgressBarColors {
   static readonly Aqua: ProgressBarColor = {
     fill: ChatColor.Aqua,
@@ -130,6 +142,9 @@ export abstract class ProgressBarColors {
 }
 
 // indeterminate - Renders a pixel going left to right for loading.
+/**
+ * Provides progress bar behavior.
+ */
 export class ProgressBar extends Ticking {
   static stack = new Map<string, ProgressBar>();
   readonly id: string;

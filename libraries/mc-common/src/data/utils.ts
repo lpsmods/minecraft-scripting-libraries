@@ -27,6 +27,9 @@ import { ConditionUtils } from "../validation";
  */
 export type DynamicObject = World | Entity | ItemStack | ContainerSlot;
 
+/**
+ * Utility helpers for data.
+ */
 export abstract class DataUtils {
   /**
    * Creates a deep copy of JSON data.

@@ -30,11 +30,17 @@ import {
 
 let initialized = false;
 
+/**
+ * Options for configuring the custom effect utils.
+ */
 export interface CustomEffectUtilsOptions {
   amplifier?: number;
   showParticles?: boolean;
 }
 
+/**
+ * Runtime instance data for custom effect.
+ */
 export interface CustomEffectInstance {
   effect: string;
   amplifier: number;
@@ -44,6 +50,9 @@ export interface CustomEffectInstance {
   params: { [key: string]: any };
 }
 
+/**
+ * Event payload for custom effect callbacks.
+ */
 export class CustomEffectEvent {
   constructor(entity: Entity, effect: CustomEffectInstance) {
     this.entity = entity;
@@ -56,16 +65,28 @@ export class CustomEffectEvent {
   readonly effect: CustomEffectInstance;
 }
 
+/**
+ * Event payload for custom effect tick callbacks.
+ */
 export class CustomEffectTickEvent extends CustomEffectEvent {}
 
+/**
+ * Event payload for custom effect start callbacks.
+ */
 export class CustomEffectStartEvent extends CustomEffectEvent {
   cancel: boolean = false;
 }
 
+/**
+ * Event payload for custom effect end callbacks.
+ */
 export class CustomEffectEndEvent extends CustomEffectEvent {
   cancel: boolean = false;
 }
 
+/**
+ * Utility helpers for custom effect.
+ */
 export class CustomEffectUtils {
   private static struct: Struct<any, any> = object({
     effect: string(),
@@ -172,6 +193,9 @@ export class CustomEffectUtils {
   }
 }
 
+/**
+ * Provides custom effects behavior.
+ */
 export class CustomEffects extends Registry<CustomEffect> {
   static readonly registryId = "custom_effects";
 
@@ -181,8 +205,14 @@ export class CustomEffects extends Registry<CustomEffect> {
   }
 }
 
+/**
+ * Shared registry for custom effect.
+ */
 export const customEffectRegistry = new CustomEffects();
 
+/**
+ * Provides custom effect behavior.
+ */
 export abstract class CustomEffect {
   static readonly effectId: string;
 

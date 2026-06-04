@@ -18,11 +18,17 @@ import {
 import { ItemBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the info book.
+ */
 export interface InfoBookOptions extends PagedActionFormOptions {
   default: string;
   translation_pattern: string;
 }
 
+/**
+ * Custom component that implements info book behavior.
+ */
 export class InfoBookComponent extends ItemBaseComponent implements ItemCustomComponent {
   static readonly componentId = AddonUtils.makeId("info_book");
   struct: Struct<any, any> = object({

@@ -1,5 +1,8 @@
 import { gzip as pakoGZip, Uint8ArrayReturnType } from "pako";
 
+/**
+ * Utility helpers for encode.
+ */
 export class EncodeUtils {
   /**
    * Compresses the provided string to gzip format.

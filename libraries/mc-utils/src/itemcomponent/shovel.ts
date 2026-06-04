@@ -6,11 +6,17 @@ import { offsetVolume } from "../utils";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Options for configuring the shovel.
+ */
 export interface ShovelOptions {
   size: number;
   block: string;
 }
 
+/**
+ * Custom component that implements shovel behavior.
+ */
 export class ShovelComponent extends ToolComponent implements ItemCustomComponent {
   static readonly componentId = AddonUtils.makeId("shovel");
 

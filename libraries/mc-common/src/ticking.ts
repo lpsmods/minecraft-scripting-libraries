@@ -1,5 +1,8 @@
 import { system } from "@minecraft/server";
 
+/**
+ * Provides ticking behavior.
+ */
 export abstract class Ticking {
   static all: Map<number, Ticking> = new Map<number, Ticking>();
 

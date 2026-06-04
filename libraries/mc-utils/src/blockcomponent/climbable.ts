@@ -4,8 +4,14 @@ import { object, Struct } from "superstruct";
 import { AddonUtils } from "../utils/addon";
 import { BlockBaseComponent, NearbyEntityBlockEvent } from "./base";
 
+/**
+ * Options for configuring the climbable component.
+ */
 export interface ClimbableComponentOptions {}
 
+/**
+ * Custom component that implements climbable behavior.
+ */
 export class ClimbableComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("climbable");
   struct: Struct<any, any> = object({});

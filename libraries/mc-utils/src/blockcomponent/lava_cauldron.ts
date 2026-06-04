@@ -12,11 +12,17 @@ import { ItemUtils } from "../item/utils";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Options for configuring the lava cauldron.
+ */
 export interface LavaCauldronOptions {
   block: string;
   interactions?: string[];
 }
 
+/**
+ * Provides lava cauldron interaction behavior.
+ */
 export class LavaCauldronInteraction {
   constructor(item: string, resultItem: string) {
     this.item = item;
@@ -43,6 +49,9 @@ export class LavaCauldronInteraction {
   }
 }
 
+/**
+ * Custom component that implements lava cauldron behavior.
+ */
 export class LavaCauldronComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("lava_cauldron");
   struct: Struct<any, any> = object({

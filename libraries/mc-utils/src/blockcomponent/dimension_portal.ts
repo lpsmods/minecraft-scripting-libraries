@@ -4,10 +4,16 @@ import { object, Struct } from "superstruct";
 import { AddonUtils } from "../utils/addon";
 import { BlockBaseComponent, NearbyEntityBlockEvent } from "./base";
 
+/**
+ * Options for configuring the block portal.
+ */
 export interface BlockPortalOptions {
   dimensionId: string;
 }
 
+/**
+ * Custom component that implements block portal behavior.
+ */
 export class BlockPortalComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("portal");
   struct: Struct<any, any> = object({});

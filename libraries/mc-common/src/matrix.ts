@@ -1,7 +1,13 @@
 import { Vector2, Vector3 } from "@minecraft/server";
 
+/**
+ * Type definition for a matrix3.
+ */
 export type Matrix3 = number[][];
 
+/**
+ * Utility helpers for matrix.
+ */
 export abstract class MatrixUtils {
   // Helpers
 

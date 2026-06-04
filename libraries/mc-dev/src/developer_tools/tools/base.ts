@@ -2,6 +2,9 @@ import { Player, ShutdownEvent, StartupEvent, WorldLoadAfterEvent } from "@minec
 import { ChunkTickEvent, EntityTickEvent, PlayerChunkLoadEvent, PlayerChunkUnloadEvent } from "@lpsmods/mc-utils";
 import { Settings } from "@lpsmods/mc-common";
 
+/**
+ * Options for configuring the dev tool.
+ */
 export interface DevToolOptions {
   name?: string;
   description?: string;
@@ -32,6 +35,9 @@ class DevToolSettings extends Settings {
   }
 }
 
+/**
+ * Provides dev tool behavior.
+ */
 export abstract class DevTool {
   static all = new Map<string, DevTool>();
 

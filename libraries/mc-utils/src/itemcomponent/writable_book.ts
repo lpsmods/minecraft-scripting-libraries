@@ -18,10 +18,16 @@ import { create, defaulted, number, object, Struct } from "superstruct";
 
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the writable book.
+ */
 export interface WritableBookOptions {
   max_pages: number;
 }
 
+/**
+ * Custom component that implements writable book behavior.
+ */
 export class WritableBookComponent implements ItemCustomComponent {
   static readonly componentId = AddonUtils.makeId("writable_book");
   struct: Struct<any, any> = object({

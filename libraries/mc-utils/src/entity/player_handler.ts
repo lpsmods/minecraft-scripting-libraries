@@ -25,6 +25,9 @@ import { EntityHandler } from "./entity_handler";
 
 let initialized = false;
 
+/**
+ * Handler for player.
+ */
 export class PlayerHandler extends EntityHandler {
   static players = new Map<string, PlayerHandler>();
   constructor() {

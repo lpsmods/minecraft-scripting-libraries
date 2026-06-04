@@ -17,16 +17,25 @@ import { ItemUtils } from "../item";
 
 let initialized = false;
 
+/**
+ * Allowed values for a screen event source.
+ */
 export enum ScreenEventSource {
   Block = "block",
   Entity = "entity",
 }
 
+/**
+ * Options for configuring the screen event.
+ */
 export interface ScreenEventOptions {
   sourceBlock?: Block;
   sourceEntity?: Entity;
 }
 
+/**
+ * Event payload for screen callbacks.
+ */
 export abstract class ScreenEvent {
   constructor(player: Player, screenType: string, sourceType: ScreenEventSource, options: ScreenEventOptions) {
     this.player = player;
@@ -43,14 +52,29 @@ export abstract class ScreenEvent {
   readonly sourceEntity: Entity | undefined;
 }
 
+/**
+ * Event payload for open screen callbacks.
+ */
 export class OpenScreenEvent extends ScreenEvent {}
 
+/**
+ * Event payload for close screen callbacks.
+ */
 export class CloseScreenEvent extends ScreenEvent {}
 
+/**
+ * Event signal for subscribing to open screen events.
+ */
 export class OpenScreenEventSignal extends EventSignal<OpenScreenEvent> {}
 
+/**
+ * Event signal for subscribing to close screen events.
+ */
 export class CloseScreenEventSignal extends EventSignal<CloseScreenEvent> {}
 
+/**
+ * Provides screen events behavior.
+ */
 export class ScreenEvents {
   private constructor() {}
 

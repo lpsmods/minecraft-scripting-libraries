@@ -29,6 +29,9 @@ import { forAllDimensions } from "../utils";
 
 let initialized = false;
 
+/**
+ * Handler for entity.
+ */
 export class EntityHandler {
   static all = new Map<string, EntityHandler>();
   options: EntityQueryOptions;

@@ -9,6 +9,9 @@ import { DeveloperTools } from "../developer_tools";
 import { Macros } from "../macro";
 import { CustomCommandUtils } from "@lpsmods/mc-utils";
 
+/**
+ * Command implementation for macro.
+ */
 export class MacroCommand {
   private static registered: boolean = false;
 

@@ -12,6 +12,9 @@ import { BlockBaseComponent, NeighborUpdateEvent } from "./base";
 import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the wall.
+ */
 export interface WallOptions {
   north_state: keyof BlockStateSuperset;
   east_state: keyof BlockStateSuperset;
@@ -20,6 +23,9 @@ export interface WallOptions {
   up_state: keyof BlockStateSuperset;
 }
 
+/**
+ * Custom component that implements wall behavior.
+ */
 export class WallComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("wall");
   struct: Struct<any, any> = object({

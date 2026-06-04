@@ -14,6 +14,9 @@ import {
 } from "@minecraft/server";
 import { array, assign, boolean, define, number, object, optional, string } from "superstruct";
 
+/**
+ * Utility helpers for condition.
+ */
 export class ConditionUtils {
   static isGzipped(value: any): boolean {
     if (typeof value !== "string") return false;
@@ -58,32 +61,68 @@ export class ConditionUtils {
   }
 }
 
+/**
+ * Predicate that checks whether a value is a gzip.
+ */
 export const isGzip = define("gzip", ConditionUtils.isGzipped);
 
+/**
+ * Predicate that checks whether a value is an uuid4.
+ */
 export const isUuid4 = define("uuid4", ConditionUtils.isUuid4);
 
+/**
+ * Predicate that checks whether a value is a block.
+ */
 export const isBlock = define("BlockType", ConditionUtils.isBlock);
 
+/**
+ * Predicate that checks whether a value is an item.
+ */
 export const isItem = define("ItemType", ConditionUtils.isItem);
 
+/**
+ * Predicate that checks whether a value is an entity.
+ */
 export const isEntity = define("EntityType", ConditionUtils.isEntity);
 
+/**
+ * Predicate that checks whether a value is an effect.
+ */
 export const isEffect = define("EffectType", ConditionUtils.isEffect);
 
+/**
+ * Predicate that checks whether a value is an enchant.
+ */
 export const isEnchant = define("EnchantmentType", ConditionUtils.isEnchant);
 
+/**
+ * Predicate that checks whether a value is a dimension.
+ */
 export const isDimension = define("DimensionType", ConditionUtils.isDimension);
 
+/**
+ * Shared vec3 value.
+ */
 export const vec3 = define("Vector3", ConditionUtils.isVec3);
 
+/**
+ * Shared vec2 value.
+ */
 export const vec2 = define("Vector2", ConditionUtils.isVec2);
 
+/**
+ * Shared entity filter property options value.
+ */
 export const entityFilterPropertyOptions = object({
   propertyId: string(),
   exclude: optional(boolean()),
   value: optional(string()),
 });
 
+/**
+ * Shared entity filter score options value.
+ */
 export const entityFilterScoreOptions = object({
   exclude: optional(boolean()),
   maxScore: optional(number()),
@@ -91,6 +130,9 @@ export const entityFilterScoreOptions = object({
   objective: optional(string()),
 });
 
+/**
+ * Shared entity filter value.
+ */
 export const entityFilter = object({
   excludeFamilies: optional(array(string())),
   excludeGameModes: optional(array(string())),
@@ -112,6 +154,9 @@ export const entityFilter = object({
   type: optional(string()),
 });
 
+/**
+ * Shared entity query value.
+ */
 export const entityQuery = assign(
   entityFilter,
   object({

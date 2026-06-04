@@ -11,8 +11,14 @@ import {
   system,
 } from "@minecraft/server";
 
+/**
+ * Map of unit test entries.
+ */
 export type UnitTestMap = Map<string, (ctx: CustomCommandOrigin, message?: string) => void>;
 
+/**
+ * Command implementation for test.
+ */
 export class TestCommand {
   private static registered: boolean = false;
 

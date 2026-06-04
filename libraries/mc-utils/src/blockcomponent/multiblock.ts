@@ -20,6 +20,9 @@ import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 import { DirectionUtils } from "../utils/direction";
 
+/**
+ * Options for configuring the multiblock.
+ */
 export interface MultiblockOptions {
   part_state: keyof BlockStateSuperset;
   direction_state?: keyof BlockStateSuperset;
@@ -27,6 +30,9 @@ export interface MultiblockOptions {
   parts?: string[];
 }
 
+/**
+ * Provides part behavior.
+ */
 export class Part {
   readonly name: string;
   readonly offset: Vector3;
@@ -80,6 +86,9 @@ export class Part {
   }
 }
 
+/**
+ * Event payload for multi block receive callbacks.
+ */
 export class MultiBlockReceiveEvent {
   constructor(block: Block, sourceBlock: Block, id: string, data?: { [key: string]: any }) {
     this.block = block;
@@ -112,6 +121,9 @@ export class MultiBlockReceiveEvent {
   readonly data: { [key: string]: any };
 }
 
+/**
+ * Custom component that implements multiblock behavior.
+ */
 export class MultiblockComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("multiblock");
   struct: Struct<any, any> = object({

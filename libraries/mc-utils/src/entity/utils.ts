@@ -11,6 +11,9 @@ import { forAllDimensions } from "../utils";
 import { DirectionUtils } from "../utils/direction";
 import { Vector3Utils } from "@minecraft/math";
 
+/**
+ * Utility helpers for entity.
+ */
 export abstract class EntityUtils {
   /**
    * Drops all items in the entities inventory.

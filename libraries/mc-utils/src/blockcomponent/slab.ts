@@ -13,11 +13,17 @@ import { BlockBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 import { ItemUtils } from "../item";
 
+/**
+ * Options for configuring the slab.
+ */
 export interface SlabOptions {
   double_state: keyof BlockStateSuperset;
   sound_event: string;
 }
 
+/**
+ * Custom component that implements slab behavior.
+ */
 export class SlabComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("slab");
   struct: Struct<any, any> = object({

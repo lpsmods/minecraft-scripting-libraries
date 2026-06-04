@@ -11,6 +11,9 @@ import {
 } from "@minecraft/server";
 import { ErrorUtils, MathUtils } from "@lpsmods/mc-common";
 
+/**
+ * Utility helpers for world.
+ */
 export abstract class WorldUtils {
   static MAX_DISTANCE = 8388608; // When player starts to phase through blocks.
 

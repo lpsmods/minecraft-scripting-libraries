@@ -14,10 +14,16 @@ import { AddonUtils } from "../utils/addon";
 import { BlockBaseComponent } from "./base";
 import { isEntity } from "../validation";
 
+/**
+ * Options for configuring the tile entity.
+ */
 export interface TileEntityOptions {
   entity: string;
 }
 
+/**
+ * Custom component that implements tile entity behavior.
+ */
 export class TileEntityComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("tile_entity");
   struct: Struct<any, any> = object({

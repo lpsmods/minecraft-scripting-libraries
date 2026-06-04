@@ -3,6 +3,9 @@ import { CustomCommand, CustomCommandOrigin, CustomCommandRegistry, CustomComman
 // feature
 // featurerule
 
+/**
+ * Command implementation for place.
+ */
 export class PlaceCommand {
   private static registered: boolean = false;
 

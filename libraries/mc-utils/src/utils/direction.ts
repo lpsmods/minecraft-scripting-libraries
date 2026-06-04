@@ -14,6 +14,9 @@ import {
   VECTOR3_ZERO,
 } from "@minecraft/math";
 
+/**
+ * Utility helpers for direction.
+ */
 export abstract class DirectionUtils {
   /**
    * Converts a {@link Vector2} rotation to facing direction.

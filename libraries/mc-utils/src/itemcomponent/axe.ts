@@ -6,17 +6,26 @@ import { offsetVolume } from "../utils";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Interface describing an axe interaction.
+ */
 export interface AxeInteraction {
   block: string;
   converted_block: string;
 }
 
+/**
+ * Options for configuring the axe.
+ */
 export interface AxeOptions {
   interactions: AxeInteraction[];
   size: number;
   sound_event: string;
 }
 
+/**
+ * Custom component that implements axe behavior.
+ */
 export class AxeComponent extends ToolComponent implements ItemCustomComponent {
   static readonly componentId = AddonUtils.makeId("axe");
 

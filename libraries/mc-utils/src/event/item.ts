@@ -3,6 +3,9 @@ import { EventSignal } from "@lpsmods/mc-common";
 
 import { ItemUtils } from "../item";
 
+/**
+ * Event payload for item callbacks.
+ */
 export abstract class ItemEvent {
   constructor(itemStack: ItemStack) {
     this.itemStack = itemStack;
@@ -11,6 +14,9 @@ export abstract class ItemEvent {
   readonly itemStack: ItemStack;
 }
 
+/**
+ * Event payload for player item callbacks.
+ */
 export abstract class PlayerItemEvent extends ItemEvent {
   constructor(itemStack: ItemStack, player: Player) {
     super(itemStack);
@@ -20,6 +26,9 @@ export abstract class PlayerItemEvent extends ItemEvent {
   readonly player: Player;
 }
 
+/**
+ * Options for configuring the item event.
+ */
 export interface ItemEventOptions {
   /**
    * An item name. Prefix with '#' for item tag or "!" to ignore.
@@ -27,6 +36,9 @@ export interface ItemEventOptions {
   itemPredicate?: string;
 }
 
+/**
+ * Event signal for subscribing to item events.
+ */
 export class ItemEventSignal<T extends ItemEvent> extends EventSignal<T, ItemEventOptions> {
   apply(event: T): void {
     for (const fn of this.listeners) {
@@ -40,22 +52,49 @@ export class ItemEventSignal<T extends ItemEvent> extends EventSignal<T, ItemEve
   }
 }
 
+/**
+ * Event payload for item hold callbacks.
+ */
 export class ItemHoldEvent extends PlayerItemEvent {}
 
+/**
+ * Event payload for item release hold callbacks.
+ */
 export class ItemReleaseHoldEvent extends PlayerItemEvent {}
 
+/**
+ * Event payload for item hold tick callbacks.
+ */
 export class ItemHoldTickEvent extends PlayerItemEvent {}
 
+/**
+ * Event signal for subscribing to item hold events.
+ */
 export class ItemHoldEventSignal extends ItemEventSignal<ItemHoldEvent> {}
 
+/**
+ * Event signal for subscribing to item release hold events.
+ */
 export class ItemReleaseHoldEventSignal extends ItemEventSignal<ItemReleaseHoldEvent> {}
 
+/**
+ * Event signal for subscribing to item hold tick events.
+ */
 export class ItemHoldTickEventSignal extends ItemEventSignal<ItemHoldTickEvent> {}
 
+/**
+ * Event signal for subscribing to item stripped events.
+ */
 export class ItemStrippedEventSignal extends EventSignal<PlayerItemEvent> {}
 
+/**
+ * Event signal for subscribing to item scraped wax events.
+ */
 export class ItemScrapedWaxEventSignal extends EventSignal<PlayerItemEvent> {}
 
+/**
+ * Event signal for subscribing to item scraped oxidization events.
+ */
 export class ItemScrapedOxidizationEventSignal extends EventSignal<PlayerItemEvent> {}
 
 /**

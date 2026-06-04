@@ -1,5 +1,8 @@
 import { BlockPermutation } from "@minecraft/server";
 
+/**
+ * Provides parser behavior.
+ */
 export class Parser {
   // stone_slab["minecraft:vertical_half"="top"]
   static parseBlockPermutation(value: string): BlockPermutation | undefined {

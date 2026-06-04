@@ -17,11 +17,17 @@ import { PlayerUtils } from "../entity/player_utils";
 import { AddonUtils } from "../utils/addon";
 import { vec3 } from "../validation";
 
+/**
+ * Options for configuring the sittable.
+ */
 export interface SittableOptions {
   seat_position: number[];
   seat_animations: string[];
 }
 
+/**
+ * Event payload for sittable block callbacks.
+ */
 export class SittableBlockEvent {
   constructor(block: Block, dimension: Dimension, player: Player) {
     this.block = block;
@@ -35,6 +41,9 @@ export class SittableBlockEvent {
   cancel: boolean = false;
 }
 
+/**
+ * Custom component that implements sittable behavior.
+ */
 export class SittableComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("sittable");
   struct: Struct<any, any> = object({

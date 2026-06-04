@@ -1,5 +1,8 @@
 import { ungzip, Data } from "pako";
 
+/**
+ * Utility helpers for decode.
+ */
 export class DecodeUtils {
   /**
    * Decodes a Base64-encoded string into raw bytes.

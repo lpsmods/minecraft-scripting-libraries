@@ -18,12 +18,18 @@ import { CropComponent, CropOptions } from "./crop";
 import { SaplingComponent, SaplingOptions } from "./sapling";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the fertilizable.
+ */
 export interface FertilizableOptions {
   growth_state?: keyof BlockStateSuperset;
   max_stage?: number;
   items: string[];
 }
 
+/**
+ * Custom component that implements fertilizable behavior.
+ */
 export class FertilizableComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("fertilizable");
   struct: Struct<any, any> = object({

@@ -12,10 +12,16 @@ import { Parser } from "../parser";
 import { ItemUtils } from "../item/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the cauldron.
+ */
 export interface CauldronOptions {
   interactions?: string[];
 }
 
+/**
+ * Provides cauldron interaction behavior.
+ */
 export class CauldronInteraction {
   constructor(item: string, blockPermutation: BlockPermutation, resultItem?: string) {
     this.item = item;
@@ -46,6 +52,9 @@ export class CauldronInteraction {
   }
 }
 
+/**
+ * Custom component that implements cauldron behavior.
+ */
 export class CauldronComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("cauldron");
   struct: Struct<any, any> = object({

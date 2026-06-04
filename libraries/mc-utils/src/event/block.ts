@@ -5,6 +5,9 @@ import { EventSignal } from "@lpsmods/mc-common";
 
 let initialized = false;
 
+/**
+ * Event payload for block callbacks.
+ */
 export abstract class BlockEvent {
   constructor(block: Block, dimension?: Dimension) {
     this.block = block;
@@ -16,15 +19,27 @@ export abstract class BlockEvent {
   readonly dimension: Dimension;
 }
 
+/**
+ * Event payload for block nearby entity tick callbacks.
+ */
 export class BlockNearbyEntityTickEvent extends BlockEvent {}
 
+/**
+ * Event payload for block neighbor update callbacks.
+ */
 export class BlockNeighborUpdateEvent extends BlockEvent {}
 
+/**
+ * Event signal for subscribing to block nearby entity tick events.
+ */
 export class BlockNearbyEntityTickEventSignal extends EventSignal<BlockNearbyEntityTickEvent> {
   constructor() {
     super();
   }
 }
+/**
+ * Event signal for subscribing to block neighbor update events.
+ */
 export class BlockNeighborUpdateEventSignal extends EventSignal<BlockNeighborUpdateEvent> {
   constructor() {
     super();

@@ -2,15 +2,24 @@ import { Color } from "@lpsmods/mc-common";
 import { Colors } from "@minecraft/math";
 import { Vector2 } from "@minecraft/server";
 
+/**
+ * Allowed values for an image format.
+ */
 export enum ImageFormat {
   RGBA = "rgba",
   RGB = "rgb",
 }
 
+/**
+ * Allowed values for a sampler method.
+ */
 export enum SamplerMethod {
   NEAREST = "nearest",
 }
 
+/**
+ * Provides image behavior.
+ */
 export class Image {
   data: Color[][];
   readonly size: Vector2;

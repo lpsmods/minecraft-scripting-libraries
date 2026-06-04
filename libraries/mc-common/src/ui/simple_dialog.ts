@@ -5,8 +5,14 @@ import { showWarning } from "./message_box";
 import { TextKey } from "../text";
 
 // TODO: implement https://github.com/python/cpython/blob/3.14/Lib/tkinter/simpledialog.py
+/**
+ * Provides simple dialog behavior.
+ */
 export class SimpleDialog {}
 
+/**
+ * Provides dialog behavior.
+ */
 export class Dialog {
   player: Player;
   result?: any;
@@ -121,6 +127,9 @@ class QueryInteger extends QueryDialog {
   }
 }
 
+/**
+ * Runs the ask integer helper.
+ */
 export async function askInteger(player: Player, title: string, prompt: string): Promise<number> {
   const d = await new QueryInteger(player, title, prompt).show();
   return d.result;
@@ -134,6 +143,9 @@ class QueryFloat extends QueryDialog {
   }
 }
 
+/**
+ * Runs the ask float helper.
+ */
 export async function askFloat(player: Player, title: string, prompt: string): Promise<number> {
   const d = await new QueryFloat(player, title, prompt).show();
   return d.result;
@@ -145,6 +157,9 @@ class QueryString extends QueryDialog {
   }
 }
 
+/**
+ * Runs the ask string helper.
+ */
 export async function askString(player: Player, title: string, prompt: string): Promise<string> {
   const d = await new QueryString(player, title, prompt).show();
   return d.result;

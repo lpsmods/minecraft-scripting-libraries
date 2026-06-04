@@ -5,12 +5,18 @@ import { FeatureHandler, FeatureRuleCanPlaceEvent, FeatureRulePlaceEvent } from 
 import { BiomeUtils } from "../biome/utils";
 import { BlockUtils } from "../block/utils";
 
+/**
+ * Allowed values for a placement pass.
+ */
 export enum PlacementPass {
   surface_pass = 1,
   before_surface_pass = 2,
   underground_pass = 3,
 }
 
+/**
+ * Options for configuring the custom feature rule.
+ */
 export interface CustomFeatureRuleOptions {
   placement_pass?: PlacementPass;
   scatter_chance?: number;

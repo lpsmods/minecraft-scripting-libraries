@@ -1,8 +1,14 @@
+/**
+ * Interface describing an event listener.
+ */
 export interface EventListener<T, O> {
   callback: (event: T) => void;
   options?: O;
 }
 
+/**
+ * Event signal for subscribing to event signal events.
+ */
 export abstract class EventSignal<T, O = undefined> {
   listeners: EventListener<T, O>[] = [];
 

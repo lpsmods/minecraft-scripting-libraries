@@ -9,12 +9,18 @@ import { DirectionUtils } from "./utils/direction";
 
 // import * as debug from "@minecraft/debug-utilities";
 
+/**
+ * Options for configuring the area detector.
+ */
 export interface AreaDetectorOptions {
   id?: string;
   dimensionId?: string;
   tickInterval?: number;
 }
 
+/**
+ * Provides area detector behavior.
+ */
 export abstract class AreaDetector extends Ticking {
   static readonly typeId: string;
 
@@ -425,6 +431,9 @@ export class SphereAreaDetector extends AreaDetector {
   }
 }
 
+/**
+ * Interface describing a gateway.
+ */
 export interface Gateway {
   from: Vector3;
   to: Vector3;

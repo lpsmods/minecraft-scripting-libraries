@@ -6,6 +6,9 @@ import { LootTableHandler } from "./loot_table_handler";
 
 let initialized = false;
 
+/**
+ * Handler for block loot.
+ */
 export class BlockLootHandler extends LootTableHandler {
   blockId: Identifier;
 

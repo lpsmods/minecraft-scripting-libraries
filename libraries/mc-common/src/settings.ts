@@ -4,6 +4,9 @@ import { PropertyValue } from "./constants";
 import { ModalForm, ModalFormHandler } from "./ui";
 import { DynamicObject, VersionedDataStorage } from "./data";
 
+/**
+ * Interface describing a setting descriptor.
+ */
 export interface SettingDescriptor {
   type: "string" | "number" | "boolean" | "Vector3";
   value?: PropertyValue;
@@ -14,12 +17,18 @@ export interface SettingDescriptor {
   description?: string;
 }
 
+/**
+ * Options for configuring the settings.
+ */
 export interface SettingsOptions {
   formatVersion?: number;
   object?: DynamicObject;
   gzip?: boolean;
 }
 
+/**
+ * Provides settings behavior.
+ */
 export class Settings {
   readonly id: string;
   readonly store: VersionedDataStorage;
@@ -136,6 +145,9 @@ export class Settings {
   }
 }
 
+/**
+ * Options for configuring the player settings.
+ */
 export interface PlayerSettingsOptions {
   id?: string;
   formatVersion?: number;

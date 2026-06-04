@@ -17,6 +17,9 @@ import { object, Struct } from "superstruct";
 
 import { ItemEvent, ItemHoldEvent } from "../event/item";
 
+/**
+ * Custom component that implements item base behavior.
+ */
 export abstract class ItemBaseComponent extends Ticking implements ItemCustomComponent {
   static readonly componentId: string;
 

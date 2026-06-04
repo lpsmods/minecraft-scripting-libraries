@@ -13,6 +13,9 @@ import {
   ItemTypes,
 } from "@minecraft/server";
 
+/**
+ * Utility helpers for condition.
+ */
 export class ConditionUtils {
   static isGzipped(value: any): boolean {
     if (typeof value !== "string") return false;

@@ -1,11 +1,23 @@
 import { Vector3, RGB, RGBA } from "@minecraft/server";
 
+/**
+ * Type definition for a property value.
+ */
 export type PropertyValue = string | number | boolean | Vector3 | undefined;
 
+/**
+ * Shared max effect value.
+ */
 export const MAX_EFFECT = 20000000;
 
+/**
+ * Shared center entity value.
+ */
 export const CENTER_ENTITY = { x: 0.5, y: 0, z: 0.5 };
 
+/**
+ * Type definition for a color.
+ */
 export type Color = RGBA | RGB;
 
 /**
@@ -45,6 +57,9 @@ export namespace Colors {
   export const Clear: RGBA = { ...Colors.Black, alpha: 0 };
 }
 
+/**
+ * Shared replaceable blocks value.
+ */
 export const REPLACEABLE_BLOCKS = [
   "vine",
   "fern",
@@ -61,6 +76,9 @@ export const REPLACEABLE_BLOCKS = [
   "snow_layer",
 ];
 
+/**
+ * Shared candles value.
+ */
 export const CANDLES = [
   "candle",
   "white_candle",
@@ -81,6 +99,9 @@ export const CANDLES = [
   "pink_candle",
 ];
 
+/**
+ * Shared colors value.
+ */
 export const COLORS = [
   "white",
   "light_gray",
@@ -100,6 +121,9 @@ export const COLORS = [
   "pink",
 ];
 
+/**
+ * Shared wood types value.
+ */
 export const WOOD_TYPES = [
   "oak",
   "spruce",
@@ -115,6 +139,9 @@ export const WOOD_TYPES = [
   "warped",
 ];
 
+/**
+ * Allowed values for a chat color.
+ */
 export enum ChatColor {
   Aqua = `§b`,
   Black = `§0`,
@@ -146,11 +173,17 @@ export enum ChatColor {
   Yellow = `§e`,
 }
 
+/**
+ * Allowed values for an environment.
+ */
 export enum Environment {
   Development = "development",
   Production = "production",
 }
 
+/**
+ * Allowed values for an oxidization.
+ */
 export enum Oxidization {
   Normal = 0,
   Exposed = 1,

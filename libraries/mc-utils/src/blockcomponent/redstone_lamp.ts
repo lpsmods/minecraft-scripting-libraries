@@ -12,11 +12,17 @@ import { BlockBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 import { BlockUtils } from "../block/utils";
 
+/**
+ * Options for configuring the redstone lamp.
+ */
 export interface RedstoneLampOptions {
   lit_state: keyof BlockStateSuperset;
   delay: number;
 }
 
+/**
+ * Custom component that implements redstone lamp behavior.
+ */
 export class RedstoneLampComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("redstone_lamp");
   struct: Struct<any, any> = object({

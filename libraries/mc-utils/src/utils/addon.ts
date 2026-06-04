@@ -18,6 +18,9 @@ import {
   world,
 } from "@minecraft/server";
 
+/**
+ * Utility helpers for addon.
+ */
 export abstract class AddonUtils {
   static addonId: string = "mcutils";
   static addons: string[] = [];

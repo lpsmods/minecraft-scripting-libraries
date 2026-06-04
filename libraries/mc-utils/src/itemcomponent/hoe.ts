@@ -6,11 +6,17 @@ import { offsetVolume } from "../utils";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Options for configuring the hoe.
+ */
 export interface HoeOptions {
   size: number;
   block: string;
 }
 
+/**
+ * Custom component that implements hoe behavior.
+ */
 export class HoeComponent extends ToolComponent implements ItemCustomComponent {
   static readonly componentId = AddonUtils.makeId("hoe");
   struct: Struct<any, any> = object({

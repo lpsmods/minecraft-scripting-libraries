@@ -16,6 +16,9 @@ import { forAllDimensions } from "../utils";
 import { ChunkUtils } from "../chunk";
 import { EntityUtils } from "../entity";
 
+/**
+ * Event payload for entity callbacks.
+ */
 export abstract class EntityEvent {
   constructor(entity: Entity) {
     this.entity = entity;
@@ -24,6 +27,9 @@ export abstract class EntityEvent {
   readonly entity: Entity;
 }
 
+/**
+ * Event payload for entity block callbacks.
+ */
 export abstract class EntityBlockEvent extends EntityEvent {
   constructor(entity: Entity, block: Block) {
     super(entity);
@@ -33,6 +39,9 @@ export abstract class EntityBlockEvent extends EntityEvent {
   readonly block: Block;
 }
 
+/**
+ * Event payload for entity mount callbacks.
+ */
 export class EntityMountEvent extends EntityEvent {
   constructor(entity: Entity, rider: Entity) {
     super(entity);
@@ -42,6 +51,9 @@ export class EntityMountEvent extends EntityEvent {
   readonly rider: Entity;
 }
 
+/**
+ * Event payload for entity dismount callbacks.
+ */
 export class EntityDismountEvent extends EntityEvent {
   constructor(entity: Entity, rider: Entity) {
     super(entity);
@@ -51,6 +63,9 @@ export class EntityDismountEvent extends EntityEvent {
   readonly rider: Entity;
 }
 
+/**
+ * Event payload for entity moved callbacks.
+ */
 export class EntityMovedEvent extends EntityEvent {
   constructor(entity: Entity, prevLocation: Vector3) {
     super(entity);
@@ -80,6 +95,9 @@ export class EntityMovedEvent extends EntityEvent {
   readonly movedChunk: boolean;
 }
 
+/**
+ * Event payload for entity fall on callbacks.
+ */
 export class EntityFallOnEvent extends EntityEvent {
   constructor(entity: Entity, distance: number) {
     super(entity);
@@ -89,12 +107,24 @@ export class EntityFallOnEvent extends EntityEvent {
   readonly distance: number;
 }
 
+/**
+ * Event payload for entity tick callbacks.
+ */
 export class EntityTickEvent extends EntityEvent {}
 
+/**
+ * Event payload for entity step on callbacks.
+ */
 export class EntityStepOnEvent extends EntityBlockEvent {}
 
+/**
+ * Event payload for entity step off callbacks.
+ */
 export class EntityStepOffEvent extends EntityBlockEvent {}
 
+/**
+ * Event payload for entity enter block callbacks.
+ */
 export class EntityEnterBlockEvent extends EntityBlockEvent {
   constructor(entity: Entity, block: Block, previousBlock?: Block) {
     super(entity, block);
@@ -110,6 +140,9 @@ export class EntityEnterBlockEvent extends EntityBlockEvent {
   readonly sameType: boolean;
 }
 
+/**
+ * Event payload for entity leave block callbacks.
+ */
 export class EntityLeaveBlockEvent extends EntityBlockEvent {
   constructor(entity: Entity, block: Block, newBlock?: Block) {
     super(entity, block);
@@ -125,8 +158,14 @@ export class EntityLeaveBlockEvent extends EntityBlockEvent {
   readonly sameType: boolean;
 }
 
+/**
+ * Event payload for entity in block tick callbacks.
+ */
 export class EntityInBlockTickEvent extends EntityBlockEvent {}
 
+/**
+ * Event signal for subscribing to entity events.
+ */
 export abstract class EntityEventSignal<T extends EntityEvent> extends EventSignal<T, EntityQueryOptions> {
   apply(event: T): void {
     for (const fn of this.listeners) {
@@ -141,24 +180,54 @@ export abstract class EntityEventSignal<T extends EntityEvent> extends EventSign
   }
 }
 
+/**
+ * Event signal for subscribing to entity mount events.
+ */
 export class EntityMountEventSignal extends EntityEventSignal<EntityMountEvent> {}
 
+/**
+ * Event signal for subscribing to entity dismount events.
+ */
 export class EntityDismountEventSignal extends EntityEventSignal<EntityDismountEvent> {}
 
+/**
+ * Event signal for subscribing to entity moved events.
+ */
 export class EntityMovedEventSignal extends EntityEventSignal<EntityMovedEvent> {}
 
+/**
+ * Event signal for subscribing to entity tick events.
+ */
 export class EntityTickEventSignal extends EntityEventSignal<EntityTickEvent> {}
 
+/**
+ * Event signal for subscribing to entity fall on events.
+ */
 export class EntityFallOnEventSignal extends EntityEventSignal<EntityFallOnEvent> {}
 
+/**
+ * Event signal for subscribing to entity step on events.
+ */
 export class EntityStepOnEventSignal extends EntityEventSignal<EntityStepOnEvent> {}
 
+/**
+ * Event signal for subscribing to entity step off events.
+ */
 export class EntityStepOffEventSignal extends EntityEventSignal<EntityStepOffEvent> {}
 
+/**
+ * Event signal for subscribing to entity enter block events.
+ */
 export class EntityEnterBlockEventSignal extends EntityEventSignal<EntityEnterBlockEvent> {}
 
+/**
+ * Event signal for subscribing to entity leave block events.
+ */
 export class EntityLeaveBlockEventSignal extends EntityEventSignal<EntityLeaveBlockEvent> {}
 
+/**
+ * Event signal for subscribing to entity in block tick events.
+ */
 export class EntityInBlockTickEventSignal extends EntityEventSignal<EntityInBlockTickEvent> {}
 
 /**

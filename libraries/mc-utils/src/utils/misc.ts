@@ -112,6 +112,9 @@ export function nextItem<T>(array: T[], value: T): T | undefined {
   return array[(index + 1) % array.length];
 }
 
+/**
+ * Runs the difference array helper.
+ */
 export function differenceArray(a: string[], b: string[]): string[] {
   const setA = new Set(a);
   const setB = new Set(b);
@@ -133,11 +136,17 @@ export function differenceArray(a: string[], b: string[]): string[] {
   return result;
 }
 
+/**
+ * Runs the remove items helper.
+ */
 export function removeItems<T>(source: T[], itemsToRemove: T[]): T[] {
   const toRemove = new Set(itemsToRemove);
   return source.filter((item) => !toRemove.has(item));
 }
 
+/**
+ * Runs the deep merge helper.
+ */
 export function deepMerge<T extends object, U extends object>(obj1: T, obj2: U): T & U {
   const result: any = { ...obj1 };
 

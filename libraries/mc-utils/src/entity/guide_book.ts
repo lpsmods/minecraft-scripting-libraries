@@ -13,6 +13,9 @@ import { defaulted, number, object, optional, string, Struct } from "superstruct
 
 import { EntityHandler } from "./entity_handler";
 
+/**
+ * Options for configuring the guide book entity.
+ */
 export interface GuideBookEntityOptions {
   itemId?: string;
   propertyName?: string;
@@ -26,6 +29,9 @@ const struct: Struct<any> = object({
   maxPages: defaulted(number(), 50),
 });
 
+/**
+ * Event payload for guide book entity callbacks.
+ */
 export class GuideBookEntityEvent {
   constructor(entity: Entity) {
     this.entity = entity;
@@ -34,6 +40,9 @@ export class GuideBookEntityEvent {
   readonly entity: Entity;
 }
 
+/**
+ * Event payload for turn page entity callbacks.
+ */
 export class TurnPageEntityEvent extends GuideBookEntityEvent {
   constructor(entity: Entity, player: Player, prevPage: number, page: number) {
     super(entity);
@@ -48,6 +57,9 @@ export class TurnPageEntityEvent extends GuideBookEntityEvent {
   readonly prevPage: number;
 }
 
+/**
+ * Provides guide book entity behavior.
+ */
 export class GuideBookEntity extends EntityHandler {
   guideOptions: GuideBookEntityOptions;
 

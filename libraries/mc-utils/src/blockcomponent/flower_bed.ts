@@ -10,12 +10,18 @@ import { create, defaulted, number, object, string, Struct } from "superstruct";
 import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the flower bed.
+ */
 export interface FlowerBedOptions {
   flowers_state: keyof BlockStateSuperset;
   max_flowers: number;
 }
 
 // TODO: pink pedals, leaf litter.
+/**
+ * Custom component that implements flower bed behavior.
+ */
 export class FlowerBedComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("flower_bed");
   struct: Struct<any, any> = object({

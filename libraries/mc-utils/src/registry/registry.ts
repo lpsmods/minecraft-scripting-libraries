@@ -1,5 +1,8 @@
 import { Id, Identifier } from "@lpsmods/mc-common";
 
+/**
+ * Registry for registry.
+ */
 export abstract class Registry<T> {
   static readonly registryId: string;
   private instances = new Map<string, T>();

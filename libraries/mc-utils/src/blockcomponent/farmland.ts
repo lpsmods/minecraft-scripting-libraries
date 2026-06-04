@@ -13,6 +13,9 @@ import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 import { BlockBaseComponent } from "./base";
 
+/**
+ * Options for configuring the farmland.
+ */
 export interface FarmlandOptions {
   moisture_state: keyof BlockStateSuperset;
   max_moisture: number;
@@ -20,6 +23,9 @@ export interface FarmlandOptions {
   block: string;
 }
 
+/**
+ * Custom component that implements farmland behavior.
+ */
 export class FarmlandComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("farmland");
   struct: Struct<any, any> = object({

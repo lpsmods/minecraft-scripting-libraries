@@ -23,6 +23,9 @@ import {
 } from "@minecraft/server";
 import { VECTOR2_ZERO, VECTOR3_ZERO } from "@minecraft/math";
 
+/**
+ * Allowed values for a typing types.
+ */
 export enum TypingTypes {
   Container = "container",
   Block = "block",
@@ -52,6 +55,9 @@ export enum TypingTypes {
   Undefined = "undefined",
 }
 
+/**
+ * Provides typing behavior.
+ */
 export class Typing {
   static get(value: any): TypingTypes | undefined {
     const type = typeof value;
@@ -88,6 +94,9 @@ export class Typing {
   }
 }
 
+/**
+ * Provides hasher behavior.
+ */
 export class Hasher {
   static parseVec3(value: string): Vector3 {
     if (!value) return VECTOR3_ZERO;

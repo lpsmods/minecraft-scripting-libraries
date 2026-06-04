@@ -7,6 +7,9 @@ import { EntityUtils } from "../entity";
 
 let initialized = false;
 
+/**
+ * Options for configuring the flattenable.
+ */
 export interface FlattenableOptions {
   /**
    * The flattened block. (like grass_path)
@@ -16,6 +19,9 @@ export interface FlattenableOptions {
   onConvert?: (block: Block, event: ItemUseAfterEvent) => void;
 }
 
+/**
+ * Registry for flattenable block.
+ */
 export class FlattenableBlockRegistry extends Registry<FlattenableOptions> {
   /**
    * Register a new flattenable block interaction.

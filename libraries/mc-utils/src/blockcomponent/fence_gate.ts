@@ -16,11 +16,17 @@ import { BlockUtils } from "../block/utils";
 import { ToggleableComponent, ToggleableOptions } from "./toggleable";
 import { DirectionUtils } from "../utils/direction";
 
+/**
+ * Options for configuring the fence gate.
+ */
 export interface FenceGateOptions extends ToggleableOptions {
   in_wall_state: keyof BlockStateSuperset;
   direction_state: keyof BlockStateSuperset;
 }
 
+/**
+ * Custom component that implements fence gate behavior.
+ */
 export class FenceGateComponent extends ToggleableComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("fence_gate");
 

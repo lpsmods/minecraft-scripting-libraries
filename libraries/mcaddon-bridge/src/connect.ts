@@ -2,6 +2,9 @@ import { Player } from "@minecraft/server";
 import { Packet } from "./packet";
 import { uuid } from "./utils";
 
+/**
+ * Provides connection behavior.
+ */
 export class Connection {
   readonly addonId: string;
   isConnected: boolean = false;

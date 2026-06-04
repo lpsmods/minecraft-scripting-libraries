@@ -12,6 +12,9 @@ import {
 import { customEnchantmentRegistry, CustomEnchantmentUtils } from "../enchantment";
 import { CustomCommandUtils } from "./utils";
 
+/**
+ * Command implementation for custom enchant.
+ */
 export class CustomEnchantCommand {
   private static registered: boolean = false;
 

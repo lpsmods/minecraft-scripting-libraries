@@ -1,6 +1,9 @@
 import { BiomeType } from "@minecraft/server";
 import { Identifier } from "@lpsmods/mc-common";
 
+/**
+ * Utility helpers for biome.
+ */
 export abstract class BiomeUtils {
   /**
    * Match any biome name.

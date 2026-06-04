@@ -3,6 +3,9 @@ import { ActionFormData } from "@minecraft/server-ui";
 
 import { TextUtils } from "../text";
 
+/**
+ * Event payload for action form callbacks.
+ */
 export class ActionFormEvent {
   constructor(ui: ActionFormData, player: Player, ctx?: any) {
     this.ui = ui;
@@ -15,6 +18,9 @@ export class ActionFormEvent {
   readonly ctx: any;
 }
 
+/**
+ * Event payload for action form show callbacks.
+ */
 export class ActionFormShowEvent extends ActionFormEvent {
   /**
    * When cancel is true it will not show the form.
@@ -22,6 +28,9 @@ export class ActionFormShowEvent extends ActionFormEvent {
   cancel: boolean = false;
 }
 
+/**
+ * Interface describing an action button.
+ */
 export interface ActionButton {
   label: string | RawMessage;
   icon?: string;
@@ -45,6 +54,9 @@ export interface ActionButton {
   condition?: (event: ActionFormEvent) => boolean;
 }
 
+/**
+ * Interface describing an action form.
+ */
 export interface ActionForm {
   title?: string | RawMessage;
   body?: string | RawMessage;
@@ -73,10 +85,16 @@ function t(text: string | RawMessage): string | RawMessage {
   return TextUtils.renderMarkdown(content);
 }
 
+/**
+ * Options for configuring the action form handler.
+ */
 export interface ActionFormHandlerOptions {
   id?: string;
 }
 
+/**
+ * Handler for action form.
+ */
 export class ActionFormHandler {
   form: ActionForm;
   readonly options: ActionFormHandlerOptions;

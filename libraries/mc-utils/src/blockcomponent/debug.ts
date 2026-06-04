@@ -3,6 +3,9 @@ import { BlockComponentPlayerInteractEvent, BlockCustomComponent, CustomComponen
 import { BlockBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Custom component that implements debug block behavior.
+ */
 export class DebugBlockComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("debug");
 

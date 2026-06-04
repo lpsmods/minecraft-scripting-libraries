@@ -13,11 +13,17 @@ import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 import { EntityEnterBlockEvent, EntityInBlockTickEvent, EntityLeaveBlockEvent } from "../event";
 
+/**
+ * Options for configuring the powder snow.
+ */
 export interface PowderSnowOptions {
   solid_state: keyof BlockStateSuperset;
   fog_identifier?: string;
 }
 
+/**
+ * Custom component that implements powder snow behavior.
+ */
 export class PowderSnowComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("powder_snow");
   struct: Struct<any, any> = object({

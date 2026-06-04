@@ -9,6 +9,9 @@ import {
 
 import { customEffectRegistry, CustomEffectUtils } from "../effect";
 
+/**
+ * Command implementation for custom effect.
+ */
 export class CustomEffectCommand {
   private static registered: boolean = false;
 

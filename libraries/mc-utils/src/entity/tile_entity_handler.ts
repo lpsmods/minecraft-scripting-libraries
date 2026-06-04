@@ -3,6 +3,9 @@ import { Block, Entity, EntityDieAfterEvent } from "@minecraft/server";
 import { EntityHandler } from "./entity_handler";
 import { EntityTickEvent } from "../event";
 
+/**
+ * Event payload for tile entity callbacks.
+ */
 export class TileEntityEvent {
   constructor(entity: Entity, block: Block) {
     this.entity = entity;
@@ -13,8 +16,14 @@ export class TileEntityEvent {
   readonly block: Block;
 }
 
+/**
+ * Event payload for tile entity tick callbacks.
+ */
 export class TileEntityTickEvent extends TileEntityEvent {}
 
+/**
+ * Handler for tile entity.
+ */
 export class TileEntityHandler extends EntityHandler {
   constructor(entity: string) {
     super({ type: entity });

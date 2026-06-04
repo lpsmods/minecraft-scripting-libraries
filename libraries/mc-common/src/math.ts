@@ -5,6 +5,9 @@
 import { BlockVolume, Entity, Vector2, Vector3, VectorXZ } from "@minecraft/server";
 import { VECTOR3_ZERO, Vector3Utils } from "@minecraft/math";
 
+/**
+ * Utility helpers for math.
+ */
 export class MathUtils {
   /**
    * Combines multiple block volumes into one bounding box.

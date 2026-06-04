@@ -11,6 +11,9 @@ import { TextUtils, Icon } from "@lpsmods/mc-common";
 
 import { EntityHandler } from "./entity_handler";
 
+/**
+ * Handler for text display.
+ */
 export class TextDisplayHandler extends EntityHandler {
   constructor(options: EntityQueryOptions) {
     super(options);

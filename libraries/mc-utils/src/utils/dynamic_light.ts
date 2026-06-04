@@ -3,6 +3,9 @@ import { VECTOR3_ZERO, Vector3Utils } from "@minecraft/math";
 
 import { EntityEvents, EntityMovedEvent } from "../event";
 
+/**
+ * Provides dynamic light behavior.
+ */
 export class DynamicLight {
   blockType: string;
   entity: Entity;

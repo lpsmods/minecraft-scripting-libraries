@@ -5,6 +5,9 @@ import { InfoBookComponent } from "./info_book";
 import { ItemUtils } from "../item/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Custom component that implements guide book behavior.
+ */
 export class GuideBookComponent extends InfoBookComponent implements ItemCustomComponent {
   static readonly componentId = AddonUtils.makeId("guide_book");
 

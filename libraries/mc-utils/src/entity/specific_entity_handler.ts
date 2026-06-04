@@ -2,6 +2,9 @@ import { Dimension, Entity, EntityRemoveBeforeEvent, ItemStack, Vector3, world }
 
 import { EntityHandler } from "./entity_handler";
 
+/**
+ * Handler for specific entity.
+ */
 export class SpecificEntityHandler extends EntityHandler {
   constructor(entity: Entity) {
     super({ type: entity.typeId, tags: [entity.id] }, entity.id);
@@ -21,12 +24,18 @@ export class SpecificEntityHandler extends EntityHandler {
   }
 }
 
+/**
+ * Creates a spawn entity definition.
+ */
 export function spawnEntity(dimension: Dimension, identifier: string, location: Vector3): EntityHandler {
   const entity = dimension.spawnEntity(identifier, location);
   const handler = new SpecificEntityHandler(entity);
   return handler;
 }
 
+/**
+ * Creates a spawn item definition.
+ */
 export function spawnItem(dimension: Dimension, itemStack: ItemStack, location: Vector3): EntityHandler {
   const entity = dimension.spawnItem(itemStack, location);
   const handler = new SpecificEntityHandler(entity);

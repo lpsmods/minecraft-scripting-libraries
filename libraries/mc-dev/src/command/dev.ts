@@ -10,10 +10,16 @@ import {
   system,
 } from "@minecraft/server";
 
+/**
+ * Allowed values for a dev command action.
+ */
 export enum DevCommandAction {
   Show = "show",
 }
 
+/**
+ * Command implementation for dev.
+ */
 export class DevCommand {
   private static registered: boolean = false;
 

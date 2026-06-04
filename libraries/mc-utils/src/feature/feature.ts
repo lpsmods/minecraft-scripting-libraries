@@ -16,6 +16,9 @@ import { FeatureHandler, FeaturePlaceEvent } from "./feature_handler";
 import { RandomUtils } from "../utils/random";
 import { BlockUtils } from "../block/utils";
 
+/**
+ * Options for configuring the custom feature.
+ */
 export interface CustomFeatureOptions {
   offset?: Vector3;
   grounded?: boolean;
@@ -115,6 +118,9 @@ export class CustomFeature {
   }
 }
 
+/**
+ * Allowed values for a facing direction.
+ */
 export enum FacingDirection {
   North = "north",
   South = "south",
@@ -123,11 +129,17 @@ export enum FacingDirection {
   Random = "random",
 }
 
+/**
+ * Options for configuring the structure template.
+ */
 export interface StructureTemplateOptions extends CustomFeatureOptions {
   structureOptions?: StructurePlaceOptions;
   facing_direction?: FacingDirection;
 }
 
+/**
+ * Provides structure template behavior.
+ */
 export class StructureTemplate extends CustomFeature {
   static readonly typeId = "structure_template_feature";
   structureName: string;
@@ -185,6 +197,9 @@ export class StructureTemplate extends CustomFeature {
 }
 
 // TODO: Return the size of the feature. Choose the feature its going to place before it places it.
+/**
+ * Provides weighted random feature behavior.
+ */
 export class WeightedRandomFeature extends CustomFeature {
   static readonly typeId = "weighted_random_feature";
   features: Set<[string, number]>;
@@ -238,6 +253,9 @@ export class WeightedRandomFeature extends CustomFeature {
 // }
 
 // TODO:
+/**
+ * Provides extended feature behavior.
+ */
 export class ExtendedFeature extends CustomFeature {
   static readonly typeId = "extended_feature";
   featureName: string;

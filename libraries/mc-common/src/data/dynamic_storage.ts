@@ -1,6 +1,9 @@
 import { Vector3 } from "@minecraft/server";
 import { DataStorageOptions, VersionedDataStorage } from "./data_storage";
 
+/**
+ * Provides dynamic storage behavior.
+ */
 export class DynamicStorage {
   readonly store: VersionedDataStorage;
 

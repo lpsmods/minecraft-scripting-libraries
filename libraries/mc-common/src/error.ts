@@ -4,6 +4,9 @@
 
 import { LocationInUnloadedChunkError, LocationOutOfWorldBoundariesError } from "@minecraft/server";
 
+/**
+ * Utility helpers for error.
+ */
 export class ErrorUtils {
   /**
    * Wraps the callback in a try-catch statement, making the error silent.
@@ -61,11 +64,17 @@ export class ErrorUtils {
   }
 }
 
+/**
+ * Interface describing a validation issue.
+ */
 export interface ValidationIssue {
   path: string;
   message: string;
 }
 
+/**
+ * Provides validation error behavior.
+ */
 export class ValidationError extends Error {
   public readonly issues: ValidationIssue[];
 

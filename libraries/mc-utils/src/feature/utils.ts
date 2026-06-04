@@ -3,6 +3,9 @@ import { Vector3Utils } from "@minecraft/math";
 
 import { CustomFeature } from "./feature";
 
+/**
+ * Utility helpers for feature.
+ */
 export abstract class FeatureUtils {
   static underBlocks<T>(
     feature: CustomFeature,

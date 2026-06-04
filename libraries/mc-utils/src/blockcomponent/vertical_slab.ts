@@ -6,10 +6,16 @@ import { SlabComponent, SlabOptions } from "./slab";
 import { AddonUtils } from "../utils/addon";
 import { DirectionUtils } from "../utils/direction";
 
+/**
+ * Options for configuring the vertical slab.
+ */
 export interface VerticalSlabOptions extends SlabOptions {
   direction_state: keyof BlockStateSuperset;
 }
 
+/**
+ * Custom component that implements vertical slab behavior.
+ */
 export class VerticalSlabComponent extends SlabComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("vertical_slab");
 

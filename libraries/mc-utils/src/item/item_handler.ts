@@ -18,6 +18,9 @@ import { ItemEvents, ItemHoldEvent, ItemHoldTickEvent, ItemReleaseHoldEvent } fr
 
 let initialized = false;
 
+/**
+ * Handler for item.
+ */
 export abstract class ItemHandler {
   static all = new Map<string, ItemHandler>();
 

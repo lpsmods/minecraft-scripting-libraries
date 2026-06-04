@@ -7,6 +7,9 @@ import { EntityUtils } from "../entity";
 
 let initialized = false;
 
+/**
+ * Options for configuring the tillable block.
+ */
 export interface TillableBlockOptions {
   /**
    * The tilled block. (like farmland)
@@ -16,6 +19,9 @@ export interface TillableBlockOptions {
   onConvert?: (block: Block, event: ItemUseAfterEvent) => void;
 }
 
+/**
+ * Registry for tillable block.
+ */
 export class TillableBlockRegistry extends Registry<TillableBlockOptions> {
   /**
    * Register a new tillable block interaction.

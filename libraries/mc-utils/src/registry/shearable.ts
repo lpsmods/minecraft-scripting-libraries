@@ -7,6 +7,9 @@ import { EntityUtils } from "../entity";
 
 let initialized = false;
 
+/**
+ * Options for configuring the shearable.
+ */
 export interface ShearableOptions {
   /**
    * The sheared block. (like carved_pumpkin)
@@ -16,6 +19,9 @@ export interface ShearableOptions {
   onConvert?: (block: Block, event: ItemUseAfterEvent) => void;
 }
 
+/**
+ * Registry for shearable blocks.
+ */
 export class ShearableBlocksRegistry extends Registry<ShearableOptions> {
   /**
    * Register a new shearable block interaction.

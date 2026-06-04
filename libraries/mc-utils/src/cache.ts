@@ -1,10 +1,16 @@
 import { MemoryTier, system } from "@minecraft/server";
 
+/**
+ * Options for configuring the lrucache.
+ */
 export interface LRUCacheOptions {
   maxSize?: number;
   debug?: boolean;
 }
 
+/**
+ * Provides lrucache behavior.
+ */
 export class LRUCache<K, V> {
   private cache: Map<K, V>;
   readonly options: LRUCacheOptions;

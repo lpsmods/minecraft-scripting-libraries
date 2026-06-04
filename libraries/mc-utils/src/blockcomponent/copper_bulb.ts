@@ -6,11 +6,17 @@ import { BlockBaseComponent } from "./base";
 import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the copper bulb.
+ */
 export interface CopperBulbOptions {
   lit_state: keyof BlockStateSuperset;
   powered_state: keyof BlockStateSuperset;
 }
 
+/**
+ * Custom component that implements copper bulb behavior.
+ */
 export class CopperBulbComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("copper_bulb");
   struct: Struct<any, any> = object({

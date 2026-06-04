@@ -13,11 +13,17 @@ import { FallingBlockEvent, FallingBlockHandler } from "../entity/falling_block_
 import { AddonUtils } from "../utils/addon";
 import { isEntity } from "../validation";
 
+/**
+ * Options for configuring the falling block.
+ */
 export interface FallingBlockOptions {
   entity: string;
   y_rotation_offset: number;
 }
 
+/**
+ * Custom component that implements falling block behavior.
+ */
 export class FallingBlockComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("falling_block");
   struct: Struct<any, any> = object({

@@ -12,12 +12,18 @@ import { BlockBaseComponent } from "./base";
 import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the sapling.
+ */
 export interface SaplingOptions {
   growth_state: keyof BlockStateSuperset;
   max_stage: number;
   feature: string;
 }
 
+/**
+ * Custom component that implements sapling behavior.
+ */
 export class SaplingComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("sapling");
   struct: Struct<any, any> = object({

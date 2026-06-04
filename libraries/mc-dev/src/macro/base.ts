@@ -9,12 +9,18 @@ import {
   ModalFormHandler,
 } from "@lpsmods/mc-common";
 
+/**
+ * Interface describing a macro data.
+ */
 export interface MacroData {
   id: number;
   name: string;
   intent: MacroIntentData;
 }
 
+/**
+ * Provides macros behavior.
+ */
 export class Macros {
   static getAll(): MacroData[] {
     const defaultValue = [

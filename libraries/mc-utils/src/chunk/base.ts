@@ -333,6 +333,9 @@ export class Chunk {
   }
 }
 
+/**
+ * Provides chunk volume behavior.
+ */
 export class ChunkVolume {
   "from": VectorXZ;
   to: VectorXZ;

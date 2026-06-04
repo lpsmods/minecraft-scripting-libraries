@@ -1,5 +1,8 @@
 import { system } from "@minecraft/server";
 
+/**
+ * Options for configuring the autosave.
+ */
 export interface AutosaveOptions {
   /**
    * The delay in ticks before the save function is called. Default is 20 ticks (1 second).

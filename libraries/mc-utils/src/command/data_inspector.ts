@@ -14,6 +14,9 @@ import { DataUtils } from "@lpsmods/mc-common";
 import { CustomCommandUtils } from "./utils";
 import { EntityUtils } from "../entity";
 
+/**
+ * Command implementation for data inspector.
+ */
 export class DataInspectorCommand {
   private static registered: boolean = false;
 

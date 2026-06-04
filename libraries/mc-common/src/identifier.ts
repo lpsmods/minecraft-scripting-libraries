@@ -11,6 +11,9 @@ import {
   ItemType,
 } from "@minecraft/server";
 
+/**
+ * Type definition for an id.
+ */
 export type Id =
   | string
   | String
@@ -26,6 +29,9 @@ export type Id =
   | EffectType
   | EnchantmentType;
 
+/**
+ * Provides identifier behavior.
+ */
 export class Identifier {
   namespace: string;
   path: string;

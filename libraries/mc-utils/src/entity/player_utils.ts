@@ -7,6 +7,9 @@ import { clampNumber } from "@minecraft/math";
 
 import { Chunk } from "../chunk/base";
 
+/**
+ * Event payload for armor set callbacks.
+ */
 export class ArmorSetEvent {
   constructor(player: Player, itemStack: ItemStack, equipmentSlot: EquipmentSlot, beforeItemStack?: ItemStack) {
     this.player = player;
@@ -21,6 +24,9 @@ export class ArmorSetEvent {
   readonly equipmentSlot: EquipmentSlot;
 }
 
+/**
+ * Interface describing an armor set.
+ */
 export interface ArmorSet {
   head?: ItemStack;
   chest?: ItemStack;
@@ -30,12 +36,18 @@ export interface ArmorSet {
   offhand?: ItemStack;
 }
 
+/**
+ * Options for configuring the player eat.
+ */
 export interface PlayerEatOptions {
   nutrition?: number;
   saturationModifier?: number;
   soundId?: boolean | string;
 }
 
+/**
+ * Utility helpers for player.
+ */
 export class PlayerUtils {
   /**
    * Get all loaded chunks by the player.

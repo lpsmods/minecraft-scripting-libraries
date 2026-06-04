@@ -7,11 +7,17 @@ import { RandomUtils } from "../utils/random";
 import { BlockBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the crop.
+ */
 export interface CropOptions {
   growth_state: keyof BlockStateSuperset;
   max_stage: number;
 }
 
+/**
+ * Custom component that implements crop behavior.
+ */
 export class CropComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("crop");
   struct: Struct<any, any> = object({

@@ -9,11 +9,17 @@ import { boolean, create, defaulted, object, Struct } from "superstruct";
 import { ItemUtils } from "../item/utils";
 import { AddonUtils } from "../utils/addon";
 
+/**
+ * Options for configuring the tool component.
+ */
 export interface ToolComponentOptions {
   damage_when_mined: boolean;
   damage_when_hit: boolean;
 }
 
+/**
+ * Custom component that implements tool behavior.
+ */
 export class ToolComponent implements ItemCustomComponent {
   static readonly componentId = AddonUtils.makeId("tool");
   struct: Struct<any, any> = object({

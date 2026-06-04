@@ -6,6 +6,9 @@ import { PlayerUtils } from "../entity";
 import { isBlock } from "../validation";
 import { BlockUtils } from "../block/utils";
 
+/**
+ * Options for configuring the food block.
+ */
 export interface FoodBlockOptions {
   nutrition: number;
   saturation_modifier: number;
@@ -14,6 +17,9 @@ export interface FoodBlockOptions {
   using_converts_to?: string;
 }
 
+/**
+ * Custom component that implements food block behavior.
+ */
 export class FoodBlockComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("food");
   struct: Struct<any, any> = object({

@@ -5,6 +5,9 @@
 import { BlockVolume, Vector3, world } from "@minecraft/server";
 import { MathUtils } from "@lpsmods/mc-common";
 
+/**
+ * Provides random behavior.
+ */
 export class Random {
   private seed: bigint = BigInt(world.seed);
 
@@ -40,6 +43,9 @@ export class Random {
   }
 }
 
+/**
+ * Utility helpers for random.
+ */
 export class RandomUtils {
   /**
    * Chooses a random location in a block volume.

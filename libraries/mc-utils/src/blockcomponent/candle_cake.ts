@@ -20,6 +20,9 @@ import { isBlock, isItem, vec3 } from "../validation";
 
 // TODO: Use block permutation for "BLOCK" instead of slice_state
 // Check players hunger.
+/**
+ * Options for configuring the candle cake.
+ */
 export interface CandleCakeOptions {
   candle: string;
   lit_state: keyof BlockStateSuperset;
@@ -29,6 +32,9 @@ export interface CandleCakeOptions {
   flame_particle: string;
 }
 
+/**
+ * Custom component that implements candle cake behavior.
+ */
 export class CandleCakeComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("candle_cake");
   struct: Struct<any, any> = object({

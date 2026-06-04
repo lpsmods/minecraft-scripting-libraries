@@ -6,11 +6,17 @@ import { offsetVolume } from "../utils";
 import { AddonUtils } from "../utils/addon";
 import { isBlock } from "../validation";
 
+/**
+ * Options for configuring the flint and steel.
+ */
 export interface FlintAndSteelOptions {
   block?: string;
   size: number;
 }
 
+/**
+ * Custom component that implements flint and steel behavior.
+ */
 export class FlintAndSteelComponent extends ToolComponent implements ItemCustomComponent {
   static readonly componentId = AddonUtils.makeId("flint_and_steel");
   struct: Struct<any, any> = object({

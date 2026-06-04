@@ -10,12 +10,18 @@ import { create, defaulted, number, object, string, Struct } from "superstruct";
 import { AddonUtils } from "../utils/addon";
 import { BlockUtils } from "../block/utils";
 
+/**
+ * Options for configuring the leaves.
+ */
 export interface LeavesOptions {
   distance_state: keyof BlockStateSuperset;
   persistent_state: keyof BlockStateSuperset;
   delay: number;
 }
 
+/**
+ * Custom component that implements leaves behavior.
+ */
 export class LeavesComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("leaves");
   struct: Struct<any, any> = object({

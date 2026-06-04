@@ -1,6 +1,9 @@
 import { Player } from "@minecraft/server";
 import { MacroIntent, MacroIntentData } from "./base";
 
+/**
+ * Provides run command intent behavior.
+ */
 export class RunCommandIntent extends MacroIntent {
   static readonly intentId = "run_command";
 

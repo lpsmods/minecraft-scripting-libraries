@@ -18,12 +18,18 @@ import { ItemEvent, ItemEvents, ItemHoldEvent, ItemHoldTickEvent, ItemReleaseHol
 
 let initialized = false;
 
+/**
+ * Runtime instance data for custom enchantment.
+ */
 export interface CustomEnchantmentInstance {
   enchant: string;
   level: number;
   params: { [key: string]: any };
 }
 
+/**
+ * Event payload for custom enchantment callbacks.
+ */
 export class CustomEnchantmentEvent extends ItemEvent {
   cancel: boolean = false;
 
@@ -35,10 +41,19 @@ export class CustomEnchantmentEvent extends ItemEvent {
   readonly enchantment: CustomEnchantmentInstance;
 }
 
+/**
+ * Event payload for item custom enchant callbacks.
+ */
 export class ItemCustomEnchantEvent extends CustomEnchantmentEvent {}
 
+/**
+ * Event payload for item custom disenchant callbacks.
+ */
 export class ItemCustomDisenchantEvent extends CustomEnchantmentEvent {}
 
+/**
+ * Utility helpers for custom enchantment.
+ */
 export class CustomEnchantmentUtils {
   private static struct: Struct<any, any> = object({
     enchant: string(),
@@ -165,8 +180,14 @@ class CustomEnchantments extends Registry<CustomEnchantment> {
   }
 }
 
+/**
+ * Shared registry for custom enchantment.
+ */
 export const customEnchantmentRegistry = new CustomEnchantments();
 
+/**
+ * Provides custom enchantment behavior.
+ */
 export abstract class CustomEnchantment {
   static readonly enchantmentId: string;
 

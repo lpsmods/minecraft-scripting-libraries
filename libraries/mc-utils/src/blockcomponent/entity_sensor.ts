@@ -2,12 +2,18 @@ import { BlockComponentTickEvent, CustomComponentParameters, EntityQueryOptions 
 import { AddonUtils } from "../utils";
 
 // TODO: Needs testing in-game.
+/**
+ * Options for configuring the entity sensor.
+ */
 export interface EntitySensorOptions {
   block?: string;
   filters?: EntityQueryOptions[];
   radius?: number;
 }
 
+/**
+ * Custom component that implements entity sensor behavior.
+ */
 export class EntitySensorComponent {
   static readonly componentId = AddonUtils.makeId("entity_sensor");
   constructor() {

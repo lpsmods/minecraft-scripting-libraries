@@ -2,6 +2,9 @@ import { StartupEvent, system } from "@minecraft/server";
 import { DevCommand, MacroCommand } from "./command";
 import { DeveloperTools } from "./developer_tools";
 
+/**
+ * Runs the initialize dev helper.
+ */
 export function initializeDev(environment: string = "development", namespace: string = "mcdev"): void {
   if (environment !== "development") return;
   // Initialize

@@ -3,6 +3,9 @@ import { PacketData, PacketEvents, PacketReceiveEvent } from "./packet";
 import { ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 import { errorPacket } from "./utils";
 
+/**
+ * Interface describing a bridge descriptor.
+ */
 export interface BridgeDescriptor {
   /**
    * Sets the property’s value
@@ -42,6 +45,9 @@ export interface BridgeDescriptor {
   set?: (value: any) => void;
 }
 
+/**
+ * Options for configuring the bridge.
+ */
 export interface BridgeOptions {
   version?: string;
   name?: string | RawMessage;
@@ -49,6 +55,9 @@ export interface BridgeOptions {
   enableDocs?: boolean;
 }
 
+/**
+ * Provides bridge behavior.
+ */
 export class Bridge {
   static readonly all = new Map<string, Bridge>();
 

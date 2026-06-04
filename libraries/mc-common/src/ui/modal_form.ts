@@ -10,6 +10,9 @@ function t(text: string | RawMessage): string | RawMessage {
   return TextUtils.renderMarkdown(content);
 }
 
+/**
+ * Event payload for modal form callbacks.
+ */
 export class ModalFormEvent {
   constructor(ui: ModalFormData, player: Player, ctx?: any) {
     this.ui = ui;
@@ -22,6 +25,9 @@ export class ModalFormEvent {
   readonly ctx: any;
 }
 
+/**
+ * Event payload for model form show callbacks.
+ */
 export class ModelFormShowEvent extends ModalFormEvent {
   /**
    * When cancel is true it will not show the form.
@@ -29,10 +35,16 @@ export class ModelFormShowEvent extends ModalFormEvent {
   cancel: boolean = false;
 }
 
+/**
+ * Type definition for a form result.
+ */
 export type FormResult = {
   [key: string]: boolean | number | string | undefined;
 };
 
+/**
+ * Provides modal form on submit behavior.
+ */
 export class ModalFormOnSubmit extends ModalFormEvent {
   constructor(ui: ModalFormData, player: Player, formResult: FormResult, ctx?: any) {
     super(ui, player, ctx);
@@ -42,6 +54,9 @@ export class ModalFormOnSubmit extends ModalFormEvent {
   readonly formResult: FormResult;
 }
 
+/**
+ * Type definition for a text option.
+ */
 export type TextOption = {
   type: "text";
   label: string | RawMessage;
@@ -51,6 +66,9 @@ export type TextOption = {
   placeholder?: string;
 };
 
+/**
+ * Type definition for a dropdown option.
+ */
 export type DropdownOption = {
   type: "dropdown";
   label: string | RawMessage;
@@ -60,6 +78,9 @@ export type DropdownOption = {
   tooltip?: string | RawMessage;
 };
 
+/**
+ * Type definition for a slider option.
+ */
 export type SliderOption = {
   type: "slider";
   label: string | RawMessage;
@@ -71,6 +92,9 @@ export type SliderOption = {
   max?: number;
 };
 
+/**
+ * Type definition for a toggle option.
+ */
 export type ToggleOption = {
   type: "toggle";
   label: string | RawMessage;
@@ -79,23 +103,35 @@ export type ToggleOption = {
   value?: boolean;
 };
 
+/**
+ * Type definition for a divider option.
+ */
 export type DividerOption = {
   type: "divider";
   condition?: (event: ModalFormEvent) => boolean;
 };
 
+/**
+ * Type definition for a label option.
+ */
 export type LabelOption = {
   type: "label";
   text: string | RawMessage;
   condition?: (event: ModalFormEvent) => boolean;
 };
 
+/**
+ * Type definition for a header option.
+ */
 export type HeaderOption = {
   type: "header";
   text: string | RawMessage;
   condition?: (event: ModalFormEvent) => boolean;
 };
 
+/**
+ * Options for configuring the modal.
+ */
 export type ModalOptions =
   | TextOption
   | DropdownOption
@@ -105,6 +141,9 @@ export type ModalOptions =
   | LabelOption
   | HeaderOption;
 
+/**
+ * Interface describing a modal form.
+ */
 export interface ModalForm {
   title?: string | RawMessage;
   body?: string | RawMessage;
@@ -131,11 +170,17 @@ export interface ModalForm {
   onSubmit?: (event: ModalFormOnSubmit) => void;
 }
 
+/**
+ * Options for configuring the modal form handler.
+ */
 export interface ModalFormHandlerOptions {
   id?: string;
   saveValues?: boolean;
 }
 
+/**
+ * Handler for modal form.
+ */
 export class ModalFormHandler {
   form: ModalForm;
   saveValues: boolean;

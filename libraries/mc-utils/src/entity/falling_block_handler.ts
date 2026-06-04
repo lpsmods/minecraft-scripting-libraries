@@ -6,6 +6,9 @@ import { EntityFallOnEvent } from "../event/entity";
 import { BlockUtils } from "../block";
 import { FallingBlockOptions } from "../blockcomponent";
 
+/**
+ * Event payload for falling block callbacks.
+ */
 export class FallingBlockEvent {
   constructor(block: Block, beforePermutation: BlockPermutation, entity: Entity) {
     this.block = block;
@@ -20,6 +23,9 @@ export class FallingBlockEvent {
   cancel: boolean;
 }
 
+/**
+ * Handler for falling block.
+ */
 export class FallingBlockHandler extends SpecificEntityHandler {
   component: any;
   blockOptions: FallingBlockOptions;

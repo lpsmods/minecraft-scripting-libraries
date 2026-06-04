@@ -28,17 +28,26 @@ import {
 import { CustomTags } from "../registry";
 import { DirectionUtils } from "../utils/direction";
 
+/**
+ * Allowed values for an exposed direction.
+ */
 export enum ExposedDirection {
   Above = "above",
   Below = "below",
   Side = "side",
 }
 
+/**
+ * Options for configuring the spawn entity rotation.
+ */
 export interface SpawnEntityRotationOptions extends SpawnEntityOptions {
   removeBlock?: boolean;
   useBlockDirection?: boolean;
 }
 
+/**
+ * Utility helpers for block.
+ */
 export abstract class BlockUtils {
   /**
    * Spawns an entity from a block.

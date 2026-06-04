@@ -18,12 +18,18 @@ import { BlockStateSuperset } from "@minecraft/vanilla-data";
 import { Molang } from "molang";
 import { deepMerge } from "../utils";
 
+/**
+ * Interface describing a molang environment.
+ */
 export interface MolangEnvironment {
   query?: Record<string, unknown>;
   variable?: Record<string, unknown>;
   context?: Record<string, unknown>;
 }
 
+/**
+ * Utility helpers for molang.
+ */
 export abstract class MolangUtils {
   /**
    * Executes molang synchronously using the context of the broader block.

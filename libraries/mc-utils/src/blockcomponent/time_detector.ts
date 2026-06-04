@@ -11,6 +11,9 @@ import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 import { vec2 } from "../validation";
 
+/**
+ * Options for configuring the time detector.
+ */
 export interface TimeDetectorOptions {
   inverted_state: keyof BlockStateSuperset;
   powered_state: keyof BlockStateSuperset;
@@ -18,6 +21,9 @@ export interface TimeDetectorOptions {
 }
 
 // TODO:
+/**
+ * Custom component that implements time detector behavior.
+ */
 export class TimeDetectorComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("time_detector");
   struct: Struct<any, any> = object({

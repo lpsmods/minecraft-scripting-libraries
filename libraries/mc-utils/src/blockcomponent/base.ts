@@ -16,6 +16,9 @@ import { BlockEvent } from "../event/block";
 import { EntityEnterBlockEvent, EntityInBlockTickEvent, EntityLeaveBlockEvent } from "../event";
 import { DirectionUtils } from "../utils/direction";
 
+/**
+ * Event payload for neighbor update callbacks.
+ */
 export class NeighborUpdateEvent extends BlockEvent {
   constructor(block: Block, sourceBlock: Block, direction?: Direction) {
     super(block);
@@ -34,6 +37,9 @@ export class NeighborUpdateEvent extends BlockEvent {
   readonly direction?: Direction;
 }
 
+/**
+ * Event payload for nearby entity block callbacks.
+ */
 export class NearbyEntityBlockEvent extends BlockEvent {
   constructor(block: Block, entity: Entity) {
     super(block);
@@ -46,8 +52,14 @@ export class NearbyEntityBlockEvent extends BlockEvent {
   readonly entity: Entity;
 }
 
+/**
+ * Event payload for scheduled block callbacks.
+ */
 export class ScheduledBlockEvent extends BlockEvent {}
 
+/**
+ * Interface describing a scheduled event.
+ */
 export interface ScheduledEvent {
   callback: (event: ScheduledBlockEvent, args: CustomComponentParameters) => void;
   timeLeft: number;

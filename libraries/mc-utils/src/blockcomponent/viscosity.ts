@@ -6,10 +6,16 @@ import { BlockBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 import { EntityEnterBlockEvent, EntityLeaveBlockEvent } from "../event";
 
+/**
+ * Options for configuring the viscosity.
+ */
 export interface ViscosityOptions {
   value: number;
 }
 
+/**
+ * Custom component that implements viscosity behavior.
+ */
 export class ViscosityComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("viscosity");
   struct: Struct<any, any> = object({

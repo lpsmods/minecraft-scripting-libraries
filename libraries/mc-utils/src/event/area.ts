@@ -3,6 +3,9 @@ import { EventSignal } from "@lpsmods/mc-common";
 
 import { AreaDetector } from "../area_detector";
 
+/**
+ * Event payload for area callbacks.
+ */
 export abstract class AreaEvent {
   readonly entity: Entity;
   readonly dimension: Dimension;
@@ -15,12 +18,30 @@ export abstract class AreaEvent {
   }
 }
 
+/**
+ * Event payload for area enter callbacks.
+ */
 export class AreaEnterEvent extends AreaEvent {}
+/**
+ * Event payload for area leave callbacks.
+ */
 export class AreaLeaveEvent extends AreaEvent {}
+/**
+ * Event payload for area tick callbacks.
+ */
 export class AreaTickEvent extends AreaEvent {}
 
+/**
+ * Event signal for subscribing to area enter events.
+ */
 export class AreaEnterEventSignal extends EventSignal<AreaEnterEvent> {}
+/**
+ * Event signal for subscribing to area leave events.
+ */
 export class AreaLeaveEventSignal extends EventSignal<AreaLeaveEvent> {}
+/**
+ * Event signal for subscribing to area tick events.
+ */
 export class AreaTickEventSignal extends EventSignal<AreaTickEvent> {}
 
 /**

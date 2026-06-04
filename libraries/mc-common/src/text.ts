@@ -299,6 +299,9 @@ export enum Emoji {
   Camera = ":camera:",
 }
 
+/**
+ * Options for configuring the render json.
+ */
 export interface RenderJsonOptions {
   indent?: number;
   defaultColor?: ChatColor | string;
@@ -307,6 +310,9 @@ export interface RenderJsonOptions {
   stringColor?: ChatColor | string;
 }
 
+/**
+ * Utility helpers for text.
+ */
 export class TextUtils {
   /**
    * Removes strings from text.

@@ -15,6 +15,9 @@ import {
 
 import { CustomTags } from "../registry";
 
+/**
+ * Utility helpers for item.
+ */
 export abstract class ItemUtils {
   /**
    * Replace slot with itemStack.

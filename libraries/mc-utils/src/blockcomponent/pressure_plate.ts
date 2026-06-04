@@ -16,6 +16,9 @@ import { AddonUtils } from "../utils/addon";
 import { entityFilter } from "../validation";
 import { BlockBaseComponent } from "./base";
 
+/**
+ * Options for configuring the pressure plate.
+ */
 export interface PressurePlateOptions {
   filter: EntityFilter;
   powered_state: keyof BlockStateSuperset;
@@ -25,6 +28,9 @@ export interface PressurePlateOptions {
 }
 
 // TODO: Extend BlockBase and use onEnter and onLeave instead.
+/**
+ * Custom component that implements pressure plate behavior.
+ */
 export class PressurePlateComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("pressure_plate");
   struct: Struct<any, any> = object({

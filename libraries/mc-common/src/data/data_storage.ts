@@ -4,11 +4,17 @@ import { DataUtils, DynamicObject } from "./utils";
 import { PropertyValue } from "../constants";
 import { DataStorageEvents, DeleteDataEvent, ReadDataEvent, WriteDataEvent } from "./event";
 
+/**
+ * Options for configuring the data storage.
+ */
 export interface DataStorageOptions {
   object?: DynamicObject;
   gzip?: boolean;
 }
 
+/**
+ * Provides data storage behavior.
+ */
 export class DataStorage {
   static instances = new Map<string, DataStorage>();
 
@@ -235,6 +241,9 @@ export class DataStorage {
   onWrite?(): void {}
 }
 
+/**
+ * Interface describing a versioned data.
+ */
 export interface VersionedDataSchema {
   minFormat: number;
   maxFormat: number;
@@ -243,6 +252,9 @@ export interface VersionedDataSchema {
 
 // TODO: Cache gzipped data storage.
 
+/**
+ * Provides versioned data storage behavior.
+ */
 export class VersionedDataStorage extends DataStorage {
   readonly formatVersion: number;
   schemas = new Map<string, VersionedDataSchema>();
@@ -288,12 +300,18 @@ export class VersionedDataStorage extends DataStorage {
   }
 }
 
+/**
+ * Provides local storage behavior.
+ */
 export class LocalStorage extends DataStorage {
   constructor() {
     super("mcutils:local_storage");
   }
 }
 
+/**
+ * Provides session storage behavior.
+ */
 export class SessionStorage extends DataStorage {
   constructor() {
     super("mcutils:session_storage");
@@ -304,7 +322,13 @@ export class SessionStorage extends DataStorage {
   }
 }
 
+/**
+ * Shared local storage value.
+ */
 export const localStorage = new LocalStorage();
+/**
+ * Shared session storage value.
+ */
 export const sessionStorage = new SessionStorage();
 
 // Events

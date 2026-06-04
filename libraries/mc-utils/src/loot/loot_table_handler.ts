@@ -2,6 +2,9 @@ import { Dimension, Entity, ItemStack, Vector3 } from "@minecraft/server";
 
 import { RandomUtils } from "../utils/random";
 
+/**
+ * Handler for loot table.
+ */
 export abstract class LootTableHandler {
   static all: Map<string, LootTableHandler> = new Map<string, LootTableHandler>();
   readonly id: string;

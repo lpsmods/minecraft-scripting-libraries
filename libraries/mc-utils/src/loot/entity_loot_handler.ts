@@ -5,6 +5,9 @@ import { LootTableHandler } from "./loot_table_handler";
 
 let initialized = false;
 
+/**
+ * Handler for entity loot.
+ */
 export class EntityLootHandler extends LootTableHandler {
   entityId: Identifier;
 
