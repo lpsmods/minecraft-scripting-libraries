@@ -43,7 +43,7 @@ export class AxeComponent extends ToolComponent implements ItemCustomComponent {
     this.onUseOn = this.onUseOn.bind(this);
   }
 
-  private static defaultInteractions(): { [key: string]: string } {
+  static defaultInteractions(): { [key: string]: string } {
     return {
       oak_log: "stripped_oak_log",
       spruce_log: "stripped_spruce_log",
@@ -147,7 +147,7 @@ export class AxeComponent extends ToolComponent implements ItemCustomComponent {
     block.setType(result.block);
   }
 
-  private interactBlock(event: ItemUseOnEvent, options: AxeOptions): void {
+  interactBlock(event: ItemUseOnEvent, options: AxeOptions): void {
     event.block.dimension.playSound("use.gravel", event.block.location, {
       volume: 1,
     });
