@@ -28,7 +28,9 @@ export class StairsComponent extends BlockBaseComponent implements BlockCustomCo
   });
 
   /**
-   * @deprecated Vanilla stairs block behavior.
+   * @deprecated Vanilla stairs block behavior. (use `minecraft:corner_and_cardinal_direction` block trait instead.)
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
@@ -40,19 +42,19 @@ export class StairsComponent extends BlockBaseComponent implements BlockCustomCo
     return block.hasTag("minecraft:stairs") || block.hasTag("stairs") || block.typeId.endsWith("stairs");
   }
 
-  private getFacing(block: Block, options: StairsOptions): string {
+  getFacing(block: Block, options: StairsOptions): string {
     const states = block.permutation.getAllStates();
     if ("weirdo_direction" in states) return DirectionUtils.fromWeirdo(states.weirdo_direction as number).toLowerCase();
-    return (states["minecraft:cardinal_direction"] as string).toLowerCase();
+    return (states["minecraft:cardinal_direction"] as string)?.toLowerCase() ?? "north";
   }
 
-  private getHalf(block: Block, options: StairsOptions): string {
+  getHalf(block: Block, options: StairsOptions): string {
     const states = block.permutation.getAllStates();
     if ("upside_down_bit" in states) return states.upside_down_bit ? "bottom" : "top";
-    return (states["minecraft:vertical_half"] as string).toLowerCase();
+    return (states["minecraft:vertical_half"] as string)?.toLowerCase() ?? "bottom";
   }
 
-  private isLeftTurn(a: string, b: string): boolean {
+  isLeftTurn(a: string, b: string): boolean {
     return (
       (a === "north" && b === "west") ||
       (a === "west" && b === "south") ||
@@ -61,7 +63,7 @@ export class StairsComponent extends BlockBaseComponent implements BlockCustomCo
     );
   }
 
-  private isRightTurn(a: string, b: string): boolean {
+  isRightTurn(a: string, b: string): boolean {
     return (
       (a === "north" && b === "east") ||
       (a === "east" && b === "south") ||
