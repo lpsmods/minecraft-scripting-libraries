@@ -1,6 +1,50 @@
 import { gzip as pakoGZip, Uint8ArrayReturnType } from "pako";
 
 export class EncodeUtils {
+  /**
+   * Compresses the provided string to gzip format.
+   * @param {string} text The text to compress.
+   * @returns {Uint8ArrayReturnType} The compressed gzip bytes.
+   */
+  static toGzip(text: string): Uint8ArrayReturnType {
+    const data = this.toUtf8(text);
+    return pakoGZip(data);
+  }
+
+  /**
+   * Converts raw bytes into a Base64-encoded string.
+   * @param {Uint8Array} bytes The binary data to encode.
+   * @returns {string} The Base64 representation of the input bytes.
+   */
+  static toBase64(bytes: Uint8Array): string {
+    let out = "";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+    let i = 0;
+    while (i < bytes.length) {
+      const b1 = bytes[i++] || 0;
+      const b2 = bytes[i++] || 0;
+      const b3 = bytes[i++] || 0;
+
+      const triplet = (b1 << 16) | (b2 << 8) | b3;
+
+      out += chars[(triplet >> 18) & 63];
+      out += chars[(triplet >> 12) & 63];
+      out += chars[(triplet >> 6) & 63];
+      out += chars[triplet & 63];
+    }
+
+    const padLength = (3 - (bytes.length % 3)) % 3;
+    if (padLength > 0) out = out.slice(0, -padLength) + "=".repeat(padLength);
+
+    return out;
+  }
+
+  /**
+   * Encodes a JavaScript string into UTF-8 bytes.
+   * @param {string} str The string to encode.
+   * @returns {Uint8Array} The UTF-8 encoded bytes.
+   */
   static toUtf8(str: string): Uint8Array {
     const out = [];
     let i = 0;
@@ -27,34 +71,5 @@ export class EncodeUtils {
       }
     }
     return new Uint8Array(out);
-  }
-
-  static toGzip(text: string): Uint8ArrayReturnType {
-    const data = this.toUtf8(text);
-    return pakoGZip(data);
-  }
-
-  static toBase64(bytes: Uint8Array): string {
-    let out = "";
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-    let i = 0;
-    while (i < bytes.length) {
-      const b1 = bytes[i++] || 0;
-      const b2 = bytes[i++] || 0;
-      const b3 = bytes[i++] || 0;
-
-      const triplet = (b1 << 16) | (b2 << 8) | b3;
-
-      out += chars[(triplet >> 18) & 63];
-      out += chars[(triplet >> 12) & 63];
-      out += chars[(triplet >> 6) & 63];
-      out += chars[triplet & 63];
-    }
-
-    const padLength = (3 - (bytes.length % 3)) % 3;
-    if (padLength > 0) out = out.slice(0, -padLength) + "=".repeat(padLength);
-
-    return out;
   }
 }
