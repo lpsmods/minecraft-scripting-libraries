@@ -3,6 +3,7 @@ import { Block, BlockType, BlockTypes, ItemUseAfterEvent, system, world } from "
 import { Registry } from "./registry";
 import { ItemUtils } from "../item";
 import { BlockUtils } from "../block";
+import { EntityUtils } from "../entity";
 
 let initialized = false;
 
@@ -68,6 +69,7 @@ function init(): void {
       if (options.onConvert) options.onConvert(source, event);
       source.dimension.playSound(options.soundEvent ?? "use.gravel", source.location);
       BlockUtils.setType(source, options.block);
+      ItemUtils.applyDamage(event.source, event.itemStack);
     });
   });
 }
