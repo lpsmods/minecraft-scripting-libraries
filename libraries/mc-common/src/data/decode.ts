@@ -1,6 +1,11 @@
 import { ungzip, Data } from "pako";
 
 export class DecodeUtils {
+  /**
+   * Decodes a Base64-encoded string into raw bytes.
+   * @param {string} b64 The Base64 text to decode.
+   * @returns {Uint8Array} The decoded binary data.
+   */
   static fromBase64(b64: string): Uint8Array {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     const lookup: { [k: string]: number } = {};
@@ -37,10 +42,21 @@ export class DecodeUtils {
     return new Uint8Array(bytes);
   }
 
+  /**
+   * Decompresses gzip data and converts the result to a string.
+   * @param {Data} bytes The gzip-compressed bytes.
+   * @returns {string} The decompressed UTF-8 string.
+   */
   static fromGzip(bytes: Data): string {
     const raw = ungzip(bytes);
     return this.fromUtf8(raw);
   }
+
+  /**
+   * Converts UTF-8 bytes into a JavaScript string.
+   * @param {Uint8Array} bytes The UTF-8 encoded bytes.
+   * @returns {string} The decoded string.
+   */
   static fromUtf8(bytes: Uint8Array): string {
     let out = "";
     let i = 0;
