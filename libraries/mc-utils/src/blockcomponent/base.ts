@@ -7,8 +7,8 @@ import {
   Entity,
   Vector3,
 } from "@minecraft/server";
-import { Hasher } from "@lpsmods/mc-common";
-import { VECTOR3_ZERO } from "@minecraft/math";
+import { DataStorageOptions, Hasher, DynamicStorage } from "@lpsmods/mc-common";
+import { Vector2Utils, VECTOR3_ZERO } from "@minecraft/math";
 import { Struct, object } from "superstruct";
 
 import { BlockUtils } from "../block/utils";
@@ -63,9 +63,100 @@ export abstract class BlockBaseComponent {
 
   static components: BlockBaseComponent[] = [];
   private scheduledEvents = new Set<ScheduledEvent>();
+  private storageCache = new Map<string, DynamicStorage>();
   struct: Struct<any, any> = object({});
 
   constructor() {}
+
+  // #region Dynamic Properties
+
+  /**
+   * Get the data storage used for the block.
+   * @param {Block} block
+   * @param {number} formatVersion
+   * @param {DataStorageOptions} options
+   * @returns {DynamicStorage}
+   */
+  getStorage(block: Block, formatVersion?: number, options?: DataStorageOptions): DynamicStorage {
+    const k = `${block.dimension.id},${Vector2Utils.toString(block.location)}`;
+    const cached = this.storageCache.get(k);
+    if (!cached) {
+      const store = BlockUtils.getStorage(block, formatVersion, options);
+      this.storageCache.set(k, store);
+      return store;
+    }
+    return cached;
+  }
+
+  /**
+   * @remarks
+   * Clears all dynamic properties that have been set on this
+   * block.
+   *
+   * @throws This function can throw errors.
+   */
+  clearDynamicProperties(block: Block): void {
+    BlockUtils.clearDynamicProperties(block);
+  }
+
+  /**
+   * @remarks
+   * Returns a property value.
+   *
+   * @param identifier
+   * The property identifier.
+   * @returns
+   * Returns the value for the property, or undefined if the
+   * property has not been set.
+   * @throws This function can throw errors.
+   */
+  getDynamicProperty(block: Block, identifier: string): boolean | number | string | Vector3 | undefined {
+    return BlockUtils.getDynamicProperty(block, identifier);
+  }
+
+  /**
+   * @remarks
+   * Returns the available set of dynamic property identifiers
+   * that have been used on this block.
+   *
+   * @returns
+   * A string array of the dynamic properties set on this block.
+   * @throws This function can throw errors.
+   */
+  getDynamicPropertyIds(block: Block): string[] {
+    return BlockUtils.getDynamicPropertyIds(block);
+  }
+
+  /**
+   * @remarks
+   * Returns the total size, in bytes, of all the dynamic
+   * properties that are currently stored for this block. This
+   * includes the size of both the key and the value.  This can
+   * be useful for diagnosing performance warning signs - if, for
+   * example, a block has many megabytes of associated dynamic
+   * properties, it may be slow to load on various devices.
+   *
+   * @throws This function can throw errors.
+   */
+  getDynamicPropertyTotalByteCount(block: Block): number {
+    return BlockUtils.getDynamicPropertyTotalByteCount(block);
+  }
+
+  /**
+   * @remarks
+   * Sets a specified property to a value.
+   *
+   * @param identifier
+   * The property identifier.
+   * @param value
+   * Data value of the property to set.
+   * @throws This function can throw errors.
+   */
+  setDynamicProperty(block: Block, identifier: string, value?: boolean | number | string | Vector3): void {
+    BlockUtils.setDynamicProperty(block, identifier, value);
+  }
+
+  // #endregion
 
   destroy = BlockUtils.destroy;
 
@@ -76,6 +167,7 @@ export abstract class BlockBaseComponent {
   }
 
   basePlace(event: BlockComponentOnPlaceEvent, args: CustomComponentParameters): void {
+    if (event.block.isAir) return;
     for (const direction in Direction) {
       const sourceBlock = event.block.offset(DirectionUtils.toOffset(direction));
       if (!sourceBlock) continue;
@@ -175,33 +267,33 @@ export abstract class BlockBaseComponent {
   // CUSTOM EVENTS
 
   /**
-   * This function will be called when an entity is nearby.
+   * This function will be called when an entity is nearby. (Requires {@link baseTick} or {@link enterLeaveTick})
    * @param {NearbyEntityBlockEvent} event
    */
   onNearbyEntityTick(event: NearbyEntityBlockEvent, args: CustomComponentParameters): void {}
 
   /**
-   * @deprecated This function will be called when a block has been placed/updated next to this block. (Requires neighborTick)
+   * @deprecated This function will be called when a block has been placed/updated next to this block. (Requires {@link baseTick} or {@link neighborTick})
    * @param {NeighborUpdateEvent} event
    */
   onNeighborUpdate?(event: NeighborUpdateEvent, args: CustomComponentParameters): void;
 
   /**
-   * This function will be called when an entity has entered the block. (Requires enterLeaveTick)
+   * This function will be called when an entity has entered the block. (Requires {@link baseTick} or {@link enterLeaveTick})
    * @param {EntityEnterBlockEvent} event
    * @param {CustomComponentParameters} args
    */
   onEnter?(event: EntityEnterBlockEvent, args: CustomComponentParameters): void;
 
   /**
-   * This function will be called when an entity has left the block. (Requires enterLeaveTick)
+   * This function will be called when an entity has left the block. (Requires {@link baseTick} or {@link enterLeaveTick})
    * @param {EntityLeaveBlockEvent} event
    * @param {CustomComponentParameters} args
    */
   onLeave?(event: EntityLeaveBlockEvent, args: CustomComponentParameters): void;
 
   /**
-   * This function will be called when an entity is in the block. (Requires enterLeaveTick)
+   * This function will be called when an entity is in the block. (Requires {@link baseTick} or {@link enterLeaveTick})
    * @param {EntityInBlockTickEvent} event
    * @param {CustomComponentParameters} args
    */
