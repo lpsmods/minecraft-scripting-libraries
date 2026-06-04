@@ -132,6 +132,8 @@ export abstract class DataUtils {
         return world.getDimension(value.dimension).getBlock({ x: value.x, y: value.y, z: value.z });
       case "entity":
         return world.getEntity(value);
+      case "player":
+        return world.getEntity(value.id);
       case "bigint":
         return BigInt(value);
       case "undefined":
@@ -195,6 +197,8 @@ export abstract class DataUtils {
         return { type: "enchantment_type", value: value.id };
       case TypingTypes.Dimension:
         return { type: "dimension", value: value.id };
+      case TypingTypes.Player:
+        return { type: "player", value: value.id };
       case TypingTypes.Block:
         return {
           type: "block",
