@@ -1,6 +1,6 @@
 import { Dimension, Entity, world } from "@minecraft/server";
+import { EventSignal } from "@lpsmods/mc-common";
 
-import { EventSignal } from "./utils";
 import { AreaDetector } from "../area_detector";
 
 export abstract class AreaEvent {
