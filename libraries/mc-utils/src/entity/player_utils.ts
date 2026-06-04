@@ -41,7 +41,7 @@ export class PlayerUtils {
    * Get all loaded chunks by the player.
    * @param {player} player
    * @param {number} simulationDistance
-   * @returns
+   * @returns {Chunk[]}
    */
   static getLoadedChunks(player: Player, simulationDistance: number = 4): Chunk[] {
     const px = Math.floor(player.location.x);
@@ -113,7 +113,6 @@ export class PlayerUtils {
    * @param {PLayer} player
    * @param {ArmorSet} armorSet
    * @param condition
-   * @returns
    */
   static applyArmor(player: Player, armorSet: ArmorSet, condition?: (event: ArmorSetEvent) => boolean): void {
     const equ = player.getComponent("equippable");
