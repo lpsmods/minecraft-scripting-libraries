@@ -37,6 +37,8 @@ export class PressurePlateComponent extends BlockBaseComponent implements BlockC
 
   /**
    * Vanilla pressure plate block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
