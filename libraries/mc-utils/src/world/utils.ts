@@ -15,14 +15,6 @@ export abstract class WorldUtils {
   static MAX_DISTANCE = 8388608; // When player starts to phase through blocks.
 
   /**
-   * The world seed. (Returns 0)
-   * @returns {number}
-   */
-  static getSeed(): number {
-    return 0;
-  }
-
-  /**
    * Get score from objective. Otherwise return undefined.
    * @param {ScoreboardObjective} objective
    * @param {ScoreboardIdentity} name
