@@ -12,27 +12,23 @@ describe("Direction Utils", () => {
     const east = { x: 0, y: -90 };
     const down = { x: 90, y: 0 };
     const up = { x: -90, y: 0 };
-    expect(DirectionUtils.rot2dir(north)).toBe(Direction.North);
-    expect(DirectionUtils.rot2dir(south)).toBe(Direction.South);
-    expect(DirectionUtils.rot2dir(east)).toBe(Direction.East);
-    expect(DirectionUtils.rot2dir(west)).toBe(Direction.West);
-    expect(DirectionUtils.rot2dir(up)).toBe(Direction.Up);
-    expect(DirectionUtils.rot2dir(down)).toBe(Direction.Down);
+    expect(DirectionUtils.fromRotation(north)).toBe(Direction.North);
+    expect(DirectionUtils.fromRotation(south)).toBe(Direction.South);
+    expect(DirectionUtils.fromRotation(east)).toBe(Direction.East);
+    expect(DirectionUtils.fromRotation(west)).toBe(Direction.West);
+    expect(DirectionUtils.fromRotation(up)).toBe(Direction.Up);
+    expect(DirectionUtils.fromRotation(down)).toBe(Direction.Down);
   });
 
-  it("Converts a direction to rotation", () => {
-    const north = Direction.North;
-    const south = Direction.South;
-    const west = Direction.East;
-    const east = Direction.West;
-    const down = Direction.Up;
-    const up = Direction.Down;
-    expect(DirectionUtils.toRotation(north)).toEqual({ x: 0, y: 180 });
-    expect(DirectionUtils.toRotation(south)).toEqual({ x: 0, y: 0 });
-    expect(DirectionUtils.toRotation(east)).toEqual({ x: 0, y: 90 });
-    expect(DirectionUtils.toRotation(west)).toEqual({ x: 0, y: -90 });
-    expect(DirectionUtils.toRotation(up)).toEqual({ x: 90, y: 0 });
-    expect(DirectionUtils.toRotation(down)).toEqual({ x: -90, y: 0 });
+  it("Converts horizontal rotation to a direction", () => {
+    const north = { x: 0, y: 180 };
+    const south = { x: 0, y: 0 };
+    const west = { x: 0, y: 90 };
+    const east = { x: 0, y: -90 };
+    expect(DirectionUtils.fromHorizontalRotation(north)).toBe(Direction.North);
+    expect(DirectionUtils.fromHorizontalRotation(south)).toBe(Direction.South);
+    expect(DirectionUtils.fromHorizontalRotation(east)).toBe(Direction.East);
+    expect(DirectionUtils.fromHorizontalRotation(west)).toBe(Direction.West);
   });
 
   it("Converts a number to a direction", () => {
@@ -61,6 +57,48 @@ describe("Direction Utils", () => {
     expect(DirectionUtils.fromWeirdo(north)).toBe(Direction.North);
   });
 
+  it("Returns direction rotated counter clockwise", () => {
+    const north = Direction.North;
+    const south = Direction.South;
+    const west = Direction.West;
+    const east = Direction.East;
+    const down = Direction.Up;
+    const up = Direction.Down;
+    expect(DirectionUtils.rotateYLeft(north)).toBe(Direction.West);
+    expect(DirectionUtils.rotateYLeft(east)).toBe(Direction.North);
+    expect(DirectionUtils.rotateYLeft(south)).toBe(Direction.East);
+    expect(DirectionUtils.rotateYLeft(west)).toBe(Direction.South);
+    expect(DirectionUtils.rotateYLeft(up)).toBe(Direction.South);
+    expect(DirectionUtils.rotateYLeft(down)).toBe(Direction.South);
+  });
+
+  it("Returns direction rotated clockwise", () => {
+    const north = Direction.North;
+    const south = Direction.South;
+    const west = Direction.West;
+    const east = Direction.East;
+    const down = Direction.Up;
+    const up = Direction.Down;
+    expect(DirectionUtils.rotateYRight(north)).toBe(Direction.East);
+    expect(DirectionUtils.rotateYRight(east)).toBe(Direction.South);
+    expect(DirectionUtils.rotateYRight(south)).toBe(Direction.West);
+    expect(DirectionUtils.rotateYRight(west)).toBe(Direction.North);
+    expect(DirectionUtils.rotateYRight(up)).toBe(Direction.North);
+    expect(DirectionUtils.rotateYRight(down)).toBe(Direction.North);
+  });
+
+  it("Returns the facing direction from two points.", () => {
+    const origin = { x: 0, y: 0, z: 0 };
+    const target = { x: 0, y: 0, z: 1 };
+    expect(DirectionUtils.directionTo(origin, target)).toBe(Direction.North);
+  });
+
+  it("Returns the horizontal facing direction from two points.", () => {
+    const origin = { x: 0, y: 0, z: 0 };
+    const target = { x: 0, y: 0, z: 1 };
+    expect(DirectionUtils.horizontalDirectionTo(origin, target)).toBe(Direction.North);
+  });
+
   it("Returns the opposite direction", () => {
     const north = Direction.North;
     const south = Direction.South;
@@ -68,12 +106,12 @@ describe("Direction Utils", () => {
     const west = Direction.West;
     const up = Direction.Up;
     const down = Direction.Down;
-    expect(DirectionUtils.getOpposite(north)).toBe(Direction.South);
-    expect(DirectionUtils.getOpposite(south)).toBe(Direction.North);
-    expect(DirectionUtils.getOpposite(east)).toBe(Direction.West);
-    expect(DirectionUtils.getOpposite(west)).toBe(Direction.East);
-    expect(DirectionUtils.getOpposite(up)).toBe(Direction.Down);
-    expect(DirectionUtils.getOpposite(down)).toBe(Direction.Up);
+    expect(DirectionUtils.opposite(north)).toBe(Direction.South);
+    expect(DirectionUtils.opposite(south)).toBe(Direction.North);
+    expect(DirectionUtils.opposite(east)).toBe(Direction.West);
+    expect(DirectionUtils.opposite(west)).toBe(Direction.East);
+    expect(DirectionUtils.opposite(up)).toBe(Direction.Down);
+    expect(DirectionUtils.opposite(down)).toBe(Direction.Up);
   });
 
   it("Converts a direction to an axis", () => {
@@ -98,12 +136,27 @@ describe("Direction Utils", () => {
     const west = Direction.West;
     const up = Direction.Up;
     const down = Direction.Down;
-    expect(DirectionUtils.toOffset(north)).toEqual(VECTOR3_NORTH);
-    expect(DirectionUtils.toOffset(south)).toEqual(VECTOR3_SOUTH);
+    expect(DirectionUtils.toOffset(north)).toEqual(VECTOR3_SOUTH);
+    expect(DirectionUtils.toOffset(south)).toEqual(VECTOR3_NORTH);
     expect(DirectionUtils.toOffset(east)).toEqual(VECTOR3_EAST);
     expect(DirectionUtils.toOffset(west)).toEqual(VECTOR3_WEST);
     expect(DirectionUtils.toOffset(up)).toEqual(VECTOR3_UP);
     expect(DirectionUtils.toOffset(down)).toEqual(VECTOR3_DOWN);
+  });
+
+  it("Converts a direction to rotation", () => {
+    const north = Direction.North;
+    const south = Direction.South;
+    const west = Direction.East;
+    const east = Direction.West;
+    const down = Direction.Up;
+    const up = Direction.Down;
+    expect(DirectionUtils.toRotation(north)).toEqual({ x: 0, y: 180 });
+    expect(DirectionUtils.toRotation(south)).toEqual({ x: 0, y: 0 });
+    expect(DirectionUtils.toRotation(east)).toEqual({ x: 0, y: 90 });
+    expect(DirectionUtils.toRotation(west)).toEqual({ x: 0, y: -90 });
+    expect(DirectionUtils.toRotation(up)).toEqual({ x: 90, y: 0 });
+    expect(DirectionUtils.toRotation(down)).toEqual({ x: -90, y: 0 });
   });
 
   it("Returns the offset from a direction", () => {
@@ -134,24 +187,31 @@ describe("Direction Utils", () => {
     });
   });
 
-  it("Returns the facing direction from two points.", () => {
-    const origin = { x: 0, y: 0, z: 0 };
-    const target = { x: 0, y: 0, z: 1 };
-    expect(DirectionUtils.relDir(origin, target)).toBe(Direction.North);
-  });
-
-  it("Returns direction rotated clockwise", () => {
-    const north = Direction.North;
-    const south = Direction.South;
-    const west = Direction.West;
-    const east = Direction.East;
-    const down = Direction.Up;
-    const up = Direction.Down;
-    expect(DirectionUtils.rotateY(north)).toBe(Direction.East);
-    expect(DirectionUtils.rotateY(east)).toBe(Direction.South);
-    expect(DirectionUtils.rotateY(south)).toBe(Direction.West);
-    expect(DirectionUtils.rotateY(west)).toBe(Direction.North);
-    expect(DirectionUtils.rotateY(up)).toBe(Direction.North);
-    expect(DirectionUtils.rotateY(down)).toBe(Direction.North);
+  it("Returns the offset from rotation", () => {
+    const forward = { x: 0, y: 0, z: 1 };
+    const north = VECTOR3_SOUTH;
+    const south = VECTOR3_NORTH;
+    const east = VECTOR3_EAST;
+    const west = VECTOR3_WEST;
+    expect(DirectionUtils.offsetFromRotation(forward, north)).toEqual({
+      x: -0,
+      y: 0,
+      z: 1,
+    });
+    expect(DirectionUtils.offsetFromRotation(forward, south)).toEqual({
+      x: -0,
+      y: 0,
+      z: 1,
+    });
+    expect(DirectionUtils.offsetFromRotation(forward, east)).toEqual({
+      x: -0,
+      y: -0.01745240643728351,
+      z: 0.9998476951563913,
+    });
+    expect(DirectionUtils.offsetFromRotation(forward, west)).toEqual({
+      x: 0,
+      y: 0.01745240643728351,
+      z: 0.9998476951563913,
+    });
   });
 });
