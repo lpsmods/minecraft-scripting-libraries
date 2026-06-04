@@ -26,6 +26,8 @@ export class FenceGateComponent extends ToggleableComponent implements BlockCust
 
   /**
    * Fence gate block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
