@@ -1,6 +1,5 @@
 import { ItemStack, Block, ScoreboardObjective, Vector3, Player, Entity } from "@minecraft/server";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
-
 import { TextUtils, DataStorage } from "@lpsmods/mc-common";
 import {
   PlayerUtils,
@@ -10,6 +9,9 @@ import {
   WorldUtils,
   BlockUtils,
   MolangUtils,
+  EntityUtils,
+  Chunk,
+  ChunkUtils,
 } from "@lpsmods/mc-utils";
 
 declare module "@minecraft/server" {
@@ -23,6 +25,8 @@ declare module "@minecraft/server" {
   }
 
   interface Block {
+    chunk: Chunk;
+
     executeMolang(expression: string): unknown;
 
     /**
@@ -94,6 +98,9 @@ declare module "@minecraft/server" {
   }
 
   interface Entity {
+    isMoving: boolean;
+    chunk: Chunk;
+
     executeMolang(expression: string): unknown;
   }
 }
@@ -168,11 +175,35 @@ Block.prototype.decrementState = function (stateName, amount) {
   return BlockUtils.decrementState(this, stateName, amount);
 };
 
+Object.defineProperty(Block.prototype, "chunk", {
+  get() {
+    return ChunkUtils.fromBlock(this);
+  },
+  configurable: true,
+  enumerable: false,
+});
+
 // ENTITY
 
 Entity.prototype.executeMolang = function (expression) {
   return MolangUtils.entity(this, expression);
 };
+
+Object.defineProperty(Entity.prototype, "isMoving", {
+  get() {
+    return EntityUtils.isMoving(this);
+  },
+  configurable: true,
+  enumerable: false,
+});
+
+Object.defineProperty(Entity.prototype, "chunk", {
+  get() {
+    return ChunkUtils.fromEntity(this);
+  },
+  configurable: true,
+  enumerable: false,
+});
 
 // MISC
 
