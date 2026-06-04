@@ -1,7 +1,6 @@
 import { Dimension, Player, system, world } from "@minecraft/server";
-import { Hasher } from "@lpsmods/mc-common";
+import { EventSignal } from "@lpsmods/mc-common";
 
-import { EventSignal } from "./utils";
 import { Chunk } from "../chunk/base";
 import { PlayerUtils } from "../entity/player_utils";
 import { differenceArray, removeItems } from "../utils";
@@ -92,7 +91,12 @@ export class ChunkEvents {
 var SIMULATION_DISTANCE = 4;
 var loadedChunks: Set<string> = new Set();
 
+function isChunkLoadTimeout(err: unknown): boolean {
+  return typeof err === "string" && /^Chunk -?\d+ -?\d+ timed out!$/.test(err);
+}
+
 function tick() {
+  if (!ChunkEvents.loadedTick.size) return;
   for (const hash of loadedChunks) {
     const chunk = ChunkUtils.fromString(hash);
     if (!chunk) continue;
@@ -101,7 +105,7 @@ function tick() {
 }
 
 function movedChunk(player: Player): void {
-  if (ChunkEvents.size === 0) return;
+  if (!ChunkEvents.playerLoad.size && !ChunkEvents.playerUnload.size) return;
   const cache = [];
   const chunks = PlayerUtils.getLoadedChunks(player, SIMULATION_DISTANCE);
   for (const chunk of chunks) {
@@ -111,13 +115,20 @@ function movedChunk(player: Player): void {
     if (loadedChunks.has(key)) continue;
     loadedChunks.add(key);
     const gen = chunk.getDynamicProperty("mcutils:has_generated") ?? false;
-    chunk.ensureLoaded().then((loaded) => {
-      if (!loaded) return;
-      if (!gen) {
-        chunk.setDynamicProperty("mcutils:has_generated", true);
-      }
-      ChunkEvents.playerLoad.apply(new PlayerChunkLoadEvent(chunk, player, !gen));
-    });
+    chunk
+      .ensureLoaded()
+      .then((loaded) => {
+        if (!loadedChunks.has(key) || player.dimension.id !== chunk.dimension.id) return;
+        if (!loaded) return;
+        if (!gen) {
+          chunk.setDynamicProperty("mcutils:has_generated", true);
+        }
+        ChunkEvents.playerLoad.apply(new PlayerChunkLoadEvent(chunk, player, !gen));
+      })
+      .catch((err) => {
+        if (isChunkLoadTimeout(err) && (!loadedChunks.has(key) || player.dimension.id !== chunk.dimension.id)) return;
+        console.warn(`ChunkEvents error: ${String(err)}`);
+      });
   }
 
   const diff = differenceArray(cache, [...loadedChunks]);
