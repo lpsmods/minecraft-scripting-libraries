@@ -4,6 +4,13 @@ import { Chunk } from "./base";
 
 export class ChunkUtils {
   /**
+   * Whether to gzip chunk data before saving it to dynamic properties.
+   *
+   * This can reduce the size of the data by a lot, but it also increases the time it takes to save and load chunks.
+   */
+  static gzip: boolean = false;
+
+  /**
    * Converts a block pos to a chunk pos.
    * @param {Vector3} location
    * @returns {VectorXZ}
@@ -21,7 +28,7 @@ export class ChunkUtils {
    * @param {Vector3} location
    * @returns {Chunk}
    */
-  static pos2Chunk(dimension: Dimension, location: Vector3): Chunk {
+  static fromPos(dimension: Dimension, location: Vector3): Chunk {
     const pos = this.pos(location);
     return new Chunk(dimension, pos);
   }
@@ -31,8 +38,8 @@ export class ChunkUtils {
    * @param {Block} block
    * @returns {Chunk}
    */
-  static block2Pos(block: Block): Chunk {
-    return this.pos2Chunk(block.dimension, block.location);
+  static fromBlock(block: Block): Chunk {
+    return this.fromPos(block.dimension, block.location);
   }
 
   /**
@@ -40,8 +47,8 @@ export class ChunkUtils {
    * @param {Entity} entity
    * @returns {Chunk}
    */
-  static entity2Pos(entity: Entity): Chunk {
-    return this.pos2Chunk(entity.dimension, entity.location);
+  static fromEntity(entity: Entity): Chunk {
+    return this.fromPos(entity.dimension, entity.location);
   }
 
   /**
@@ -49,19 +56,33 @@ export class ChunkUtils {
    * @returns {string}
    */
   static toString(chunk: Chunk): string {
-    return `${chunk.dimension.id}_${chunk.x},${chunk.z}`;
+    return `${chunk.dimension.id},${chunk.x},${chunk.z}`;
   }
 
   /**
    * Gets a CHunk from the string representation produced by ChunkUtils.toString.
    */
   static fromString(str: string): Chunk {
-    const parts = str.split("_");
-    const pos = parts[parts.length].split(",");
-    const dim = world.getDimension(parts.slice(0, -1).join("_"));
-    return new Chunk(dim, {
-      x: Number.parseInt(pos[0]),
-      z: Number.parseInt(pos[1]),
-    });
+    const points = str.split(",");
+    let dim = points[0];
+    const x = +points[1];
+    const z = +points[2];
+    return new Chunk(world.getDimension(dim), { x, z });
   }
+
+  // TODO: Remove these in next release.
+  /**
+   * @deprecated Use fromEntity instead.
+   */
+  static entity2Pos = this.fromEntity;
+
+  /**
+   * @deprecated Use fromPos instead.
+   */
+  static pos2Chunk = this.fromPos;
+
+  /**
+   * @deprecated Use fromBlock instead.
+   */
+  static block2Pos = this.fromBlock;
 }
