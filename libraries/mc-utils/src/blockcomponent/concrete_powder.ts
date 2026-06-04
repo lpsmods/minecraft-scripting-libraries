@@ -10,7 +10,6 @@ export interface ConcretePowderOptions {
   block?: string;
 }
 
-// TODO: Add gravity
 export class ConcretePowderComponent extends BlockBaseComponent implements BlockCustomComponent {
   static readonly componentId = AddonUtils.makeId("concrete_powder");
   struct: Struct<any, any> = object({
@@ -19,6 +18,8 @@ export class ConcretePowderComponent extends BlockBaseComponent implements Block
 
   /**
    * Vanilla concrete powder block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
