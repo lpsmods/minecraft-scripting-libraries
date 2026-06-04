@@ -1,4 +1,4 @@
-import { BlockType, ItemType } from "@minecraft/server";
+import { BlockType, BlockTypes, ItemType, world } from "@minecraft/server";
 import { Id, Identifier, COLORS } from "@lpsmods/mc-common";
 
 import { Registry } from "./registry";
@@ -155,3 +155,72 @@ CustomTags.blocks.register("copper_chests", [
   "waxed_oxidized_copper_chest",
 ]);
 CustomTags.blocks.register("anvil", ["anvil", "chipped_anvil", "damaged_anvil"]);
+CustomTags.blocks.register("replaceable", [
+  "air",
+  "water",
+  "lava",
+  "short_grass",
+  "fern",
+  "deadbush",
+  "bush",
+  "short_dry_grass",
+  "tall_dry_grass",
+  "seagrass",
+  "fire",
+  "soul_fire",
+  "snow_layer",
+  "vine",
+  "glow_lichen",
+  "resin_clump",
+  "light_block_0",
+  "light_block_1",
+  "light_block_2",
+  "light_block_3",
+  "light_block_4",
+  "light_block_5",
+  "light_block_6",
+  "light_block_7",
+  "light_block_8",
+  "light_block_9",
+  "light_block_10",
+  "light_block_11",
+  "light_block_12",
+  "light_block_13",
+  "light_block_14",
+  "light_block_15",
+  "tall_grass",
+  "large_fern",
+  "structure_void",
+  "bubble_column",
+  "warped_roots",
+  "nether_sprouts",
+  "crimson_roots",
+  "leaf_litter",
+  "hanging_roots",
+]);
+
+CustomTags.blocks.register("unsupported", [
+  "#stairs",
+  "#walls",
+  "#fences",
+  "#fence_gates",
+  "#doors",
+  "#bars",
+  "#glass_panes",
+  "#slabs",
+  "#trapdoors",
+]);
+
+// Dynamic
+// world.afterEvents.worldLoad.subscribe(() => {
+//   const blocks = BlockTypes.getAll();
+//   CustomTags.blocks.register("stairs", blocks.filter(bt => bt.id.endsWith("_stairs")));
+//   CustomTags.blocks.register("walls", blocks.filter(bt => bt.id.endsWith("_wall")));
+//   CustomTags.blocks.register("fences", blocks.filter(bt => bt.id.endsWith("_fence")));
+//   CustomTags.blocks.register("fence_gates", blocks.filter(bt => bt.id.endsWith("_fence_gate")));
+//   CustomTags.blocks.register("doors", blocks.filter(bt => bt.id.endsWith("_door") && !bt.id.endsWith("_trapdoor")));
+//   CustomTags.blocks.register("bars", blocks.filter(bt => bt.id.endsWith("_bars")));
+//   CustomTags.blocks.register("glass", blocks.filter(bt => bt.id.endsWith("_glass")));
+//   CustomTags.blocks.register("glass_panes", blocks.filter(bt => bt.id.endsWith("_glass_pane")));
+//   CustomTags.blocks.register("slabs", blocks.filter(bt => bt.id.endsWith("_slab")));
+// });
