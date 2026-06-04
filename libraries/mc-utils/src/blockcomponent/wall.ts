@@ -32,6 +32,8 @@ export class WallComponent extends BlockBaseComponent implements BlockCustomComp
 
   /**
    * Vanilla wall block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
