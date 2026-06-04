@@ -1,8 +1,7 @@
 // TODO: Implement
 
 import { Block, Dimension } from "@minecraft/server";
-
-import { EventSignal } from "./utils";
+import { EventSignal } from "@lpsmods/mc-common";
 
 let initialized = false;
 
