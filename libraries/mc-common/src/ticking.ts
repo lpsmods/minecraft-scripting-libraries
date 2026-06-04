@@ -2,6 +2,10 @@ import { system } from "@minecraft/server";
 
 export abstract class Ticking {
   static all: Map<number, Ticking> = new Map<number, Ticking>();
+
+  /**
+   * When false it will pause this object from ticking.
+   */
   enabled: boolean = false;
   readonly runId: number;
 
