@@ -23,6 +23,8 @@ export class CoralComponent implements BlockCustomComponent {
 
   /**
    * Vanilla coral block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     this.onTick = this.onTick.bind(this);
