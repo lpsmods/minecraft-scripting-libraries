@@ -3,6 +3,7 @@ import { Block, BlockType, BlockTypes, ItemUseAfterEvent, system, world } from "
 import { Registry } from "./registry";
 import { ItemUtils } from "../item";
 import { BlockUtils } from "../block";
+import { EntityUtils } from "../entity";
 
 let initialized = false;
 
@@ -60,6 +61,7 @@ function init(): void {
   initialized = true;
 
   // TODO: Invert
+  // Scrape oxidization
   world.beforeEvents.itemUse.subscribe((event) => {
     if (!event.itemStack || !ItemUtils.matches(event.itemStack, "#is_axe")) return;
     const source = event.source.getBlockFromViewDirection({
