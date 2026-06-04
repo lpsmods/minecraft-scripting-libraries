@@ -1,5 +1,5 @@
 import { Player } from "@minecraft/server";
-import { Packet, PacketData } from "./packet";
+import { Packet } from "./packet";
 import { uuid } from "./utils";
 
 export class Connection {
@@ -20,20 +20,21 @@ export class Connection {
   async connect(version?: string): Promise<Connection> {
     return new Promise((resolve, reject) => {
       const id = `bridge:${uuid()}`;
-      const data = new PacketData();
-      data.set("method", "connect");
-      data.set("addon", this.addonId);
-      data.set("version", version);
+      const data = {
+        method: "connect",
+        addon: this.addonId,
+        version,
+      };
       Packet.sendSync(id, data)
         // Got response
         .then((packet) => {
-          if (packet.get("body.error")) return reject(this);
+          if (packet.body.error) return reject(new Error(packet.body.message ?? "Connection failed"));
           this.isConnected = true;
           resolve(this);
         })
         // Timed out
-        .catch((res) => {
-          reject(this);
+        .catch((err) => {
+          console.error(`Connection timeout: ${String(err)}`);
         });
     });
   }
@@ -41,19 +42,22 @@ export class Connection {
   async docs(player: Player): Promise<void> {
     return new Promise((resolve, reject) => {
       const id = `bridge:${uuid()}`;
-      const data = new PacketData();
-      data.set("method", "docs");
-      data.set("addon", this.addonId);
-      data.setEntity("player", player);
+      const data = {
+        method: "docs",
+        addon: this.addonId,
+        player,
+      };
       Packet.sendSync(id, data)
         .then((res) => {
-          if (res.get("body.error")) {
-            reject(res.get("body.message"));
+          if (res.body.error) {
+            reject(res.body.message);
             return;
           }
           resolve();
         })
-        .catch(reject);
+        .catch((err) => {
+          console.warn(`Failed to open docs: ${String(err)}`);
+        });
     });
   }
 
@@ -65,10 +69,11 @@ export class Connection {
   async get(property: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const id = `bridge:${uuid()}`;
-      const data = new PacketData();
-      data.set("method", "get");
-      data.set("addon", this.addonId);
-      data.set("property", property);
+      const data = {
+        method: "get",
+        addon: this.addonId,
+        property,
+      };
       Packet.sendSync(id, data)
         .then((packet) => {
           if (packet.get("body.error")) {
@@ -79,7 +84,9 @@ export class Connection {
 
           resolve(packet.get("body.value"));
         })
-        .catch(reject);
+        .catch((err) => {
+          console.warn(`Connection timeout: ${String(err)}`);
+        });
     });
   }
 
@@ -92,20 +99,23 @@ export class Connection {
   async set(property: string, value: any): Promise<void> {
     return new Promise((resolve, reject) => {
       const id = `bridge:${uuid()}`;
-      const data = new PacketData();
-      data.set("method", "set");
-      data.set("addon", this.addonId);
-      data.set("property", property);
-      data.set("value", value);
+      const data = {
+        method: "set",
+        addon: this.addonId,
+        property,
+        value,
+      };
       Packet.sendSync(id, data)
         .then((res) => {
-          if (res.get("body.error")) {
-            reject(res.get("body.message"));
+          if (res.body.error) {
+            reject(res.body.message);
             return;
           }
           resolve();
         })
-        .catch(reject);
+        .catch((err) => {
+          console.warn(`Connection timeout: ${String(err)}`);
+        });
     });
   }
 
@@ -117,15 +127,22 @@ export class Connection {
   async has(property: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const id = `bridge:${uuid()}`;
-      const data = new PacketData();
-      data.set("method", "has");
-      data.set("addon", this.addonId);
-      data.set("property", property);
+      const data = {
+        method: "has",
+        addon: this.addonId,
+        property,
+      };
       Packet.sendSync(id, data)
         .then((res) => {
-          resolve(res.get("body.value"));
+          if (res.body.error) {
+            reject(res.body.message);
+            return;
+          }
+          resolve(res.body.value);
         })
-        .catch(reject);
+        .catch((err) => {
+          console.warn(`Connection timeout: ${String(err)}`);
+        });
     });
   }
 
@@ -138,20 +155,23 @@ export class Connection {
   async call(property: string, ...args: any): Promise<any> {
     return new Promise((resolve, reject) => {
       const id = `bridge:${uuid()}`;
-      const data = new PacketData();
-      data.set("method", "call");
-      data.set("addon", this.addonId);
-      data.set("property", property);
-      data.set("args", args);
+      const data = {
+        method: "call",
+        addon: this.addonId,
+        property,
+        args,
+      };
       Packet.sendSync(id, data)
         .then((res) => {
-          if (res.get("body.error")) {
-            reject(res.get("body.message"));
+          if (res.body.error) {
+            reject(res.body.message);
             return;
           }
-          resolve(res.get("body.value"));
+          resolve(res.body.value);
         })
-        .then(reject);
+        .catch((err) => {
+          console.warn(`Connection timeout: ${String(err)}`);
+        });
     });
   }
 }
