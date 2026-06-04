@@ -28,6 +28,8 @@ export class TimeDetectorComponent implements BlockCustomComponent {
 
   /**
    * Vanilla time detector block behavior. (like; daylight detector)
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     this.onPlayerInteract = this.onPlayerInteract.bind(this);
