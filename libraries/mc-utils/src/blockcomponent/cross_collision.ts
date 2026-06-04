@@ -30,6 +30,8 @@ export class CrossCollisionComponent extends BlockBaseComponent implements Block
 
   /**
    * @deprecated Fence, Iron bars, and glass pane like behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
