@@ -1,9 +1,14 @@
-import { BlockComponentTickEvent, Block, CustomComponentParameters, BlockCustomComponent } from "@minecraft/server";
+import {
+  Block,
+  CustomComponentParameters,
+  BlockCustomComponent,
+  BlockComponentRedstoneUpdateEvent,
+} from "@minecraft/server";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
 import { MathUtils } from "@lpsmods/mc-common";
 import { create, defaulted, number, object, string, Struct } from "superstruct";
 
-import { BlockBaseComponent, NeighborUpdateEvent } from "./base";
+import { BlockBaseComponent } from "./base";
 import { AddonUtils } from "../utils/addon";
 import { BlockUtils } from "../block/utils";
 
@@ -21,10 +26,12 @@ export class RedstoneLampComponent extends BlockBaseComponent implements BlockCu
 
   /**
    * Vanilla redstone lamp block behavior.
+   *
+   * Requires `minecraft:redstone_consumer`
    */
   constructor() {
     super();
-    this.onTick = this.onTick.bind(this);
+    this.onRedstoneUpdate = this.onRedstoneUpdate.bind(this);
   }
 
   updateNeighbors(block: Block, value: boolean, options: RedstoneLampOptions): void {
@@ -37,18 +44,11 @@ export class RedstoneLampComponent extends BlockBaseComponent implements BlockCu
 
   // EVENTS
 
-  // TODO: Prevent spam
-  onNeighborUpdate(event: NeighborUpdateEvent, args: CustomComponentParameters): void {
+  onRedstoneUpdate(event: BlockComponentRedstoneUpdateEvent, args: CustomComponentParameters): void {
     const options = create(args.params, this.struct) as RedstoneLampOptions;
-    let level = event.sourceBlock.getRedstonePower();
-    if (level == undefined) return;
-    if (level == 0) {
+    if (!event.powerLevel) {
       return this.updateNeighbors(event.block, false, options);
     }
     this.updateNeighbors(event.block, true, options);
-  }
-
-  onTick(event: BlockComponentTickEvent, args: CustomComponentParameters): void {
-    super.baseTick(event, args);
   }
 }
