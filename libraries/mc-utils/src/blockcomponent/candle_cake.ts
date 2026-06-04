@@ -42,6 +42,8 @@ export class CandleCakeComponent extends BlockBaseComponent implements BlockCust
 
   /**
    * Vanilla candle cake block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
