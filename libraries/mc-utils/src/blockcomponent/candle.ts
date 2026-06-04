@@ -63,6 +63,8 @@ export class CandleComponent extends BlockBaseComponent implements BlockCustomCo
 
   /**
    * Vanilla candle block behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
