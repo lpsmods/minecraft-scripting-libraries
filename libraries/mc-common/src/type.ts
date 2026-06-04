@@ -40,6 +40,7 @@ export enum TypingTypes {
   DimensionType = "dimensionType",
   EnchantmentType = "enchantmentType",
   BlockPermutation = "blockPermutation",
+  Player = "player",
 
   Array = "array",
   Object = "object",
