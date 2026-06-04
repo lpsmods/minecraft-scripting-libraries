@@ -8,13 +8,22 @@ import {
   BlockPermutation,
   BlockType,
   Direction,
+  Entity,
   GameMode,
   Player,
+  SpawnEntityOptions,
   Vector3,
 } from "@minecraft/server";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
 import { Vector3Utils } from "@minecraft/math";
-import { MathUtils, Oxidization, Identifier, VersionedDataStorage } from "@lpsmods/mc-common";
+import {
+  MathUtils,
+  Oxidization,
+  Identifier,
+  VersionedDataStorage,
+  DataStorageOptions,
+  DynamicStorage,
+} from "@lpsmods/mc-common";
 
 import { CustomTags } from "../registry";
 import { DirectionUtils } from "../utils/direction";
@@ -25,7 +34,36 @@ export enum ExposedDirection {
   Side = "side",
 }
 
+export interface SpawnEntityRotationOptions extends SpawnEntityOptions {
+  removeBlock?: boolean;
+  useBlockDirection?: boolean;
+}
+
 export abstract class BlockUtils {
+  /**
+   * Spawns an entity from a block.
+   * @param {Block} block
+   * @param {string} entityId
+   * @param {SpawnEntityRotationOptions} options
+   * @returns {Entity} Newly created entity at the block location.
+   */
+  static spawnBlockEntity(block: Block, entityId: string, options: SpawnEntityRotationOptions = {}): Entity {
+    if (!options.initialRotation) options.initialRotation = 0;
+
+    // Apply block rotation.
+    if (options.useBlockDirection === undefined || options.useBlockDirection) {
+      for (const stateName of ["minecraft:cardinal_direction", "minecraft:facing_direction", "minecraft:block_face"]) {
+        if (!BlockUtils.hasState(block, stateName)) continue;
+        const dir = BlockUtils.getState(block, stateName) as string;
+        options.initialRotation += DirectionUtils.toRotation(dir).y;
+      }
+    }
+
+    // Remove block before spawning.
+    if (options.removeBlock) block.setType("air");
+    return block.dimension.spawnEntity(entityId, Vector3Utils.add(block.location, { x: 0.5, z: 0.5 }), options);
+  }
+
   /**
    * Changes the block type, but preserves the states.
    * @param {Block} block
@@ -52,8 +90,28 @@ export abstract class BlockUtils {
    * @param {any} stateValue
    * @returns {Block}
    */
-  static setState(block: Block, stateName: keyof BlockStateSuperset, stateValue: any): void {
-    block.setPermutation(block.permutation.withState(stateName, stateValue));
+  static setState(block: Block, stateName: keyof BlockStateSuperset | string, stateValue: any): void {
+    block.setPermutation(block.permutation.withState(stateName as keyof BlockStateSuperset, stateValue));
+  }
+
+  /**
+   * Gets a state for the block.
+   * @param {Block} block
+   * @param {string} stateName
+   * @returns {string | number | boolean | undefined}
+   */
+  static getState(block: Block, stateName: keyof BlockStateSuperset | string): string | number | boolean | undefined {
+    return block.permutation.getState(stateName as keyof BlockStateSuperset);
+  }
+
+  /**
+   * Whether or not the block has the state name.
+   * @param {Block} block
+   * @param {string} stateName
+   * @returns {boolean}
+   */
+  static hasState(block: Block, stateName: keyof BlockStateSuperset | string): boolean {
+    return block.permutation.getState(stateName as keyof BlockStateSuperset) !== undefined;
   }
 
   /**
@@ -62,8 +120,8 @@ export abstract class BlockUtils {
    * @param stateName
    * @param amount
    */
-  static incrementState(block: Block, stateName: keyof BlockStateSuperset, amount: number = 1): number {
-    const value = (block.permutation.getState(stateName) as number) + amount;
+  static incrementState(block: Block, stateName: keyof BlockStateSuperset | string, amount: number = 1): number {
+    const value = (block.permutation.getState(stateName as keyof BlockStateSuperset) as number) + amount;
     BlockUtils.setState(block, stateName, value);
     return value;
   }
@@ -74,8 +132,8 @@ export abstract class BlockUtils {
    * @param stateName
    * @param amount
    */
-  static decrementState(block: Block, stateName: keyof BlockStateSuperset, amount: number = 1): number {
-    const value = (block.permutation.getState(stateName) as number) - amount;
+  static decrementState(block: Block, stateName: keyof BlockStateSuperset | string, amount: number = 1): number {
+    const value = (block.permutation.getState(stateName as keyof BlockStateSuperset) as number) - amount;
     BlockUtils.setState(block, stateName, value);
     return value;
   }
@@ -85,8 +143,8 @@ export abstract class BlockUtils {
    * @param block
    * @param stateName
    */
-  static toggleState(block: Block, stateName: keyof BlockStateSuperset): boolean {
-    const value = block.permutation.getState(stateName) as boolean;
+  static toggleState(block: Block, stateName: keyof BlockStateSuperset | string): boolean {
+    const value = block.permutation.getState(stateName as keyof BlockStateSuperset) as boolean;
     BlockUtils.setState(block, stateName, !value);
     return !value;
   }
@@ -94,14 +152,14 @@ export abstract class BlockUtils {
   /**
    * Checks if both blocks have a matching block state.
    * @param {Block} block First block to compare.
-   * @param {Block} block2 Second block to compare.
+   * @param {Block} otherBlock Second block to compare.
    * @param {string} stateName The block property name to compare.
    * @returns {boolean} Whether or no the properties match.
    */
-  static matchState(block: Block, block2: Block, stateName: string): boolean {
+  static matchState(block: Block, otherBlock: Block, stateName: keyof BlockStateSuperset | string): boolean {
     return (
       block.permutation.getState(stateName as keyof BlockStateSuperset) ===
-      block2.permutation.getState(stateName as keyof BlockStateSuperset)
+      otherBlock.permutation.getState(stateName as keyof BlockStateSuperset)
     );
   }
 
@@ -264,7 +322,7 @@ export abstract class BlockUtils {
       return block.hasTag(tag) || CustomTags.blocks.matches(tag, block.typeId);
     }
     if (blockPredicate.charAt(0) === "!") {
-      return !block.matches(blockPredicate.slice(1), states);
+      return !BlockUtils.matches(block, blockPredicate.slice(1), states);
     }
     return block.matches(blockPredicate, states);
   }
@@ -281,9 +339,16 @@ export abstract class BlockUtils {
 
   // #region Dynamic Properties
 
-  private static getStorage(block: Block): VersionedDataStorage {
-    const k = `${block.dimension.id}_${Vector3Utils.toString(block.location)}`;
-    return new VersionedDataStorage(k, 1);
+  /**
+   * Get the data storage used for the block.
+   * @param {Block} block
+   * @param {number} formatVersion
+   * @param {DataStorageOptions} options
+   * @returns {DynamicStorage}
+   */
+  static getStorage(block: Block, formatVersion?: number, options?: DataStorageOptions): DynamicStorage {
+    const k = `${block.dimension.id},${Vector3Utils.toString(block.location)}`;
+    return new DynamicStorage(k, formatVersion, options);
   }
 
   /**
@@ -293,8 +358,7 @@ export abstract class BlockUtils {
    *
    */
   static clearDynamicProperties(block: Block): void {
-    const store = this.getStorage(block);
-    store.clear();
+    this.getStorage(block).clearDynamicProperties();
   }
 
   /**
@@ -308,8 +372,7 @@ export abstract class BlockUtils {
    * property has not been set.
    */
   static getDynamicProperty(block: Block, identifier: string): boolean | number | string | Vector3 | undefined {
-    const store = this.getStorage(block);
-    return store.get(identifier);
+    return this.getStorage(block).getDynamicProperty(identifier);
   }
 
   /**
@@ -321,8 +384,7 @@ export abstract class BlockUtils {
    * A string array of the dynamic properties set on this entity.
    */
   static getDynamicPropertyIds(block: Block): string[] {
-    const store = this.getStorage(block);
-    return store.keys();
+    return this.getStorage(block).getDynamicPropertyIds();
   }
 
   /**
@@ -336,8 +398,7 @@ export abstract class BlockUtils {
    *
    */
   static getDynamicPropertyTotalByteCount(block: Block): number {
-    const store = this.getStorage(block);
-    return store.getSize();
+    return this.getStorage(block).getDynamicPropertyTotalByteCount();
   }
 
   /**
@@ -358,8 +419,7 @@ export abstract class BlockUtils {
     block: Block,
     values: Record<string, boolean | number | string | Vector3 | undefined>,
   ): void {
-    const store = this.getStorage(block);
-    Object.entries(values).forEach(([k, v]) => store.set(k, v));
+    this.getStorage(block).setDynamicProperties(values);
   }
 
   /**
@@ -377,8 +437,7 @@ export abstract class BlockUtils {
    * {@link minecraftcommon.UnsupportedFunctionalityError}
    */
   static setDynamicProperty(block: Block, identifier: string, value?: boolean | number | string | Vector3): void {
-    const store = this.getStorage(block);
-    store.set(identifier, value);
+    this.getStorage(block).setDynamicProperty(identifier, value);
   }
 
   // #endregion
