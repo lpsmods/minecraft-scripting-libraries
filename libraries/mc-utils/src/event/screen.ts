@@ -10,9 +10,8 @@ import {
   world,
 } from "@minecraft/server";
 import { Vector3Utils } from "@minecraft/math";
-import { Hasher } from "@lpsmods/mc-common";
+import { Hasher, EventSignal } from "@lpsmods/mc-common";
 
-import { EventSignal } from "./utils";
 import { BlockUtils } from "../block";
 import { ItemUtils } from "../item";
 
@@ -66,6 +65,8 @@ export class ScreenEvents {
    * @eventProperty
    */
   static readonly closeScreen = new CloseScreenEventSignal();
+
+  static readonly size = this.openScreen.size + this.closeScreen.size;
 }
 
 function trackClosedUI(event: CloseScreenEvent): void {
@@ -124,6 +125,7 @@ function getBlockScreen(block: Block): string | undefined {
 }
 
 function playerInteractWithBlock(event: PlayerInteractWithBlockBeforeEvent): void {
+  if (!ScreenEvents.size) return;
   if (event.player.isSneaking) {
     const equ = event.player.getComponent("equippable");
     if (!equ) return;
@@ -141,6 +143,7 @@ function playerInteractWithBlock(event: PlayerInteractWithBlockBeforeEvent): voi
 }
 
 function playerInteractWithEntity(event: PlayerInteractWithEntityBeforeEvent): void {
+  if (!ScreenEvents.size) return;
   const npc = event.target.hasComponent("npc");
   if (npc) {
     ScreenEvents.openScreen.apply(
@@ -185,6 +188,7 @@ function playerInteractWithEntity(event: PlayerInteractWithEntityBeforeEvent): v
 }
 
 function itemUse(event: ItemUseBeforeEvent): void {
+  if (!ScreenEvents.size) return;
   if (ItemUtils.matchAny(event.itemStack, ["writable_book", "written_book"])) {
     ScreenEvents.openScreen.apply(
       new OpenScreenEvent(event.source, "book_screen", ScreenEventSource.Entity, { sourceEntity: event.source }),
