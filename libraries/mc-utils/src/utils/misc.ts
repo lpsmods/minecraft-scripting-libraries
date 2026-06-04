@@ -28,7 +28,7 @@ export function getInteractSound(block: Block, defaultSound: string = "dig.stone
 export function forDuration(callback: Function, duration?: number): void {
   var delta = 0;
   const o = system.runInterval(() => {
-    callback.call(delta), delta >= (duration ?? 20) && system.clearRun(o), delta++;
+    (callback.call(delta), delta >= (duration ?? 20) && system.clearRun(o), delta++);
   });
 }
 
