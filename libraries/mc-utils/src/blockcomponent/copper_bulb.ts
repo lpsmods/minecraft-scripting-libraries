@@ -1,8 +1,8 @@
-import { BlockComponentTickEvent, BlockCustomComponent, CustomComponentParameters } from "@minecraft/server";
+import { BlockComponentRedstoneUpdateEvent, BlockCustomComponent, CustomComponentParameters } from "@minecraft/server";
 import { BlockStateSuperset } from "@minecraft/vanilla-data";
 import { create, defaulted, object, string, Struct } from "superstruct";
 
-import { BlockBaseComponent, NeighborUpdateEvent } from "./base";
+import { BlockBaseComponent } from "./base";
 import { BlockUtils } from "../block/utils";
 import { AddonUtils } from "../utils/addon";
 
@@ -20,24 +20,20 @@ export class CopperBulbComponent extends BlockBaseComponent implements BlockCust
 
   /**
    * Vanilla copper bulb block behavior.
+   *
+   * Requires `minecraft:redstone_consumer`
    */
   constructor() {
     super();
-    this.onTick = this.onTick.bind(this);
+    this.onRedstoneUpdate = this.onRedstoneUpdate.bind(this);
   }
 
   // EVENTS
 
-  onTick(event: BlockComponentTickEvent, args: CustomComponentParameters) {
-    super.baseTick(event, args);
-  }
-
-  onNeighborUpdate(event: NeighborUpdateEvent, args: CustomComponentParameters) {
+  onRedstoneUpdate(event: BlockComponentRedstoneUpdateEvent, args: CustomComponentParameters): void {
     const options = create(args.params, this.struct) as CopperBulbOptions;
     const lit = event.block.permutation.getState(options.lit_state);
-    let level = event.sourceBlock.getRedstonePower();
-    if (level === undefined) return;
-    if (level === 0) {
+    if (!event.powerLevel) {
       return BlockUtils.setState(event.block, options.powered_state, false);
     }
     BlockUtils.setState(event.block, options.powered_state, true);
