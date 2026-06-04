@@ -25,14 +25,13 @@ A package to communicate between Minecraft Add-Ons.
 Create the api.
 
 ```ts
-import { world } from "@minecraft/server";
 import { Bridge } from "@lpsmods/mcaddon-bridge";
 
 // Create a new bridge (aka API)
 const api = new Bridge("com.example.myPack");
 
 // Basic property
-api.defineProperty(world, "name", {
+api.defineProperty("name", {
   value: "Steve",
   writeable: true,
   enumerable: true,
@@ -40,7 +39,7 @@ api.defineProperty(world, "name", {
 });
 
 // Getter and Setter
-api.defineProperty(world, "fullName", {
+api.defineProperty("fullName", {
   get() {
     const firstName = this.getDynamicProperty("first_name");
     const lastName = this.getDynamicProperty("last_name");
@@ -57,7 +56,7 @@ api.defineProperty(world, "fullName", {
 });
 
 // Simple function property
-api.defineProperty(world, "greet", {
+api.defineProperty("greet", {
   value: function (name: string) {
     console.warn(`Hello, ${name}!`);
   },
@@ -73,19 +72,23 @@ Use the API from a different pack.
 import { world } from "@minecraft/server";
 import { connect } from "@lpsmods/mcaddon-bridge";
 
-function worldLoad() {
+function worldLoad(): void {
   // Connect to the api
-  const myPack = connect("com.example.myPack");
+  connect("creator_example")
+    .then((api) => {
+      console.warn(api.get("name"));
+      api.set("name", "Bob");
+      console.warn(api.get("name"));
 
-  console.warn(myPack.get(world, "name"));
-  myPack.set(world, "name", "Bob");
-  console.warn(myPack.get(world, "name"));
+      console.warn(api.get("fullName"));
+      api.set("fullName", "Steve Black");
+      console.warn(api.get("fullName"));
 
-  console.warn(myPack.get(world, "fullName"));
-  myPack.set(world, "fullName", "Steve Black");
-  console.warn(myPack.get(world, "fullName"));
-
-  myPack.call(world, "greet", "Alex");
+      api.call("greet", "Alex");
+    })
+    .catch((err) => {
+      console.warn(`API error: ${String(err)}`);
+    });
 }
 
 world.afterEvents.worldLoad.subscribe(worldLoad);
