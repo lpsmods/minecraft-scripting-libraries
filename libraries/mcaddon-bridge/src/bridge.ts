@@ -114,7 +114,7 @@ export class Bridge {
    */
   has(name: string): boolean {
     const prop = this.descriptors.get(name);
-    return !prop;
+    return !!prop;
   }
 
   /**
