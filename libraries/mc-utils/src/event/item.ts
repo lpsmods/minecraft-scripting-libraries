@@ -1,6 +1,6 @@
 import { EquipmentSlot, ItemStack, Player, system, world } from "@minecraft/server";
+import { EventSignal } from "@lpsmods/mc-common";
 
-import { EventSignal } from "./utils";
 import { ItemUtils } from "../item";
 
 export abstract class ItemEvent {
