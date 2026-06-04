@@ -1,3 +1,4 @@
+/*! https://lnk.lpsmods.dev/mc-utils */
 export * from "./biome/index";
 export * from "./block/index";
 export * from "./blockcomponent/index";
