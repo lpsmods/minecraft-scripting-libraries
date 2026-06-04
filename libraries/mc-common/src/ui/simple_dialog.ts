@@ -41,11 +41,16 @@ export class Dialog {
 
   async show(): Promise<Dialog> {
     return new Promise((resolve) => {
-      this.ui.show(this.player).then((event) => {
-        if (event.canceled) return;
-        this.ok(event);
-        resolve(this);
-      });
+      this.ui
+        .show(this.player)
+        .then((event) => {
+          if (event.canceled) return;
+          this.ok(event);
+          resolve(this);
+        })
+        .catch((err) => {
+          console.warn(`Simple dialog error: ${String(err)}`);
+        });
     });
   }
 
