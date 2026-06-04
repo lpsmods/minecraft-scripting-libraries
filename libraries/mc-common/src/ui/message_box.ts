@@ -1,4 +1,4 @@
-import { Player } from "@minecraft/server";
+import { Player, RawMessage } from "@minecraft/server";
 import { ActionFormData, MessageFormData } from "@minecraft/server-ui";
 
 import { TextKey } from "../text";
@@ -7,11 +7,11 @@ import { TextKey } from "../text";
  * Message dialog class
  */
 export class MessageBox {
-  message: string;
-  title: string;
+  message: string | RawMessage;
+  title: string | RawMessage;
   buttons: string[] = [];
 
-  constructor(message?: string, title?: string, type?: string) {
+  constructor(message?: string | RawMessage, title?: string | RawMessage, type?: string) {
     this.message = message ?? "";
     this.title = title ?? "";
     switch (type ?? "ok") {
@@ -72,7 +72,12 @@ export class MessageBox {
   }
 }
 
-async function _show(player: Player, title?: string, message?: string, type?: string): Promise<string> {
+async function _show(
+  player: Player,
+  title?: string | RawMessage,
+  message?: string | RawMessage,
+  type?: string,
+): Promise<string> {
   const res = await new MessageBox(message, title, type).show(player);
   if (typeof res === "boolean") {
     return res ? "yes" : "no";
@@ -89,7 +94,7 @@ async function _show(player: Player, title?: string, message?: string, type?: st
  * @param {string} message
  * @returns {any}
  */
-export function showInfo(player: Player, title?: string, message?: string): any {
+export function showInfo(player: Player, title?: string | RawMessage, message?: string | RawMessage): any {
   return _show(player, title, message, "ok");
 }
 
@@ -100,7 +105,7 @@ export function showInfo(player: Player, title?: string, message?: string): any 
  * @param {string} message
  * @returns {any}
  */
-export function showWarning(player: Player, title?: string, message?: string): any {
+export function showWarning(player: Player, title?: string | RawMessage, message?: string | RawMessage): any {
   return _show(player, title, message, "ok");
 }
 
@@ -111,7 +116,7 @@ export function showWarning(player: Player, title?: string, message?: string): a
  * @param {string} message
  * @returns {any}
  */
-export function showError(player: Player, title?: string, message?: string): any {
+export function showError(player: Player, title?: string | RawMessage, message?: string | RawMessage): any {
   return _show(player, title, message, "ok");
 }
 
@@ -124,7 +129,7 @@ export function showError(player: Player, title?: string, message?: string): any
  * @param {string} message
  * @returns {any}
  */
-export function askQuestion(player: Player, title?: string, message?: string): any {
+export function askQuestion(player: Player, title?: string | RawMessage, message?: string | RawMessage): any {
   return _show(player, title, message, "yesno");
 }
 
@@ -135,7 +140,11 @@ export function askQuestion(player: Player, title?: string, message?: string): a
  * @param {string} message
  * @returns {Promise<boolean>}
  */
-export async function askOkCancel(player: Player, title?: string, message?: string): Promise<boolean> {
+export async function askOkCancel(
+  player: Player,
+  title?: string | RawMessage,
+  message?: string | RawMessage,
+): Promise<boolean> {
   const s = await _show(player, title, message, "okcancel");
   return s === "ok";
 }
@@ -147,7 +156,11 @@ export async function askOkCancel(player: Player, title?: string, message?: stri
  * @param {string} message
  * @returns {Promise<boolean>}
  */
-export async function askYesNo(player: Player, title?: string, message?: string): Promise<boolean> {
+export async function askYesNo(
+  player: Player,
+  title?: string | RawMessage,
+  message?: string | RawMessage,
+): Promise<boolean> {
   const s = await _show(player, title, message, "yesno");
   return s === "yes";
 }
@@ -159,7 +172,11 @@ export async function askYesNo(player: Player, title?: string, message?: string)
  * @param {string} message
  * @returns {Promise<boolean|undefined>}
  */
-export async function askYesNoCancel(player: Player, title?: string, message?: string): Promise<boolean | undefined> {
+export async function askYesNoCancel(
+  player: Player,
+  title?: string | RawMessage,
+  message?: string | RawMessage,
+): Promise<boolean | undefined> {
   let s = await _show(player, title, message, "yesnocancel");
   s = s.toString();
   if (s === "cancel") return undefined;
@@ -173,7 +190,11 @@ export async function askYesNoCancel(player: Player, title?: string, message?: s
  * @param {string} message
  * @returns {Promise<boolean>}
  */
-export async function askRetryCancel(player: Player, title?: string, message?: string): Promise<boolean> {
+export async function askRetryCancel(
+  player: Player,
+  title?: string | RawMessage,
+  message?: string | RawMessage,
+): Promise<boolean> {
   const s = await _show(player, title, message, "retrycancel");
   return s === "retry";
 }
