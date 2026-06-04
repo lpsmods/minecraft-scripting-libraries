@@ -18,6 +18,8 @@ export class ViscosityComponent extends BlockBaseComponent implements BlockCusto
 
   /**
    * Block viscosity behavior.
+   *
+   * Requires `minecraft:tick`
    */
   constructor() {
     super();
