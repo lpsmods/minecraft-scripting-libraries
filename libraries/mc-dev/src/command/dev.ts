@@ -39,7 +39,11 @@ export class DevCommand {
 
   static register(registry: CustomCommandRegistry): void {
     if (this.registered) return;
-    registry.registerEnum("mcdev:dev_action", ["show"]);
+    const params = this.options.mandatoryParameters ?? [];
+    const namespace = DeveloperTools.instance?.devOptions.namespace ?? "mcdev";
+    this.options.name = `${namespace}:dev`;
+    params[0].name = `${namespace}:dev_action`;
+    registry.registerEnum(params[0].name, ["show"]);
     registry.registerCommand(this.options, this.execute.bind(this));
   }
 }
