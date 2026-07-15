@@ -1,0 +1,20 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:dead_coral_block",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.deadCoral"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "lpsmods:dead_coral_block"
+        }
+      }
+    }
+  }
+}

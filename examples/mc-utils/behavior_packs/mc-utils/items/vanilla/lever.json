@@ -1,0 +1,20 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:item": {
+    "description": {
+      "identifier": "lpsmods:lever",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "lpsmods:lever",
+      "minecraft:block_placer": {
+        "block": "lpsmods:lever"
+      },
+      "minecraft:display_name": {
+        "value": "tile.lpsmods:lever.name"
+      }
+    }
+  }
+}

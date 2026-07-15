@@ -1,0 +1,20 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "lpsmods:falling_block",
+      "materials": { "default": "entity" },
+      "textures": {
+        "default": "textures/blocks/concrete_powder_white",
+        "concrete_powder": "textures/blocks/concrete_powder_white",
+        "scaffolding": "textures/blocks/scaffolding_top"
+      },
+      "geometry": {
+        "default": "geometry.lpsm_assetsplus_full_block",
+        "concrete_powder": "geometry.lpsm_assetsplus_full_block",
+        "scaffolding": "geometry.lpsm_assetsplus_full_block"
+      },
+      "render_controllers": ["controller.render.lpsm_mcutils_falling_block"]
+    }
+  }
+}

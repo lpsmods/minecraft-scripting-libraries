@@ -1,0 +1,162 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:cake",
+      "states": {
+        "mcutils:slice": [0, 1, 2, 3, 4, 5, 6]
+      },
+      "menu_category": {
+        "category": "none"
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:loot": "loot_tables/empty.json",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:cake_bottom",
+          "render_method": "opaque"
+        },
+        "side": {
+          "texture": "minecraft:cake_side",
+          "render_method": "opaque"
+        },
+        "inside": {
+          "texture": "minecraft:cake_inner",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "minecraft:cake_top",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.5
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": ["up"],
+            "block_filter": [
+              {
+                "tags": "!q.any_tag('non_full')"
+              }
+            ]
+          }
+        ]
+      },
+      "mcutils:cake": {
+        "slice_state": "mcutils:slice",
+        "max_slices": 6,
+        "interactions": ["candle->lpsmods:candle_cake"],
+        "nutrition": 2,
+        "saturation_modifier": 0.4
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:slice') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.lpsm_assetsplus_cake.slice0",
+          "minecraft:selection_box": {
+            "origin": [-7, 0, -7],
+            "size": [14, 8, 14]
+          },
+          "minecraft:collision_box": {
+            "origin": [-7, 0, -7],
+            "size": [14, 8, 14]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:slice') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.lpsm_assetsplus_cake.slice1",
+          "minecraft:selection_box": {
+            "origin": [-7, 0, -7],
+            "size": [12, 8, 14]
+          },
+          "minecraft:collision_box": {
+            "origin": [-7, 0, -7],
+            "size": [12, 8, 14]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:slice') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.lpsm_assetsplus_cake.slice2",
+          "minecraft:selection_box": {
+            "origin": [-7, 0, -7],
+            "size": [10, 8, 14]
+          },
+          "minecraft:collision_box": {
+            "origin": [-7, 0, -7],
+            "size": [10, 8, 14]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:slice') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.lpsm_assetsplus_cake.slice3",
+          "minecraft:selection_box": {
+            "origin": [-7, 0, -7],
+            "size": [8, 8, 14]
+          },
+          "minecraft:collision_box": {
+            "origin": [-7, 0, -7],
+            "size": [8, 8, 14]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:slice') == 4",
+        "components": {
+          "minecraft:geometry": "geometry.lpsm_assetsplus_cake.slice4",
+          "minecraft:selection_box": {
+            "origin": [-7, 0, -7],
+            "size": [6, 8, 14]
+          },
+          "minecraft:collision_box": {
+            "origin": [-7, 0, -7],
+            "size": [6, 8, 14]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:slice') == 5",
+        "components": {
+          "minecraft:geometry": "geometry.lpsm_assetsplus_cake.slice5",
+          "minecraft:selection_box": {
+            "origin": [-7, 0, -7],
+            "size": [4, 8, 14]
+          },
+          "minecraft:collision_box": {
+            "origin": [-7, 0, -7],
+            "size": [4, 8, 14]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:slice') == 6",
+        "components": {
+          "minecraft:geometry": "geometry.lpsm_assetsplus_cake.slice6",
+          "minecraft:selection_box": {
+            "origin": [-7, 0, -7],
+            "size": [2, 8, 14]
+          },
+          "minecraft:collision_box": {
+            "origin": [-7, 0, -7],
+            "size": [2, 8, 14]
+          }
+        }
+      }
+    ]
+  }
+}

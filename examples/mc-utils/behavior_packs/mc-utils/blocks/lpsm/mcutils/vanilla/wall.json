@@ -1,0 +1,60 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:wall",
+      "menu_category": {
+        "category": "construction",
+        "group": "lpsmods:itemGroup.name.wall"
+      },
+      "states": {
+        "mcutils:north": ["none", "low", "tall"],
+        "mcutils:south": ["none", "low", "tall"],
+        "mcutils:east": ["none", "low", "tall"],
+        "mcutils:west": ["none", "low", "tall"],
+        "mcutils:up": [true, false]
+      }
+    },
+    "components": {
+      "minecraft:tags": ["minecraft:wall"],
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:cobblestone"
+        }
+      },
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_wall",
+        "bone_visibility": {
+          "north": "q.block_state('mcutils:north')=='low'",
+          "north_tall": "q.block_state('mcutils:north')=='tall'",
+          "east": "q.block_state('mcutils:east')=='low'",
+          "east_tall": "q.block_state('mcutils:east')=='tall'",
+          "south": "q.block_state('mcutils:south')=='low'",
+          "south_tall": "q.block_state('mcutils:south')=='tall'",
+          "west": "q.block_state('mcutils:west')=='low'",
+          "west_tall": "q.block_state('mcutils:west')=='tall'",
+          "post": "q.block_state('mcutils:up')"
+        }
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "mcutils:wall": {
+        "north_state": "mcutils:north",
+        "east_state": "mcutils:east",
+        "south_state": "mcutils:south",
+        "west_state": "mcutils:west",
+        "up_state": "mcutils:up"
+      }
+    }
+  }
+}

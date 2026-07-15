@@ -1,0 +1,62 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:barrel",
+      "menu_category": {
+        "category": "equipment"
+      },
+      "states": {
+        "mcutils:open": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:loot": "loot_tables/blocks/barrel.json",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:barrel_side"
+        },
+        "up": {
+          "texture": "minecraft:barrel_top"
+        },
+        "down": {
+          "texture": "minecraft:barrel_bottom"
+        }
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 2
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "mcutils:barrel": {
+        "entity": "mcutils:chest",
+        "open_state": "mcutils:open"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:open')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:barrel_side"
+            },
+            "up": {
+              "texture": "minecraft:barrel_top_open"
+            },
+            "down": {
+              "texture": "minecraft:barrel_bottom"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

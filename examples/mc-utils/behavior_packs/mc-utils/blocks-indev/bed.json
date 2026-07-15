@@ -1,0 +1,93 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:bed",
+      "states": {
+        "mcutils:part": ["foot", "head"]
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:cardinal_direction"]
+        }
+      },
+      "menu_category": {
+        "category": "none"
+      }
+    },
+    "components": {
+      "minecraft:loot": "loot_tables/blocks/bed.json",
+      "minecraft:light_dampening": 0,
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_bed",
+        "bone_visibility": {
+          "head": "q.block_state('mcutils:part')=='head'",
+          "foot": "q.block_state('mcutils:part')=='foot'"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:oak_planks",
+          "face_dimming": false
+        },
+        "bed": {
+          "texture": "lpsmods:bed",
+          "face_dimming": false
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [-8, 0, -8],
+        "size": [16, 9, 16]
+      },
+      "minecraft:selection_box": {
+        "origin": [-8, 0, -8],
+        "size": [16, 9, 16]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "mcutils:bed": {
+        "part_state": "mcutils:part",
+        "direction_state": "minecraft:cardinal_direction",
+        "sleep_position": [0, 9, 0],
+        "sleep_animations": ["animation.custom.player.sleeping"]
+      },
+      "mcutils:multiblock": {
+        "part_state": "mcutils:part",
+        "direction_state": "minecraft:cardinal_direction",
+        "parts": ["foot,0,0,0", "head,^,^,^1"]
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction')=='north'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, 0, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction')=='south'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, 180, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction')=='east'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, -90, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction')=='west'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, 90, 0] }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:concrete_powder",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.concretePowder"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "lpsmods:concrete_powder"
+        }
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "mcutils:concrete_powder": {},
+      "mcutils:falling_block": {
+        "entity": "lpsmods:falling_block"
+      }
+    }
+  }
+}

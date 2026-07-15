@@ -1,0 +1,21 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:item": {
+    "description": {
+      "identifier": "lpsmods:door",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.door"
+      }
+    },
+    "components": {
+      "minecraft:icon": "minecraft:oak_door",
+      "minecraft:block_placer": {
+        "block": "lpsmods:door"
+      },
+      "minecraft:display_name": {
+        "value": "tile.lpsmods:door.name"
+      }
+    }
+  }
+}

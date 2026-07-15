@@ -1,0 +1,42 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:redstone_lamp",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "mcutils:lit": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "lpsmods:redstone_lamp_off"
+        }
+      },
+      "minecraft:redstone_consumer": {
+        "min_power": 1
+      },
+      "mcutils:redstone_lamp": {
+        "lit_state": "mcutils:lit",
+        "delay": 60
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:lit')==true",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:redstone_lamp_on"
+            }
+          },
+          "minecraft:light_emission": 15
+        }
+      }
+    ]
+  }
+}

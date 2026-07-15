@@ -1,0 +1,59 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:frosted_ice",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "mcutils:age": [0, 1, 2, 3]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:frosted_ice_0"
+        }
+      },
+      "mcutils:frosted_ice": {
+        "age_state": "mcutils:age",
+        "max_age": 3,
+        "converts_to": "water"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:age')==1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:frosted_ice_1"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:age')==2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:frosted_ice_2"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:age')==3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:frosted_ice_3"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

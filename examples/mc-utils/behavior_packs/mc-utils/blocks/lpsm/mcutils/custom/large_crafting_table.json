@@ -1,0 +1,45 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:large_crafting_table",
+      "menu_category": {
+        "category": "construction"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:cardinal_direction"]
+        }
+      },
+      "states": {
+        "mcutils:model": ["main", "side"]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:crafting_table_side"
+        },
+        "up": {
+          "texture": "minecraft:crafting_table_top"
+        },
+        "down": {
+          "texture": "minecraft:oak_planks"
+        },
+        "north": {
+          "texture": "minecraft:crafting_table_front"
+        }
+      },
+      "minecraft:crafting_table": {
+        "crafting_tags": ["crafting_table"],
+        "table_name": "container.large_crafting_table"
+      },
+      "mcutils:multiblock": {
+        "part_state": "mcutils:model",
+        "direction_state": "minecraft:cardinal_direction",
+        "parts": ["main,0,0,0", "side,^1,^,^"]
+      }
+    }
+  }
+}

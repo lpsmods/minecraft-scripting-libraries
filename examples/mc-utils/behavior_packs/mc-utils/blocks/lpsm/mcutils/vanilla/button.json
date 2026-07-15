@@ -1,0 +1,83 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:button",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "mcutils:powered": [false, true]
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:facing_direction"]
+        }
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": { "origin": [-3, 0, -2], "size": [6, 2, 4] },
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_button",
+        "bone_visibility": {
+          "off": "!q.block_state('mcutils:powered')",
+          "on": "q.block_state('mcutils:powered')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:stone"
+        }
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "mcutils:button": {
+        "delay": 30,
+        "powered_state": "mcutils:powered"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='north'",
+        "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='south'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, 180, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='east'",
+        "components": { "minecraft:transformation": { "rotation": [0, -0, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='west'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, -90, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='up'",
+        "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='down'",
+        "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 15
+          }
+        }
+      }
+    ]
+  }
+}

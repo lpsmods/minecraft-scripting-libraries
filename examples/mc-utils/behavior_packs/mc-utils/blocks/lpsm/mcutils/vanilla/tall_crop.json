@@ -1,0 +1,292 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:tall_crop",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "mcutils:growth": [0, 1, 2, 3, 4, 5, 6, 7],
+        "mcutils:half": ["bottom", "top"]
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full", "plant", "minecraft:crop", "fertilizable"],
+      "minecraft:loot": "loot_tables/lpsmods/blocks/tall_crop.json",
+      "minecraft:geometry": "geometry.lpsm_assetsplus_crop",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "lpsmods:tall_crop_top_stage_0",
+          "render_method": "alpha_test",
+          "face_dimming": false
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0
+      },
+      "minecraft:selection_box": {
+        "origin": [-8, 0, -8],
+        "size": [16, 16, 16]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": false,
+            "liquid_type": "water",
+            "on_liquid_touches": "popped"
+          }
+        ]
+      },
+      // "mcutils:tall_crop": {
+      //   "growth_state": "mcutils:growth",
+      //   "max_stage": 7,
+      //   "half_state": "mcutils:half",
+      //   "update_states": true
+      // },
+      "mcutils:crop": {
+        "growth_state": "mcutils:growth",
+        "max_stage": 7
+      },
+      "mcutils:fertilizable": {
+        "growth_state": "mcutils:growth",
+        "max_stage": 7
+      },
+      "mcutils:multiblock": {
+        "part_state": "mcutils:half",
+        "parts": ["bottom,0,0,0", "top,0,1,0"],
+        "sync_states": true
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:loot": "loot_tables/empty.json",
+          "minecraft:placement_filter": {
+            "conditions": [
+              {
+                "block_filter": ["lpsmods:tall_crop"],
+                "allowed_faces": ["up"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:placement_filter": {
+            "conditions": [
+              {
+                "block_filter": [
+                  "minecraft:farmland",
+                  {
+                    "tags": "q.any_tag('farmland') && !q.any_tag('non_full')"
+                  }
+                ],
+                "allowed_faces": ["up"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==0&&q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_top_stage_0",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==1&&q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_top_stage_1",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==2&&q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_top_stage_2",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==3&&q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_top_stage_3",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==4&&q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_top_stage_4",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==5&&q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_top_stage_5",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==6&&q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_top_stage_6",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==7&&q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_top_stage_7",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==0&&q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_bottom_stage_0",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==1&&q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_bottom_stage_1",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==2&&q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_bottom_stage_2",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==3&&q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_bottom_stage_3",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==4&&q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_bottom_stage_4",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==5&&q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_bottom_stage_5",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==6&&q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_bottom_stage_6",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:growth')==7&&q.block_state('mcutils:half')=='bottom'",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "lpsmods:tall_crop_bottom_stage_7",
+              "render_method": "alpha_test",
+              "face_dimming": false
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:powder_snow",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "mcutils:solid": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:loot": "loot_tables/lpsmods/blocks/powder_snow.json",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:powder_snow",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": false,
+            "liquid_type": "water",
+            "on_liquid_touches": "broken"
+          }
+        ]
+      },
+      "mcutils:powder_snow": {
+        "fog_identifier": "lpsmods:fog_powder_snow",
+        "solid_state": "mcutils:solid"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:solid')",
+        "components": {
+          "minecraft:collision_box": true
+        }
+      }
+    ]
+  }
+}

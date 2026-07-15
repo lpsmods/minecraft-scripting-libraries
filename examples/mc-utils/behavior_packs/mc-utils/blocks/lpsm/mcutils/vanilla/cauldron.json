@@ -1,0 +1,43 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:cauldron",
+      "menu_category": {
+        "category": "none"
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:loot": "loot_tables/lpsmods/blocks/cauldron.json",
+      "minecraft:geometry": "geometry.lpsm_assetsplus_cauldron",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:cauldron_side",
+          "render_method": "alpha_test"
+        },
+        "top": {
+          "texture": "minecraft:cauldron_top",
+          "render_method": "alpha_test"
+        },
+        "bottom": {
+          "texture": "minecraft:cauldron_bottom",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 2
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "mcutils:cauldron": {
+        "interactions": [
+          "potion->lpsmods:water_cauldron[mcutils:level=1]->glass_bottle",
+          "water_bucket->lpsmods:water_cauldron[mcutils:level=3]->bucket",
+          "lava_bucket->lpsmods:lava_cauldron->bucket"
+        ]
+      }
+    }
+  }
+}

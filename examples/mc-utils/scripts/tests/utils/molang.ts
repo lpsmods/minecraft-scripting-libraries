@@ -1,0 +1,16 @@
+import { MolangUtils, UnitTestMap } from "@lpsmods/mc-utils";
+
+export default (units: UnitTestMap) => {
+  units.set("block_molang", (ctx, message) => {
+    const block = ctx.sourceBlock ?? ctx.sourceEntity?.dimension.getBlock(ctx.sourceEntity.location)?.below();
+    if (!block) return;
+    let bRes = MolangUtils.block(block, message ?? "'worked'");
+    console.warn(bRes);
+  });
+  units.set("entity_molang", (ctx, message) => {
+    const entity = ctx.sourceEntity;
+    if (!entity) return;
+    let eRes = MolangUtils.entity(entity, message ?? "'worked'");
+    console.warn(eRes);
+  });
+};

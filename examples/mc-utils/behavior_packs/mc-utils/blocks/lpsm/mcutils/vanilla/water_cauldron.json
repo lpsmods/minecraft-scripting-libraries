@@ -1,0 +1,56 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:water_cauldron",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "mcutils:level": [3, 2, 1]
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:loot": "loot_tables/lpsmods/blocks/cauldron.json",
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_cauldron_layered",
+        "bone_visibility": {
+          "level_1": "q.block_state('mcutils:level')==1",
+          "level_2": "q.block_state('mcutils:level')==2",
+          "level_3": "q.block_state('mcutils:level')==3"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:cauldron_side",
+          "render_method": "alpha_test"
+        },
+        "content": {
+          "texture": "minecraft:cauldron_water",
+          "render_method": "alpha_test"
+        },
+        "top": {
+          "texture": "minecraft:cauldron_top",
+          "render_method": "alpha_test"
+        },
+        "bottom": {
+          "texture": "minecraft:cauldron_bottom",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 2
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "mcutils:layered_cauldron": {
+        "block": "lpsmods:cauldron",
+        "level_state": "mcutils:level",
+        "max_level": 3,
+        "interactions": ["bucket->water_bucket,-3", "glass_bottle->potion,-1", "potion->glass_bottle,+1"]
+      }
+    }
+  }
+}

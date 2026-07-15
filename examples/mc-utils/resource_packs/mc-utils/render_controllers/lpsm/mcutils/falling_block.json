@@ -1,0 +1,18 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.lpsm_mcutils_falling_block": {
+      "arrays": {
+        "textures": {
+          "Array.tex": ["Texture.default", "Texture.concrete_powder", "Texture.scaffolding"]
+        },
+        "geometries": {
+          "Array.geo": ["Geometry.default", "Geometry.concrete_powder", "Geometry.scaffolding"]
+        }
+      },
+      "geometry": "Array.geo[q.variant]",
+      "textures": ["Array.tex[q.variant]"],
+      "materials": [{ "*": "Material.default" }]
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Player, ShutdownEvent, StartupEvent, WorldLoadAfterEvent } from "@minecraft/server";
+import { Player, WorldLoadAfterEvent } from "@minecraft/server";
 import { ChunkTickEvent, EntityTickEvent, PlayerChunkLoadEvent, PlayerChunkUnloadEvent } from "@lpsmods/mc-utils";
 import { Settings } from "@lpsmods/mc-common";
 

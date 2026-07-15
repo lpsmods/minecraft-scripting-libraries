@@ -2,9 +2,8 @@ import { ItemStack, Player, PlayerInventoryItemChangeAfterEvent, world } from "@
 
 import { DevTool } from "./base";
 import { Settings } from "@lpsmods/mc-common";
-import { should } from "vitest";
 
-class AdvancedTooltipsTool extends DevTool {
+export class AdvancedTooltipsTool extends DevTool {
   static readonly toolId = "advanced_tooltips";
 
   constructor() {
@@ -27,8 +26,14 @@ class AdvancedTooltipsTool extends DevTool {
     });
   }
 
-  private shouldUpdate(itemStack: ItemStack): boolean {
-    return true;
+  private needsLore(itemStack: ItemStack): boolean {
+    const currentLore = itemStack.getLore();
+    const nextLore = this.getLore(itemStack);
+    if (nextLore.length === 0) return false;
+    if (currentLore.length < nextLore.length) return true;
+
+    const start = currentLore.length - nextLore.length;
+    return nextLore.some((line, index) => currentLore[start + index] !== line);
   }
 
   private getLore(itemStack: ItemStack): string[] {
@@ -46,13 +51,18 @@ class AdvancedTooltipsTool extends DevTool {
     return lore;
   }
 
+  apply(itemStack: ItemStack): ItemStack {
+    if (!this.needsLore(itemStack)) return itemStack;
+    itemStack.setLore([...itemStack.getLore(), ...this.getLore(itemStack)]);
+    return itemStack;
+  }
+
   private onInventoryChange(event: PlayerInventoryItemChangeAfterEvent): void {
     if (!this.isEnabled || !event.itemStack) return;
-    if (!this.shouldUpdate(event.itemStack)) return;
-    event.itemStack.setLore(this.getLore(event.itemStack));
+    if (!this.needsLore(event.itemStack)) return;
     const inv = event.player.getComponent("inventory")?.container;
     if (!inv) return;
-    inv.setItem(event.slot, event.itemStack);
+    inv.setItem(event.slot, this.apply(event.itemStack));
   }
 
   private update(player: Player): void {
@@ -60,9 +70,8 @@ class AdvancedTooltipsTool extends DevTool {
     if (!inv) return;
     for (let slot = 0; slot < inv.size; slot++) {
       const itemStack = inv.getItem(slot);
-      if (!itemStack || !this.shouldUpdate(itemStack)) continue;
-      itemStack.setLore(this.getLore(itemStack));
-      inv.setItem(slot, itemStack);
+      if (!itemStack || !this.needsLore(itemStack)) continue;
+      inv.setItem(slot, this.apply(itemStack));
     }
   }
 

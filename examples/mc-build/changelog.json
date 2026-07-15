@@ -1,0 +1,17 @@
+{
+  "1.0.0": {
+    "title": "1.0.0",
+    "date": "2026-06-11",
+    "author": "legopitstop",
+    "categories": [
+      {
+        "title": "General",
+        "list": ["Updated for Minecraft 26.21"]
+      },
+      {
+        "title": "New",
+        "list": ["Added new \"Stone\" block slab variant."]
+      }
+    ]
+  }
+}

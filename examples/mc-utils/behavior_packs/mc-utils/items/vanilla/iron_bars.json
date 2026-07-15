@@ -1,0 +1,20 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:item": {
+    "description": {
+      "identifier": "lpsmods:iron_bars",
+      "menu_category": {
+        "category": "construction"
+      }
+    },
+    "components": {
+      "minecraft:icon": "lpsmods:iron_bars",
+      "minecraft:block_placer": {
+        "block": "lpsmods:iron_bars"
+      },
+      "minecraft:display_name": {
+        "value": "tile.lpsmods:iron_bars.name"
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:exposed_copper_bulb",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "mcutils:powered": [false, true],
+        "mcutils:lit": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:exposed_copper_bulb"
+        }
+      },
+      "minecraft:redstone_consumer": {
+        "min_power": 1
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "mcutils:copper_bulb": {
+        "lit_state": "mcutils:lit",
+        "powered_state": "mcutils:powered"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:lit')",
+        "components": {
+          "minecraft:light_emission": 12
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered') && !q.block_state('mcutils:lit')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:exposed_copper_bulb_powered"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered') && q.block_state('mcutils:lit')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:exposed_copper_bulb_lit_powered"
+            }
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:powered') && q.block_state('mcutils:lit')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:exposed_copper_bulb_lit"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

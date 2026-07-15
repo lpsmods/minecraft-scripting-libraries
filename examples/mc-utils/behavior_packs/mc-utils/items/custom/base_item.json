@@ -1,0 +1,18 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:item": {
+    "description": {
+      "identifier": "lpsmods:base_item",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "lpsmods:base_item",
+      "minecraft:wearable": {
+        "slot": "slot.armor.head"
+      },
+      "lpsmods:base_item": {}
+    }
+  }
+}

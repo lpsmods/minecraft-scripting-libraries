@@ -1,0 +1,148 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:trapdoor",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.trapdoor"
+      },
+      "states": {
+        "mcutils:open": [false, true]
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:cardinal_direction"]
+        },
+        "minecraft:placement_position": {
+          "enabled_states": ["minecraft:vertical_half"]
+        }
+      }
+    },
+    "components": {
+      "minecraft:tags": ["wood", "trapdoors", "one_way_collidable"],
+      "minecraft:geometry": "geometry.lpsm_assetsplus_trapdoor_down",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:pale_oak_trapdoor",
+          "render_method": "alpha_test_single_sided"
+        }
+      },
+      "minecraft:collision_box": { "origin": [-8, 0, -8], "size": [16, 3, 16] },
+      "minecraft:selection_box": { "origin": [-8, 0, -8], "size": [16, 3, 16] },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water",
+            "on_liquid_touches": "no_reaction"
+          }
+        ]
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0]
+      },
+      "mcutils:toggleable": {
+        "toggle_state": "mcutils:open",
+        "true_sound_event": "open.wooden_trapdoor",
+        "false_sound_event": "close.wooden_trapdoor"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:vertical_half')=='top'",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [-8, 13, -8],
+            "size": [16, 3, 16]
+          },
+          "minecraft:selection_box": {
+            "origin": [-8, 13, -8],
+            "size": [16, 3, 16]
+          },
+          "minecraft:geometry": "geometry.lpsm_assetsplus_trapdoor_up"
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 0, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 180, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, -90, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 90, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='up'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 0, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='down'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 0, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==true&&q.block_state('minecraft:cardinal_direction')=='north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [90, 0, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==true&&q.block_state('minecraft:cardinal_direction')=='south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [90, 180, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==true&&q.block_state('minecraft:cardinal_direction')=='east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [90, -90, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==true&&q.block_state('minecraft:cardinal_direction')=='west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [90, 90, 0]
+          }
+        }
+      }
+    ]
+  }
+}

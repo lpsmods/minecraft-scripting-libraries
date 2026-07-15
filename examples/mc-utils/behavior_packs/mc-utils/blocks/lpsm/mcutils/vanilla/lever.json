@@ -1,0 +1,102 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:lever",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "mcutils:powered": [false, true]
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:facing_direction"]
+        }
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": { "origin": [-4, 0, -4], "size": [8, 9, 8] },
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_lever",
+        "bone_visibility": {
+          "off": "!q.block_state('mcutils:powered')",
+          "on": "q.block_state('mcutils:powered')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:cobblestone",
+          "face_dimming": false
+        },
+        "lever": {
+          "texture": "minecraft:lever",
+          "face_dimming": false
+        }
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water",
+            "on_liquid_touches": "no_reaction"
+          }
+        ]
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0]
+      },
+      "mcutils:toggleable": {
+        "toggled_by_redstone": false,
+        "toggle_state": "mcutils:powered",
+        "true_sound_event": "random.lever_click",
+        "false_sound_event": "random.lever_click"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='north'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, 180, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='south'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, 180, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='east'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, -90, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='west'",
+        "components": {
+          "minecraft:transformation": { "rotation": [0, -90, 0] }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='up'",
+        "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction')=='down'",
+        "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 15
+          }
+        }
+      }
+    ]
+  }
+}

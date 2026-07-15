@@ -1,0 +1,43 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:tall_block",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "mcutils:half": ["lower", "upper"]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:bedrock"
+        }
+      },
+      "mcutils:multiblock": {
+        "part_state": "mcutils:half",
+        "parts": ["lower,0,0,0", "upper,0,1,0"],
+        "sync_states": true
+      }
+      // "minecraft:tick": {
+      //   "interval_range": [0, 0]
+      // }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:half') == 'upper'",
+        "components": {
+          "minecraft:loot": "loot_tables/empty.json",
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:stone"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

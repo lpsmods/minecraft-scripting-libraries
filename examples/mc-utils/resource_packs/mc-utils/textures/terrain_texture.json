@@ -1,0 +1,166 @@
+{
+  "resource_pack_name": "vanilla",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "lpsmods:chest": {
+      "textures": ["textures/entity/chest/normal"]
+    },
+    "lpsmods:base_block": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:bush_stage_0": {
+      "textures": ["textures/blocks/sweet_berry_bush_stage0"]
+    },
+    "lpsmods:bush_stage_1": {
+      "textures": ["textures/blocks/sweet_berry_bush_stage1"]
+    },
+    "lpsmods:bush_stage_2": {
+      "textures": ["textures/blocks/sweet_berry_bush_stage2"]
+    },
+    "lpsmods:bush_stage_3": {
+      "textures": ["textures/blocks/sweet_berry_bush_stage3"]
+    },
+    "lpsmods:cake": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:candle_cake": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:cauldron": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:concrete": {
+      "textures": ["textures/blocks/concrete_white"]
+    },
+    "lpsmods:concrete_powder": {
+      "textures": ["textures/blocks/concrete_powder_white"]
+    },
+    "lpsmods:coral_block": {
+      "textures": ["textures/blocks/coral_blue"]
+    },
+    "lpsmods:dead_coral_block": {
+      "textures": ["textures/blocks/coral_blue_dead"]
+    },
+    "lpsmods:crop_stage_0": {
+      "textures": ["textures/blocks/wheat_stage_0"]
+    },
+    "lpsmods:crop_stage_1": {
+      "textures": ["textures/blocks/wheat_stage_1"]
+    },
+    "lpsmods:crop_stage_2": {
+      "textures": ["textures/blocks/wheat_stage_2"]
+    },
+    "lpsmods:crop_stage_3": {
+      "textures": ["textures/blocks/wheat_stage_3"]
+    },
+    "lpsmods:crop_stage_4": {
+      "textures": ["textures/blocks/wheat_stage_4"]
+    },
+    "lpsmods:crop_stage_5": {
+      "textures": ["textures/blocks/wheat_stage_5"]
+    },
+    "lpsmods:crop_stage_6": {
+      "textures": ["textures/blocks/wheat_stage_6"]
+    },
+    "lpsmods:crop_stage_7": {
+      "textures": ["textures/blocks/wheat_stage_7"]
+    },
+    "lpsmods:farmland": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:height": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:redstone_lamp_off": {
+      "textures": ["textures/blocks/redstone_lamp_off"]
+    },
+    "lpsmods:redstone_lamp_on": {
+      "textures": ["textures/blocks/redstone_lamp_on"]
+    },
+    "lpsmods:sapling": {
+      "textures": ["textures/blocks/sapling_oak"]
+    },
+    "lpsmods:slab": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:stairs": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:flower": {
+      "textures": "textures/blocks/flower_tulip_orange.png"
+    },
+    "lpsmods:vertical_slab": {
+      "textures": ["textures/blocks/stone"]
+    },
+    "lpsmods:leaves": {
+      "textures": ["textures/blocks/leaves_oak"]
+    },
+    "lpsmods:log_top": {
+      "textures": ["textures/blocks/log_oak_top"]
+    },
+    "lpsmods:log": {
+      "textures": ["textures/blocks/log_oak"]
+    },
+    "lpsmods:stripped_log_top": {
+      "textures": ["textures/blocks/stripped_oak_log_top"]
+    },
+    "lpsmods:stripped_log": {
+      "textures": ["textures/blocks/stripped_oak_log"]
+    },
+    "lpsmods:candle": { "textures": ["textures/blocks/candles/candle.png"] },
+    "lpsmods:candle_lit": {
+      "textures": ["textures/blocks/candles/candle_lit.png"]
+    },
+    "lpsmods:tall_crop_top_stage_0": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_top_stage_0.png"]
+    },
+    "lpsmods:tall_crop_top_stage_1": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_top_stage_1.png"]
+    },
+    "lpsmods:tall_crop_top_stage_2": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_top_stage_2.png"]
+    },
+    "lpsmods:tall_crop_top_stage_3": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_top_stage_3.png"]
+    },
+    "lpsmods:tall_crop_top_stage_4": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_top_stage_4.png"]
+    },
+    "lpsmods:tall_crop_top_stage_5": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_top_stage_5.png"]
+    },
+    "lpsmods:tall_crop_top_stage_6": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_top_stage_6.png"]
+    },
+    "lpsmods:tall_crop_top_stage_7": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_top_stage_7.png"]
+    },
+    "lpsmods:tall_crop_bottom_stage_0": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_bottom_stage_0.png"]
+    },
+    "lpsmods:tall_crop_bottom_stage_1": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_bottom_stage_1.png"]
+    },
+    "lpsmods:tall_crop_bottom_stage_2": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_bottom_stage_2.png"]
+    },
+    "lpsmods:tall_crop_bottom_stage_3": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_bottom_stage_3.png"]
+    },
+    "lpsmods:tall_crop_bottom_stage_4": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_bottom_stage_4.png"]
+    },
+    "lpsmods:tall_crop_bottom_stage_5": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_bottom_stage_5.png"]
+    },
+    "lpsmods:tall_crop_bottom_stage_6": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_bottom_stage_6.png"]
+    },
+    "lpsmods:tall_crop_bottom_stage_7": {
+      "textures": ["textures/lpsm/mcutils/blocks/tall_crop_bottom_stage_7.png"]
+    },
+    "lpsmods:bed": { "textures": ["textures/entity/bed/red.png"] }
+  }
+}

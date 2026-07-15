@@ -1,0 +1,66 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:food",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:loot": "loot_tables/empty.json",
+      "minecraft:geometry": "geometry.lpsm_assetsplus_cake.slice0",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:cake_bottom",
+          "render_method": "opaque"
+        },
+        "side": {
+          "texture": "minecraft:cake_side",
+          "render_method": "opaque"
+        },
+        "inside": {
+          "texture": "minecraft:cake_inner",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "minecraft:cake_top",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.5
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:selection_box": {
+        "origin": [-7, 0, -7],
+        "size": [14, 8, 14]
+      },
+      "minecraft:collision_box": {
+        "origin": [-7, 0, -7],
+        "size": [14, 8, 14]
+      },
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": ["up"],
+            "block_filter": [
+              {
+                "tags": "!q.any_tag('non_full')"
+              }
+            ]
+          }
+        ]
+      },
+      "mcutils:food": {
+        "nutrition": 2,
+        "saturation_modifier": 0.4,
+        "using_converts_to": "air",
+        "sound_event": "random.burp"
+      }
+    }
+  }
+}

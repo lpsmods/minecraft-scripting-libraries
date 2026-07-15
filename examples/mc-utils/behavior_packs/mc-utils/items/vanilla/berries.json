@@ -1,0 +1,18 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:item": {
+    "description": {
+      "identifier": "lpsmods:berries",
+      "menu_category": {
+        "category": "nature",
+        "group": "minecraft:itemGroup.name.crop"
+      }
+    },
+    "components": {
+      "minecraft:icon": "lpsmods:berries",
+      "minecraft:block_placer": {
+        "block": "lpsmods:bush"
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:stripped_log",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.logs"
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": ["minecraft:block_face"]
+        }
+      }
+    },
+    "components": {
+      "minecraft:tags": ["wood", "log"],
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "lpsmods:stripped_log"
+        },
+        "up": {
+          "texture": "lpsmods:stripped_log_top"
+        },
+        "down": {
+          "texture": "lpsmods:stripped_log_top"
+        }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:block_face')=='north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [90, 0, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face')=='south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [90, 180, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face')=='east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [90, -90, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face')=='west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [90, 90, 0]
+          }
+        }
+      }
+    ]
+  }
+}

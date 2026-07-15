@@ -1,0 +1,51 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:farmland",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "mcutils:moisture": { "values": { "min": 0, "max": 7 } }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.lpsm_assetsplus_farmland",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:dirt"
+        },
+        "up": {
+          "texture": "minecraft:farmland"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [-8, 0, -8],
+        "size": [16, 15, 16]
+      },
+      "minecraft:selection_box": {
+        "origin": [-8, 0, -8],
+        "size": [16, 15, 16]
+      },
+      "mcutils:farmland": {
+        "moisture_state": "mcutils:moisture"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:moisture')==7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:dirt"
+            },
+            "up": {
+              "texture": "minecraft:farmland_moist"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

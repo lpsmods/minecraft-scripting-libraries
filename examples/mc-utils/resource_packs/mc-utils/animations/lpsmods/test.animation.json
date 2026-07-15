@@ -1,0 +1,15 @@
+{
+  "format_version": "1.10.0",
+  "animations": {
+    "animation.test.root": {
+      "loop": true,
+      "bones": {
+        "rightitem": {
+          "position": [0, 10, 2],
+          "rotation": [0, 45, 0],
+          "scale": [2, 2, 2]
+        }
+      }
+    }
+  }
+}

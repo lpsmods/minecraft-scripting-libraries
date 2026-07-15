@@ -1,0 +1,63 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:scaffolding",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "mcutils:distance": [0, 1, 2, 3, 4, 5, 6, 7],
+        "mcutils:stable": [false, true],
+        "mcutils:solid": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_scaffolding",
+        "bone_visibility": {
+          "stable": "q.block_state('mcutils:stable')",
+          "unstable": "!q.block_state('mcutils:stable')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:scaffolding_side"
+        },
+        "up": {
+          "texture": "minecraft:scaffolding_top"
+        },
+        "down": {
+          "texture": "minecraft:scaffolding_bottom"
+        }
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "minecraft:collision_box": false,
+      "minecraft:tick": {
+        "interval_range": [0, 0]
+      },
+      "mcutils:scaffolding": {
+        "distance_state": "mcutils:distance",
+        "stable_state": "mcutils:stable",
+        "solid_state": "mcutils:solid",
+        "entity": "lpsmods:falling_block",
+        "distance": 7
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:solid')",
+        "components": {
+          "minecraft:collision_box": true
+        }
+      }
+    ]
+  }
+}

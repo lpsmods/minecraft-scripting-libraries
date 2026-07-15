@@ -1,15 +1,21 @@
 import {
+  BiomeTypes,
   BlockFillOptions,
   BlockPermutation,
   BlockType,
+  BlockTypes,
   BlockVolume,
   Dimension,
+  EffectTypes,
+  EnchantmentTypes,
+  EntityTypes,
+  ItemTypes,
   LocationInUnloadedChunkError,
   ScoreboardIdentity,
   ScoreboardObjective,
   Vector3,
 } from "@minecraft/server";
-import { ErrorUtils, MathUtils } from "@lpsmods/mc-common";
+import { ErrorUtils, Identifier, MathUtils } from "@lpsmods/mc-common";
 
 /**
  * Utility helpers for world.
@@ -127,5 +133,25 @@ export abstract class WorldUtils {
     if (!MathUtils.inRange(x, -horizontal, horizontal)) return false;
     if (!MathUtils.inRange(z, -horizontal, horizontal)) return false;
     return true;
+  }
+
+  private static cachedNamespaces?: string[] = undefined;
+
+  /**
+   * Returns a list of all namespaces found in this world.
+   * @returns {string[]}
+   */
+  static getAllNamespaces(): string[] {
+    if (!WorldUtils.cachedNamespaces) {
+      const results = new Set<string>();
+      ItemTypes.getAll().forEach((type) => results.add(Identifier.parse(type.id).namespace));
+      BlockTypes.getAll().forEach((type) => results.add(Identifier.parse(type.id).namespace));
+      EntityTypes.getAll().forEach((type) => results.add(Identifier.parse(type.id).namespace));
+      EffectTypes.getAll().forEach((type) => results.add(Identifier.parse(type.getName()).namespace));
+      EnchantmentTypes.getAll().forEach((type) => results.add(Identifier.parse(type.id).namespace));
+      BiomeTypes.getAll().forEach((type) => results.add(Identifier.parse(type.id).namespace));
+      WorldUtils.cachedNamespaces = Array.from(results);
+    }
+    return WorldUtils.cachedNamespaces;
   }
 }

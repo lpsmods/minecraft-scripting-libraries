@@ -1,0 +1,142 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:door",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "mcutils:open": [false, true],
+        "mcutils:half": ["bottom", "top"],
+        "mcutils:hinge": ["left", "right"]
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:cardinal_direction"]
+        }
+      }
+    },
+    "components": {
+      "minecraft:tags": ["wood"],
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_door_down"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:oak_door_bottom",
+          "render_method": "alpha_test_single_sided"
+        }
+      },
+      "minecraft:collision_box": { "origin": [-8, 0, 5], "size": [16, 16, 3] },
+      "minecraft:selection_box": { "origin": [-8, 0, 5], "size": [16, 16, 3] },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "mcutils:multiblock": {
+        "part_state": "mcutils:half",
+        "parts": ["bottom,0,0,0", "top,0,1,0"],
+        "sync_states": true
+      },
+      "mcutils:toggleable": {
+        "toggle_state": "mcutils:open",
+        "open_sound_event": "open.wooden_door",
+        "close_sound_event": "close.wooden_door"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:half')=='top'",
+        "components": {
+          "minecraft:loot": "loot_tables/empty.json",
+          "minecraft:geometry": {
+            "identifier": "geometry.lpsm_assetsplus_door_up"
+          },
+          "minecraft:placement_filter": {
+            "conditions": [
+              {
+                "block_filter": ["lpsmods:door"],
+                "allowed_faces": ["up"]
+              }
+            ]
+          },
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:oak_door_top",
+              "render_method": "alpha_test_single_sided"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 0, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 180, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, -90, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==false&&q.block_state('minecraft:cardinal_direction')=='west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 90, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==true&&q.block_state('minecraft:cardinal_direction')=='north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, -90, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==true&&q.block_state('minecraft:cardinal_direction')=='south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 90, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==true&&q.block_state('minecraft:cardinal_direction')=='east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 180, 0]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:open')==true&&q.block_state('minecraft:cardinal_direction')=='west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 0, 0]
+          }
+        }
+      }
+    ]
+  }
+}

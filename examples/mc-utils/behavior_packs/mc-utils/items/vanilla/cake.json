@@ -1,0 +1,21 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:item": {
+    "description": {
+      "identifier": "lpsmods:cake",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.miscFood"
+      }
+    },
+    "components": {
+      "minecraft:icon": "lpsmods:cake",
+      "minecraft:block_placer": {
+        "block": "lpsmods:cake"
+      },
+      "minecraft:display_name": {
+        "value": "tile.lpsmods:cake.name"
+      }
+    }
+  }
+}

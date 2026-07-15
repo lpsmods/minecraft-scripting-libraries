@@ -1,0 +1,49 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:leaves",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.leaves"
+      },
+      "states": {
+        "mcutils:distance": [1, 2, 3, 4, 5, 6, 7],
+        "mcutils:persistent": [false, true]
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": ["minecraft:vertical_half"]
+        }
+      }
+    },
+    "components": {
+      "minecraft:tags": ["plant"],
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "lpsmods:leaves",
+          "tint_method": "default_foliage",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "mcutils:leaves": {
+        "distance_state": "mcutils:distance",
+        "persistent_state": "mcutils:persistent",
+        "delay": 60
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:chest",
+      "menu_category": {
+        "category": "none"
+      }
+    },
+    "components": {
+      "minecraft:item_visual": {
+        "geometry": "geometry.lpsm_assetsplus_chest",
+        "material_instances": {
+          "*": {
+            "texture": "lpsmods:chest"
+          }
+        }
+      },
+      "minecraft:loot": "loot_tables/lpsmods/blocks/chest.json",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:air",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 2.5
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2.5
+      },
+      "minecraft:collision_box": {
+        "origin": [-7.5, 0, -7.5],
+        "size": [15, 15, 15]
+      },
+      "minecraft:selection_box": {
+        "origin": [-7.5, 0, -7.5],
+        "size": [15, 15, 15]
+      },
+      "mcutils:tile_entity": {
+        "entity": "lpsmods:chest"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "lpsmods:test",
+      "materials": { "default": "entity" },
+      "textures": { "default": "textures/blocks/diamond_block" },
+      "geometry": { "default": "geometry.lpsmods_test" },
+      "render_controllers": ["controller.render.default"],
+      "animations": {
+        "root": "animation.test.root"
+      },
+      "scripts": {
+        "animate": ["root"]
+      }
+    }
+  }
+}

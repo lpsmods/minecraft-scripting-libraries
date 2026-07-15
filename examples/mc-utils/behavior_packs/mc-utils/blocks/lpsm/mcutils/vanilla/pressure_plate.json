@@ -1,0 +1,50 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:pressure_plate",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "mcutils:powered": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": { "origin": [-7, 0, -7], "size": [14, 1, 14] },
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_pressure_plate",
+        "bone_visibility": {
+          "off": "!q.block_state('mcutils:powered')",
+          "on": "q.block_state('mcutils:powered')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:stone"
+        }
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "mcutils:pressure_plate": {
+        "powered_state": "mcutils:powered",
+        "delay": 20
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:powered')",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 15
+          }
+        }
+      }
+    ]
+  }
+}

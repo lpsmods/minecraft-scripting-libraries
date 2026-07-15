@@ -1,0 +1,209 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:daylight_detector",
+      "menu_category": {
+        "category": "equipment"
+      },
+      "states": {
+        "mcutils:inverted": [false, true],
+        "mcutils:powered": { "values": { "min": 0, "max": 15 } }
+      }
+    },
+    "components": {
+      "minecraft:tags": ["non_full"],
+      "minecraft:loot": "loot_tables/lpsmods/blocks/daylight_detector.json",
+      "minecraft:geometry": "geometry.lpsm_assetsplus_daylight_detector",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:daylight_detector"
+        },
+        "up": {
+          "texture": "minecraft:daylight_detector_top"
+        }
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 2
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "minecraft:collision_box": {
+        "origin": [-8, 0, -8],
+        "size": [16, 6, 16]
+      },
+      "minecraft:selection_box": {
+        "origin": [-8, 0, -8],
+        "size": [16, 6, 16]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "mcutils:time_detector": {
+        "time_interval": [22331, 22781],
+        "inverted_state": "mcutils:inverted",
+        "powered_state": "mcutils:powered"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:inverted')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "minecraft:daylight_detector"
+            },
+            "up": {
+              "texture": "minecraft:daylight_detector_inverted_top"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==1",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 1
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==2",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 2
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==3",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 3
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==4",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 4
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==5",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 5
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==6",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 6
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==7",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 7
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==8",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 8
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==9",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 9
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==10",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 10
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==11",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 11
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==12",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 12
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==13",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 13
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==14",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 14
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:powered')==15",
+        "components": {
+          "minecraft:redstone_producer": {
+            "connected_faces": ["up", "down", "north", "east", "south", "west"],
+            "power": 15
+          }
+        }
+      }
+    ]
+  }
+}

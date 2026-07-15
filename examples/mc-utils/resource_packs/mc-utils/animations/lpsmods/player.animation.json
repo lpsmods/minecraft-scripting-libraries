@@ -1,0 +1,42 @@
+{
+  "format_version": "1.10.0",
+  "animations": {
+    "animation.player.sit": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "position": [0, -8, 0]
+        },
+        "leftarm": {
+          "rotation": [-36.0, 0.0, 0.0]
+        },
+        "rightarm": {
+          "rotation": [-36.0, 0.0, 0.0]
+        },
+        "leftleg": {
+          "rotation": ["-72.0 - this", "-18.0 - this", "-this"]
+        },
+        "rightleg": {
+          "rotation": ["-72.0 - this", "18.0 - this", "-this"]
+        }
+      }
+    },
+    "animation.custom.player.sleeping": {
+      "loop": true,
+      "override_previous_animation": true,
+      "bones": {
+        "head": {
+          "rotation": ["30.0 - this", "-this", "-this"]
+        },
+        "root": {
+          "position": [
+            "24.0 * math.cos(query.body_y_rotation) * math.cos(query.sleep_rotation) - 24.0 * math.sin(query.body_y_rotation) * math.sin(query.sleep_rotation)",
+            0.0,
+            "24.0 * math.cos(query.body_y_rotation) * math.sin(query.sleep_rotation) + 24.0 * math.sin(query.body_y_rotation) * math.cos(query.sleep_rotation)"
+          ],
+          "rotation": [-90.0, "270.0 - query.sleep_rotation - query.body_y_rotation", 0.0]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:iron_bars",
+      "states": {
+        "mcutils:north": [false, true],
+        "mcutils:south": [false, true],
+        "mcutils:east": [false, true],
+        "mcutils:west": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "minecraft:iron_bars",
+          "render_method": "alpha_test_single_sided"
+        }
+      },
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_iron_bars",
+        "culling": "lpsm_assetsplus:iron_bars",
+        "bone_visibility": {
+          "post": "!q.block_state('mcutils:north') && !q.block_state('mcutils:east') && !q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+          "north": "q.block_state('mcutils:north')",
+          "east": "q.block_state('mcutils:east')",
+          "south": "q.block_state('mcutils:south')",
+          "west": "q.block_state('mcutils:west')",
+
+          "north_cap": "q.block_state('mcutils:north') && !q.block_state('mcutils:south')",
+          "east_cap": "q.block_state('mcutils:east') && !q.block_state('mcutils:west')",
+          "south_cap": "q.block_state('mcutils:south') && !q.block_state('mcutils:north')",
+          "west_cap": "q.block_state('mcutils:west') && !q.block_state('mcutils:east')"
+        }
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": true,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "minecraft:tick": {
+        "interval_range": [0, 0],
+        "looping": true
+      },
+      "mcutils:cross_collision": {
+        "north_state": "mcutils:north",
+        "east_state": "mcutils:east",
+        "south_state": "mcutils:south",
+        "west_state": "mcutils:west"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "!q.block_state('mcutils:north') && !q.block_state('mcutils:east') && !q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:north') && q.block_state('mcutils:east') && q.block_state('mcutils:south') && q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": true,
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:north') && !q.block_state('mcutils:east') && !q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-1, 0, -8],
+            "size": [2, 16, 9]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -8],
+            "size": [2, 16, 9]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:north') && !q.block_state('mcutils:east') && q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 9]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 9]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:north') && q.block_state('mcutils:east') && !q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -1],
+            "size": [9, 16, 2]
+          },
+          "minecraft:collision_box": {
+            "origin": [-8, 0, -1],
+            "size": [9, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:north') && !q.block_state('mcutils:east') && !q.block_state('mcutils:south') && q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-1, 0, -1],
+            "size": [9, 16, 2]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [9, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:north') && q.block_state('mcutils:east') && !q.block_state('mcutils:south') && q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -8],
+            "size": [16, 16, 9]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:north') && q.block_state('mcutils:east') && q.block_state('mcutils:south') && q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -1],
+            "size": [16, 16, 9]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:north') && q.block_state('mcutils:east') && q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -8],
+            "size": [9, 16, 16]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:north') && !q.block_state('mcutils:east') && q.block_state('mcutils:south') && q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-1, 0, -8],
+            "size": [9, 16, 16]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:north') && !q.block_state('mcutils:east') && q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-1, 0, -8],
+            "size": [2, 16, 16]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -8],
+            "size": [2, 16, 16]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:north') && q.block_state('mcutils:east') && !q.block_state('mcutils:south') && q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -1],
+            "size": [16, 16, 2]
+          },
+          "minecraft:collision_box": {
+            "origin": [-8, 0, -1],
+            "size": [16, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:north') && q.block_state('mcutils:east') && !q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -8],
+            "size": [9, 16, 9]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('mcutils:north') && !q.block_state('mcutils:east') && !q.block_state('mcutils:south') && q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-1, 0, -8],
+            "size": [9, 16, 9]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:north') && q.block_state('mcutils:east') && q.block_state('mcutils:south') && !q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -1],
+            "size": [9, 16, 9]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:north') && !q.block_state('mcutils:east') && q.block_state('mcutils:south') && q.block_state('mcutils:west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-1, 0, -1],
+            "size": [9, 16, 9]
+          },
+          "minecraft:collision_box": {
+            "origin": [-1, 0, -1],
+            "size": [2, 16, 2]
+          }
+        }
+      }
+    ]
+  }
+}

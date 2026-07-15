@@ -35,14 +35,14 @@
     "@lpsmods/minecraft-server-mock": "^0.0.2",
     "@lpsmods/minecraft-server-ui-mock": "^0.0.1",
     "@types/pako": "^2.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.60.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
     "esbuild": "^0.27.7",
     "eslint": "^9.39.4",
     "eslint-plugin-minecraft-linting": "^2.0.12",
     "eslint-plugin-unused-imports": "^4.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.7"
+    "vitest": "^4.1.9"
   },
   "dependencies": {
     "@lpsmods/mc-common": "^0.0.3",

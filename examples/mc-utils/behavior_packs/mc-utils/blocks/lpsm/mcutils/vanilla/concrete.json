@@ -1,0 +1,20 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:concrete",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.concrete"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "lpsmods:concrete"
+        }
+      }
+    }
+  }
+}

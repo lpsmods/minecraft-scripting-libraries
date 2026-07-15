@@ -1,0 +1,57 @@
+{
+  "resource_pack_name": "vanilla",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "lpsmods:pocket_dim": {
+      "textures": "textures/items/paper.png"
+    },
+    "lpsmods:iron_bars": {
+      "textures": "textures/blocks/iron_bars.png"
+    },
+    "lpsmods:sword": {
+      "textures": "textures/items/stone_sword.png"
+    },
+    "lpsmods:flint_and_steel": {
+      "textures": "textures/items/flint_and_steel.png"
+    },
+    "lpsmods:axe": {
+      "textures": "textures/items/stone_axe.png"
+    },
+    "lpsmods:pickaxe": {
+      "textures": "textures/items/stone_pickaxe.png"
+    },
+    "lpsmods:shovel": {
+      "textures": "textures/items/stone_shovel.png"
+    },
+    "lpsmods:hoe": {
+      "textures": "textures/items/stone_hoe.png"
+    },
+    "lpsmods:base_item": {
+      "textures": "textures/items/paper.png"
+    },
+    "lpsmods:flower": {
+      "textures": "textures/blocks/flower_tulip_orange.png"
+    },
+    "lpsmods:guide_book": {
+      "textures": "textures/items/book_portfolio.png"
+    },
+    "lpsmods:berries": {
+      "textures": "textures/items/sweet_berries"
+    },
+    "lpsmods:sapling": {
+      "textures": "textures/blocks/sapling_oak.png"
+    },
+    "lpsmods:seeds": {
+      "textures": "textures/items/seeds_wheat.png"
+    },
+    "lpsmods:cake": {
+      "textures": "textures/items/cake.png"
+    },
+    "lpsmods:candle": {
+      "textures": "textures/items/candles/candle.png"
+    },
+    "lpsmods:lever": {
+      "textures": "textures/items/lever.png"
+    }
+  }
+}

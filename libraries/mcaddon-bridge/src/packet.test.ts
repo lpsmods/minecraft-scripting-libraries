@@ -1,12 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { system } from "@minecraft/server";
 import { DataUtils } from "@lpsmods/mc-common";
-import {
-  Packet,
-  PacketEvents,
-  PacketReceiveEvent,
-  PacketResponseEvent,
-} from "./packet";
+import { Packet, PacketEvents, PacketReceiveEvent, PacketResponseEvent } from "./packet";
 
 function encodePacket(data: unknown): string {
   return JSON.stringify(DataUtils.dumpJson(data));

@@ -1,0 +1,102 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lpsmods:slab",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.slab"
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": ["minecraft:vertical_half"]
+        }
+      },
+      "states": {
+        "mcutils:double": [false, true]
+      }
+    },
+    "components": {
+      "minecraft:tags": ["minecraft:slab"],
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "lpsmods:slab"
+        }
+      },
+      "minecraft:geometry": {
+        "identifier": "geometry.lpsm_assetsplus_slab",
+        "bone_visibility": {
+          "top": "q.block_state('minecraft:vertical_half')=='top'",
+          "bottom": "q.block_state('minecraft:vertical_half')=='bottom'"
+        },
+        "culling": "lpsm_assetsplus:slab"
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "can_contain_liquid": false,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "mcutils:slab": {
+        "double_state": "mcutils:double",
+        "sound_event": "random.click"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('mcutils:double')",
+        "components": {
+          "minecraft:loot": "loot_tables/lpsmods/blocks/double_slab.json",
+          "minecraft:geometry": "minecraft:geometry.full_block",
+          "minecraft:selection_box": true,
+          "minecraft:collision_box": true
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:double')&&q.block_state('minecraft:vertical_half')=='top'",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [-8.0, 8.0, -8.0],
+            "size": [16.0, 8.0, 16.0]
+          },
+          "minecraft:selection_box": {
+            "origin": [-8.0, 8.0, -8.0],
+            "size": [16.0, 8.0, 16.0]
+          },
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "can_contain_liquid": true,
+                "liquid_type": "water",
+                "stops_liquid_flowing_from_direction": ["up"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('mcutils:double')&&q.block_state('minecraft:vertical_half')=='bottom'",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [-8.0, 0.0, -8.0],
+            "size": [16.0, 8.0, 16.0]
+          },
+          "minecraft:selection_box": {
+            "origin": [-8.0, 0.0, -8.0],
+            "size": [16.0, 8.0, 16.0]
+          },
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "can_contain_liquid": true,
+                "liquid_type": "water"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

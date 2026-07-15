@@ -34,25 +34,25 @@
     "@lpsmods/minecraft-server-mock": "^0.0.2",
     "@lpsmods/minecraft-server-ui-mock": "^0.0.1",
     "@types/pako": "^2.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.60.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
     "esbuild": "^0.27.7",
     "eslint": "^9.39.4",
     "eslint-plugin-minecraft-linting": "^2.0.12",
     "eslint-plugin-unused-imports": "^4.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.7"
+    "vitest": "^4.1.9"
   },
   "peerDependencies": {
-    "@minecraft/server": "^2.7.0",
-    "@minecraft/server-ui": "^2.0.0"
+    "@minecraft/server": "^2.8.0",
+    "@minecraft/server-ui": "^2.1.0"
   },
   "dependencies": {
-    "@bedrock-oss/add-on-registry": "^1.0.25",
+    "@bedrock-oss/add-on-registry": "^1.0.26",
     "@lpsmods/mc-common": "^0.0.3",
     "@minecraft/math": "^2.4.0",
     "molang": "2.0.1",
-    "pako": "^2.1.0",
+    "pako": "^2.2.0",
     "superstruct": "2.0.2"
   }
 }

@@ -1,0 +1,120 @@
+pack.name=mc-utils
+pack.description=Example resource pack for @lpsmods/mc-utils
+
+progressBar.test=Progress Bar
+container.large_crafting_table=Large Crafting Table
+
+lpsmods:itemGroup.name.vertical_slabs=Vertical Slabs
+lpsmods:itemGroup.name.flint_and_steel=Flint and Steels
+
+guide.lpsmods:search=Search
+guide.lpsmods:search.desc=Search guide book pages
+guide.lpsmods:search.results=Search Results
+guide.lpsmods:search.include_titles=Include Titles
+guide.lpsmods:search.include_buttons=Include Buttons
+
+guide.lpsmods:items=Items
+guide.lpsmods:items.desc=All items added by this Add-On!
+guide.lpsmods:items.example=Example Item
+guide.lpsmods:items.example.desc=desc
+guide.lpsmods:blocks=Blocks
+guide.lpsmods:blocks.desc=All blocks added by this Add-On!
+guide.lpsmods:blocks.example=Example Block
+guide.lpsmods:blocks.example.desc=desc
+guide.lpsmods:changelogs=Changelogs
+
+entity.lpsmods:text_display.name=Text Display\n§6Example Add-On§r
+entity.lpsmods:chest.name=Chest\n§6Example Add-On§r
+entity.lpsmods:chiseled_bookshelf.name=Chiseled Bookshelf\n§6Example Add-On§r
+entity.lpsmods:falling_block.name=Falling Block\n§6Example Add-On§r
+entity.lpsmods:custom_feature.name=Custom Feature\n§6Example Add-On§r
+
+tile.lpsmods:food.name=Food\n§6Example Add-On§r
+tile.lpsmods:base_block.name=Base Block\n§6Example Add-On§r
+tile.lpsmods:bush.name=Bush\n§6Example Add-On§r
+tile.lpsmods:cake.name=Cake\n§6Example Add-On§r
+tile.lpsmods:candle_cake.name=Candle Cake\n§6Example Add-On§r
+tile.lpsmods:cauldron.name=Cauldron\n§6Example Add-On§r
+tile.lpsmods:water_cauldron.name=Water Cauldron\n§6Example Add-On§r
+tile.lpsmods:lava_cauldron.name=Lava Cauldron\n§6Example Add-On§r
+tile.lpsmods:concrete_powder.name=Concrete Powder\n§6Example Add-On§r
+tile.lpsmods:concrete.name=Concrete\n§6Example Add-On§r
+tile.lpsmods:copper_bulb.name=Copper Bulb\n§6Example Add-On§r
+tile.lpsmods:exposed_copper_bulb.name=Exposed Copper Bulb\n§6Example Add-On§r
+tile.lpsmods:weathered_copper_bulb.name=Weathered Copper Bulb\n§6Example Add-On§r
+tile.lpsmods:oxidized_copper_bulb.name=Oxidized Copper Bulb\n§6Example Add-On§r
+tile.lpsmods:waxed_copper_bulb.name=Waxed Copper Bulb\n§6Example Add-On§r
+tile.lpsmods:waxed_exposed_copper_bulb.name=Waxed Exposed Copper Bulb\n§6Example Add-On§r
+tile.lpsmods:waxed_weathered_copper_bulb.name=Waxed Weathered Copper Bulb\n§6Example Add-On§r
+tile.lpsmods:waxed_oxidized_copper_bulb.name=Waxed Oxidized Copper Bulb\n§6Example Add-On§r
+tile.lpsmods:coral_block.name=Coral Block\n§6Example Add-On§r
+tile.lpsmods:dead_coral_block.name=Dead Coral Block\n§6Example Add-On§r
+tile.lpsmods:crop.name=Crop\n§6Example Add-On§r
+tile.lpsmods:farmland.name=Farmland\n§6Example Add-On§r
+tile.lpsmods:height.name=Height\n§6Example Add-On§r
+tile.lpsmods:potted_flower.name=Potted Flower\n§6Example Add-On§r
+tile.lpsmods:redstone_lamp.name=Redstone Lamp\n§6Example Add-On§r
+tile.lpsmods:sapling.name=Sapling\n§6Example Add-On§r
+tile.lpsmods:slab.name=Slab\n§6Example Add-On§r
+tile.lpsmods:stairs.name=Stairs\n§6Example Add-On§r
+tile.lpsmods:vertical_slab.name=Vertical Slab\n§6Example Add-On§r
+tile.lpsmods:leaves.name=Leaves\n§6Example Add-On§r
+tile.lpsmods:log.name=Log\n§6Example Add-On§r
+tile.lpsmods:stripped_log.name=Stripped Log\n§6Example Add-On§r
+tile.lpsmods:tall_block.name=Tall Block\n§6Example Add-On§r
+tile.lpsmods:tall_crop.name=Tall Crop\n§6Example Add-On§r
+tile.lpsmods:trapdoor.name=Trapdoor\n§6Example Add-On§r
+tile.lpsmods:door.name=Door\n§6Example Add-On§r
+tile.lpsmods:wall.name=Wall\n§6Example Add-On§r
+tile.lpsmods:fence.name=Fence\n§6Example Add-On§r
+tile.lpsmods:fence_gate.name=Fence Gate\n§6Example Add-On§r
+tile.lpsmods:button.name=Button\n§6Example Add-On§r
+tile.lpsmods:lever.name=Lever\n§6Example Add-On§r
+tile.lpsmods:pressure_plate.name=Pressure Plate\n§6Example Add-On§r
+tile.lpsmods:candle.name=Candle\n§6Example Add-On§r
+tile.lpsmods:flower.name=Flower\n§6Example Add-On§r
+tile.lpsmods:iron_bars.name=Iron Bars\n§6Example Add-On§r
+tile.lpsmods:glass_pane.name=Glass Pane\n§6Example Add-On§r
+tile.lpsmods:bed.name=Bed\n§6Example Add-On§r
+tile.lpsmods:seat.name=Seat\n§6Example Add-On§r
+tile.lpsmods:daylight_detector.name=Daylight Detector\n§6Example Add-On§r
+tile.lpsmods:chiseled_bookshelf.name=Chiseled Bookshelf\n§6Example Add-On§r
+tile.lpsmods:frosted_ice.name=Frosted Ice\n§6Example Add-On§r
+tile.lpsmods:scaffolding.name=Scaffolding\n§6Example Add-On§r
+tile.lpsmods:sponge.name=Sponge\n§6Example Add-On§r
+tile.lpsmods:flower_bed.name=Flower Bed\n§6Example Add-On§r
+tile.lpsmods:powder_snow.name=Powder Snow\n§6Example Add-On§r
+tile.lpsmods:ladder.name=Ladder\n§6Example Add-On§r
+tile.lpsmods:large_crafting_table.name=Large Crafting Table\n§6Example Add-On§r
+
+tile.lpsmods:chest.name=Chest\n§6Example Add-On§r
+tile.lpsmods:barrel.name=Barrel\n§6Example Add-On§r
+
+tile.lpsmods:basic_battery_block.name=Basic Battery Block\n§6Example Add-On§r
+tile.lpsmods:creative_battery_block.name=Creative Battery Block\n§6Example Add-On§r
+tile.lpsmods:energy_cable.name=Energy Cable\n§6Example Add-On§r
+tile.lpsmods:solar_panel.name=Solar Panel\n§6Example Add-On§r
+
+item.lpsmods:base_item=Base Item\n§6Example Add-On§r
+item.lpsmods:guide_book=Guide Book\n§6Example Add-On§r
+item.lpsmods:sword=Sword\n§6Example Add-On§r
+item.lpsmods:axe=Axe\n§6Example Add-On§r
+item.lpsmods:pickaxe=Pickaxe\n§6Example Add-On§r
+item.lpsmods:shovel=Shovel\n§6Example Add-On§r
+item.lpsmods:hoe=Hoe\n§6Example Add-On§r
+item.lpsmods:berries=Berries\n§6Example Add-On§r
+item.lpsmods:seeds=Seeds\n§6Example Add-On§r
+item.lpsmods:flint_and_steel=Flint and Steel\n§6Example Add-On§r
+item.lpsmods:tall_seeds=Tall Seeds\n§6Example Add-On§r
+item.lpsmods:draw_tool=Draw Tool\n§6Example Add-On§r
+item.lpsmods:bed=Bed\n§6Example Add-On§r
+item.lpsmods:flower_bed=Flower Bed\n§6Example Add-On§r
+item.lpsmods:writable_book=Book and Quill\n§6Example Add-On§r
+
+item.lpsmods:basic_battery=Basic Battery\n§6Example Add-On§r
+item.lpsmods:creative_battery=Creative Battery\n§6Example Add-On§r
+item.lpsmods:electric_drill=Electric Drill\n§6Example Add-On§r
+item.lpsmods:energy_wrench=Energy Wrench\n§6Example Add-On§r
+item.lpsmods:reactor_core=Reactor Core\n§6Example Add-On§r
+
+entity.lpsmods:guide_book.name=Guide Book

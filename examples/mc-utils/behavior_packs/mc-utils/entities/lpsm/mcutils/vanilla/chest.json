@@ -1,0 +1,45 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "lpsmods:chest",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "component_groups": {
+      "lpsmods:despawn": { "minecraft:instant_despawn": {} }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": ["static", "inanimate"]
+      },
+      "minecraft:fire_immune": {},
+      "minecraft:collision_box": { "width": 0.0, "height": 0.0 },
+      "minecraft:persistent": {},
+      "minecraft:damage_sensor": { "triggers": [{ "deals_damage": "no" }] },
+      "minecraft:physics": { "has_gravity": false, "has_collision": false },
+      "minecraft:nameable": {
+        "always_show": false,
+        "allow_name_tag_renaming": false
+      },
+      "minecraft:custom_hit_test": {
+        "hitboxes": [{ "width": 1, "height": 1, "pivot": [0, 0, 0] }]
+      },
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:knockback_resistance": {
+        "value": 1,
+        "max": 1
+      },
+      "minecraft:inventory": {
+        "can_be_siphoned_from": true,
+        "container_type": "chest_boat",
+        "inventory_size": 27
+      },
+      "minecraft:pushable_by_block": {}
+    },
+    "events": {
+      "lpsmods:despawn": { "add": { "component_groups": ["lpsmods:despawn"] } }
+    }
+  }
+}
