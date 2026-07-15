@@ -1,0 +1,50 @@
+{
+  "name": "@lpsmods/mc-build",
+  "version": "0.0.1-alpha.0",
+  "author": "legopitstop",
+  "license": "MIT",
+  "description": "Utils to help build Minecraft: Bedrock Edition Add-Ons.",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo 'no build'",
+    "test": "npx vitest run",
+    "lint": "eslint ."
+  },
+  "homepage": "https://docs.lpsmods.dev/@lpsmods/mc-build",
+  "funding": "https://github.com/sponsors/legopitstop",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lpsmods/minecraft-scripting-libraries"
+  },
+  "bugs": {
+    "url": "https://github.com/lpsmods/minecraft-scripting-libraries/issues"
+  },
+  "keywords": [
+    "minecraft",
+    "bedrock",
+    "utils",
+    "build",
+    "automation"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@typescript-eslint/eslint-plugin": "^8.62.1",
+    "esbuild": "^0.27.7",
+    "eslint": "^9.39.4",
+    "eslint-plugin-minecraft-linting": "^2.0.12",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "json5": "^2.2.3",
+    "just-scripts": "^2.6.2",
+    "path": "^0.12.7",
+    "superstruct": "^2.0.2"
+  }
+}

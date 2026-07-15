@@ -1,0 +1,72 @@
+import { BlockChestObstructionComponent } from "./chest_obstruction.ts";
+import { BlockCollisionBoxComponent } from "./collision_box.ts";
+import { BlockConnectionRuleComponent } from "./connection_rule.ts";
+import { BlockCraftingTableComponent } from "./crafting_table.ts";
+import { BlockDestructibleByExplosionComponent } from "./destructible_by_explosion.ts";
+import { BlockDestructibleByMiningComponent } from "./destructible_by_mining.ts";
+import { BlockDestructionParticlesComponent } from "./destruction_particles.ts";
+import { BlockDisplayNameComponent } from "./display_name.ts";
+import { BlockEmbeddedVisualComponent } from "./embedded_visual.ts";
+import { BlockEntityFallOnComponent } from "./entity_fall_on.ts";
+import { BlockFlammableComponent } from "./flammable.ts";
+import { BlockFlowerPottableComponent } from "./flower_pottable.ts";
+import { BlockFrictionComponent } from "./friction.ts";
+import { BlockGeometryComponent } from "./geometry.ts";
+import { BlockItemVisualComponent } from "./item_visual.ts";
+import { BlockLiquidDetectionComponent } from "./liquid_detection.ts";
+import { BlockLootComponent } from "./loot.ts";
+import { BlockMapColorComponent } from "./map_color.ts";
+import { BlockMaterialInstancesComponent } from "./material_instances.ts";
+import { BlockMovableComponent } from "./movable.ts";
+import { BlockPlacementFilterComponent } from "./placement_filter.ts";
+import { BlockPrecipitationInteractionsComponent } from "./precipitation_interactions.ts";
+import { BlockRandomOffsetComponent } from "./random_offset.ts";
+import { BlockRedstoneConductivityComponent } from "./redstone_conductivity.ts";
+import { BlockRedstoneConsumerComponent } from "./redstone_consumer.ts";
+import { BlockRedstoneProducerComponent } from "./redstone_producer.ts";
+import { BlockReplaceableComponent } from "./replaceable.ts";
+import { BlockSelectionBoxComponent } from "./selection_box.ts";
+import { BlockSupportComponent } from "./support.ts";
+import { BlockTickComponent } from "./tick.ts";
+import { BlockTransformationComponent } from "./transformation.ts";
+import { BlockLightDampeningComponent } from "./light_dampening.ts";
+import { BlockLightEmissionComponent } from "./light_emission.ts";
+
+/**
+ * Type map for block component.
+ */
+export interface BlockComponentTypes {
+  "minecraft:chest_obstruction": BlockChestObstructionComponent;
+  "minecraft:collision_box": BlockCollisionBoxComponent;
+  "minecraft:connection_rule": BlockConnectionRuleComponent;
+  "minecraft:crafting_table": BlockCraftingTableComponent;
+  "minecraft:destructible_by_explosion": BlockDestructibleByExplosionComponent;
+  "minecraft:destructible_by_mining": BlockDestructibleByMiningComponent;
+  "minecraft:destruction_particles": BlockDestructionParticlesComponent;
+  "minecraft:display_name": BlockDisplayNameComponent;
+  "minecraft:embedded_visual": BlockEmbeddedVisualComponent;
+  "minecraft:entity_fall_on": BlockEntityFallOnComponent;
+  "minecraft:flammable": BlockFlammableComponent;
+  "minecraft:flower_pottable": BlockFlowerPottableComponent;
+  "minecraft:friction": BlockFrictionComponent;
+  "minecraft:geometry": BlockGeometryComponent;
+  "minecraft:item_visual": BlockItemVisualComponent;
+  "minecraft:light_dampening": BlockLightDampeningComponent;
+  "minecraft:light_emission": BlockLightEmissionComponent;
+  "minecraft:liquid_detection": BlockLiquidDetectionComponent;
+  "minecraft:loot": BlockLootComponent;
+  "minecraft:map_color": BlockMapColorComponent;
+  "minecraft:material_instances": BlockMaterialInstancesComponent;
+  "minecraft:movable": BlockMovableComponent;
+  "minecraft:placement_filter": BlockPlacementFilterComponent;
+  "minecraft:precipitation_interactions": BlockPrecipitationInteractionsComponent;
+  "minecraft:random_offset": BlockRandomOffsetComponent;
+  "minecraft:redstone_conductivity": BlockRedstoneConductivityComponent;
+  "minecraft:redstone_consumer": BlockRedstoneConsumerComponent;
+  "minecraft:redstone_producer": BlockRedstoneProducerComponent;
+  "minecraft:replaceable": BlockReplaceableComponent;
+  "minecraft:selection_box": BlockSelectionBoxComponent;
+  "minecraft:support": BlockSupportComponent;
+  "minecraft:tick": BlockTickComponent;
+  "minecraft:transformation": BlockTransformationComponent;
+}
