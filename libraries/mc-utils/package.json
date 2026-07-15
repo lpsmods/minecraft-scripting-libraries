@@ -1,6 +1,6 @@
 {
   "name": "@lpsmods/mc-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "legopitstop",
   "license": "MIT",
   "description": "Utilities for making Minecraft: Bedrock Edition scripts",
@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@bedrock-oss/add-on-registry": "^1.0.26",
-    "@lpsmods/mc-common": "^0.0.3",
+    "@lpsmods/mc-common": "^0.0.4",
     "@minecraft/math": "^2.4.0",
     "molang": "2.0.1",
     "pako": "^2.2.0",

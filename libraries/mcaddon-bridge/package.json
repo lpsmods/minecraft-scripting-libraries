@@ -1,6 +1,6 @@
 {
   "name": "@lpsmods/mcaddon-bridge",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "legopitstop",
   "license": "MIT",
   "description": "A package to communicate between Minecraft Add-Ons.",
@@ -49,7 +49,7 @@
     "@minecraft/server-ui": "^2.1.0"
   },
   "dependencies": {
-    "@lpsmods/mc-common": "^0.0.3",
+    "@lpsmods/mc-common": "^0.0.4",
     "@minecraft/math": "^2.4.0"
   }
 }

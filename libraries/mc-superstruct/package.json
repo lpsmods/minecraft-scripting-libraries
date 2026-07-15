@@ -1,6 +1,6 @@
 {
   "name": "@lpsmods/mc-superstruct",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "legopitstop",
   "license": "MIT",
   "description": "Superstruct validation for Minecraft: Bedrock Edition types.",
@@ -45,7 +45,7 @@
     "vitest": "^4.1.9"
   },
   "dependencies": {
-    "@lpsmods/mc-common": "^0.0.3",
+    "@lpsmods/mc-common": "^0.0.4",
     "superstruct": "^2.0.2"
   }
 }

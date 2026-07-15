@@ -1,6 +1,6 @@
 {
   "name": "@lpsmods/mc-dev",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "legopitstop",
   "license": "MIT",
   "description": "Debug utilities for Minecraft Bedrock Edition Add-On development.",
@@ -49,7 +49,7 @@
     "@minecraft/server-ui": "^2.1.0"
   },
   "dependencies": {
-    "@lpsmods/mc-utils": "^1.0.0",
+    "@lpsmods/mc-utils": "^1.0.1",
     "@minecraft/math": "^2.4.0"
   }
 }

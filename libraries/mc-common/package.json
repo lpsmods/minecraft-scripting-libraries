@@ -1,6 +1,6 @@
 {
   "name": "@lpsmods/mc-common",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "legopitstop",
   "license": "MIT",
   "description": "Common utilities for @lpsmods Minecraft: Bedrock Edition packages.",

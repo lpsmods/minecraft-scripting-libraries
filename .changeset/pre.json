@@ -1,0 +1,16 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@lpsmods/mc-build": "0.0.1-alpha.0",
+    "@lpsmods/mc-common": "0.0.4",
+    "@lpsmods/mc-dev": "0.0.4",
+    "@lpsmods/mc-mixins": "0.0.2",
+    "@lpsmods/mc-superstruct": "0.0.2",
+    "@lpsmods/mc-utils": "1.0.1",
+    "@lpsmods/mcaddon-bridge": "0.0.3"
+  },
+  "changesets": [
+    "four-dancers-wave"
+  ]
+}

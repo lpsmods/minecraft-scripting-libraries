@@ -26,8 +26,3 @@ export type LootTable = Infer<typeof LootTableSchema>;
  * Type definition for a loot pool.
  */
 export type LootPool = Infer<typeof LootPoolSchema>;
-
-/**
- * Type definition for a loot entry.
- */
-export type LootEntry = Infer<typeof LootEntrySchema>;

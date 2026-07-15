@@ -1,12 +1,24 @@
 {
   "name": "@lpsmods/mc-build",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "author": "legopitstop",
   "license": "MIT",
   "description": "Utils to help build Minecraft: Bedrock Edition Add-Ons.",
-  "main": "src/index.ts",
+  "main": "dist/mc-build.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/mc-build.js",
+      "default": "./dist/mc-build.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "echo 'no build'",
+    "build": "node build.mjs && tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
     "test": "npx vitest run",
     "lint": "eslint ."
   },
