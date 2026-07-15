@@ -4,6 +4,11 @@ on:
   release:
     types: [created]
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Release tag, for example @lpsmods/mc-build_v0.0.1-alpha.1
+        required: true
+        type: string
 
 permissions:
   id-token: write
@@ -40,7 +45,13 @@ jobs:
       - name: Parse release tag
         id: tag
         run: |
-          TAG="${{ github.event.release.tag_name }}"
+          TAG="${{ github.event.release.tag_name || inputs.release_tag }}"
+
+          if [[ ! "$TAG" =~ ^@[^/]+/[^_]+_v.+$ ]]; then
+            echo "Invalid release tag '$TAG'. Expected @scope/package_vVERSION." >&2
+            exit 1
+          fi
+
           NAME="${TAG%%_v*}"
           VERSION="${TAG##*_v}"
 
