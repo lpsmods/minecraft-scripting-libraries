@@ -4,6 +4,7 @@ A collection of packages to help create Minecraft Bedrock add-ons!
 
 ## Packages
 
+- @lpsmods/mc-build
 - @lpsmods/mc-common
 - @lpsmods/mc-dev
 - @lpsmods/mc-mixins
