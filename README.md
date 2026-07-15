@@ -1,5 +1,8 @@
 # @lpsmods/minecraft-scripting-libraries
 
+![Test](https://github.com/lpsmods/minecraft-scripting-libraries/actions/workflows/tests.yml/badge.svg)
+![Lint](https://github.com/lpsmods/minecraft-scripting-libraries/actions/workflows/lint.yml/badge.svg)
+
 A collection of packages to help create Minecraft Bedrock add-ons!
 
 ## Packages
