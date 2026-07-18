@@ -1,0 +1,58 @@
+{
+  "$id": "https://raw.githubusercontent.com/lpsmods/minecraft-scripting-libraries/refs/heads/main/libraries/mc-build/changelog.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Changelog",
+  "description": "Schema for validating changelog.json files.",
+  "type": "object",
+  "default": {},
+  "additionalProperties": {
+    "$ref": "#/definitions/release"
+  },
+  "definitions": {
+    "release": {
+      "type": "object",
+      "required": ["title", "date", "author", "categories"],
+      "properties": {
+        "title": {
+          "description": "The release title",
+          "type": "string"
+        },
+        "date": {
+          "description": "The release date",
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "author": {
+          "description": "The author of the release",
+          "type": "string"
+        },
+        "categories": {
+          "description": "A list of categories",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/category"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "category": {
+      "type": "object",
+      "required": ["title", "list"],
+      "properties": {
+        "title": {
+          "description": "The category title",
+          "type": "string"
+        },
+        "list": {
+          "description": "A bulleted list of changes",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
