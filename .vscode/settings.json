@@ -11,12 +11,27 @@
     "statusBar.background": "#52a535",
     "statusBar.foreground": "#e7e7e7",
     "statusBarItem.hoverBackground": "#69c449",
-    "statusBarItem.remoteBackground": "#52a535",
+    "statusBarItem.remoteBackground": "#cfd7ef",
     "statusBarItem.remoteForeground": "#e7e7e7",
     "titleBar.activeBackground": "#52a535",
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#52a53599",
-    "titleBar.inactiveForeground": "#e7e7e799"
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "activityBarTop.activeBackground": "#69c449",
+    "activityBarTop.background": "#69c449",
+    "activityBarTop.foreground": "#15202b",
+    "activityBarTop.inactiveForeground": "#15202b99",
+    "commandCenter.foreground": "#e7e7e7",
+    "statusBar.debuggingBackground": "#52a535",
+    "statusBar.debuggingForeground": "#e7e7e7"
   },
-  "peacock.color": "#52a535"
+  "peacock.color": "#52a535",
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "changelog.json"
+      ],
+      "url": "https://raw.githubusercontent.com/lpsmods/minecraft-scripting-libraries/refs/heads/main/libraries/mc-build/changelog.schema.json"
+    }
+  ]
 }
