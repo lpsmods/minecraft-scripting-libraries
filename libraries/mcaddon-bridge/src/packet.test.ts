@@ -57,7 +57,7 @@ describe("Packet", () => {
     const [eventId, message] = sendScriptEvent.mock.calls[0];
     expect(eventId).toBe("packet:request");
     expect(decodePacket(message)).toEqual({
-      headers: { type: "response", sender: Packet.sender, id: "bridge" },
+      headers: { type: "response", sender: Packet.sender, target: "other", id: "bridge" },
       body: { ok: true, value: 7 },
     });
   });
@@ -90,7 +90,7 @@ describe("Packet", () => {
       }),
     } as any);
 
-    expect(response).toHaveBeenCalledWith(new PacketResponseEvent("bridge", { ok: true }));
+    expect(response).toHaveBeenCalledWith(new PacketResponseEvent("bridge", { ok: true }, "other"));
   });
 
   it("resolves sendSync with the matching response packet", async () => {
@@ -104,15 +104,43 @@ describe("Packet", () => {
     expect(PacketEvents.response.size).toBe(0);
   });
 
-  it("throws for unknown packet header types", () => {
-    expect(() =>
+  it("ignores malformed and unknown packet envelopes", () => {
+    expect(() => {
+      Packet.packetReceive({ id: "packet:invalid", message: "not json" } as any);
       Packet.packetReceive({
         id: "packet:invalid",
         message: encodePacket({
           headers: { type: "wat", sender: "other", id: "bridge" },
           body: {},
         }),
-      } as any),
-    ).toThrow("'wat' is not a valid packet type!");
+      } as any);
+    }).not.toThrow();
+  });
+
+  it("supports falsy responses", () => {
+    const sendScriptEvent = vi.fn();
+    system.sendScriptEvent = sendScriptEvent;
+    PacketEvents.receive.subscribe((event) => {
+      event.response = false;
+    });
+
+    Packet.packetReceive({
+      id: "packet:request",
+      message: encodePacket({ headers: { type: "request", sender: "other", id: "bridge" }, body: {} }),
+    } as any);
+
+    expect(decodePacket(sendScriptEvent.mock.calls[0][1]).body).toBe(false);
+  });
+
+  it("rejects timed out requests and removes their listeners", async () => {
+    system.sendScriptEvent = vi.fn();
+    system.runTimeout = vi.fn((callback: () => void) => {
+      callback();
+      return 1;
+    });
+    system.clearRun = vi.fn();
+
+    await expect(Packet.sendSync("bridge", {}, { timeoutTicks: 1 })).rejects.toMatchObject({ code: "TIMEOUT" });
+    expect(PacketEvents.response.size).toBe(0);
   });
 });

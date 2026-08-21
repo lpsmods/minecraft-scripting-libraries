@@ -19,6 +19,8 @@ A package to communicate between Minecraft Add-Ons.
 
 - Send data between Add-Ons using packets.
 - Create your own API bridge for other Add-Ons!
+- Correlated responses, validation, timeouts, and automatic listener cleanup.
+- Async bridge methods, version negotiation, authorization hooks, and typed connection methods.
 
 ## Example
 
@@ -33,7 +35,7 @@ const api = new Bridge("com.example.myPack");
 // Basic property
 api.defineProperty("name", {
   value: "Steve",
-  writeable: true,
+  writable: true,
   enumerable: true,
   configurable: true,
 });
@@ -60,7 +62,7 @@ api.defineProperty("greet", {
   value: function (name: string) {
     console.warn(`Hello, ${name}!`);
   },
-  writeable: true,
+  writable: true,
   enumerable: true,
   configurable: true,
 });
@@ -72,26 +74,35 @@ Use the API from a different pack.
 import { world } from "@minecraft/server";
 import { connect } from "@lpsmods/mcaddon-bridge";
 
-function worldLoad(): void {
+async function worldLoad(): Promise<void> {
   // Connect to the api
-  connect("creator_example")
-    .then((api) => {
-      console.warn(api.get("name"));
-      api.set("name", "Bob");
-      console.warn(api.get("name"));
-
-      console.warn(api.get("fullName"));
-      api.set("fullName", "Steve Black");
-      console.warn(api.get("fullName"));
-
-      api.call("greet", "Alex");
-    })
-    .catch((err) => {
-      console.warn(`API error: ${String(err)}`);
+  try {
+    const api = await connect("com.example.myPack", {
+      version: "^1.0.0",
+      timeoutTicks: 100,
     });
+    console.warn(await api.get<string>("name"));
+    await api.set("name", "Bob");
+    console.warn(await api.get<string>("fullName"));
+    await api.call<void>("greet", "Alex");
+  } catch (err) {
+    console.warn(`API error: ${String(err)}`);
+  }
 }
 
 world.afterEvents.worldLoad.subscribe(worldLoad);
 ```
+
+The older `connect(addonId, version?)` overload and misspelled `writeable` descriptor option remain supported for compatibility. New code should use `ConnectionOptions` and `writable`.
+
+## Reliability and lifecycle
+
+Requests time out after 100 game ticks by default. Pass `timeoutTicks: 0` to disable this behavior. Timed-out and completed requests always remove their packet listeners. Failures reject with exported `BridgeError` subclasses such as `BridgeTimeoutError`, `BridgeProtocolError`, and `BridgeRemoteError`.
+
+Use `bridge.dispose()` or `Bridge.unregister(addonId)` when an API is no longer available. Duplicate bridge IDs throw instead of silently replacing an existing bridge. A connection can be marked locally disconnected with `connection.disconnect()`.
+
+Descriptors enforce writes and deletion. Values require `writable: true` to be changed, setter descriptors remain writable through their setter, and only `configurable: true` properties can be removed. `bridge.keys()` returns enumerable properties.
+
+Bridge functions may return promises; callers receive their resolved value. An optional `BridgeOptions.authorize(request, sender)` hook can synchronously or asynchronously deny requests. Script-event senders can be imitated by another pack, so packs in the same world must still be treated as mutually trusted.
 
 > Not associated with or approved by Mojang Studios or Microsoft

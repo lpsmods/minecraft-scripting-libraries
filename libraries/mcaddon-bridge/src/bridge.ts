@@ -2,6 +2,7 @@ import { Player, RawMessage } from "@minecraft/server";
 import { PacketData, PacketEvents, PacketReceiveEvent } from "./packet";
 import { ActionFormData, ActionFormResponse } from "@minecraft/server-ui";
 import { errorPacket } from "./utils";
+import { BRIDGE_PROTOCOL_VERSION, BridgeRequest } from "./protocol";
 
 /**
  * Interface describing a bridge descriptor.
@@ -16,6 +17,9 @@ export interface BridgeDescriptor {
    * Can the value be changed?
    */
   writeable?: boolean;
+
+  /** Standard spelling of writeable. Takes precedence when both are supplied. */
+  writable?: boolean;
 
   /**
    * Shows in loops/Object.keys()?
@@ -53,6 +57,8 @@ export interface BridgeOptions {
   name?: string | RawMessage;
   description?: string | RawMessage;
   enableDocs?: boolean;
+  /** Optionally authorize requests. Add-ons in one world should otherwise be considered trusted. */
+  authorize?: (request: Readonly<BridgeRequest>, sender?: string) => boolean | Promise<boolean>;
 }
 
 /**
@@ -73,8 +79,9 @@ export class Bridge {
   constructor(addonId: string, options?: BridgeOptions) {
     this.addonId = addonId;
     this.options = options ?? {};
-    if (!this.options.version) this.options.version = "1.0.0";
-    if (!this.options.enableDocs) this.options.enableDocs = true;
+    this.options.version ??= "1.0.0";
+    this.options.enableDocs ??= true;
+    if (Bridge.all.has(this.addonId)) throw new Error(`Bridge '${this.addonId}' is already registered.`);
     Bridge.all.set(this.addonId, this);
   }
 
@@ -103,6 +110,7 @@ export class Bridge {
       prop.set(value);
       return this;
     }
+    if (!(prop.writable ?? prop.writeable ?? false)) throw new Error(`Property '${name}' is not writable.`);
     prop.value = value;
     return this;
   }
@@ -115,6 +123,28 @@ export class Bridge {
   has(name: string): boolean {
     const prop = this.descriptors.get(name);
     return !!prop;
+  }
+
+  /** Returns enumerable property names. */
+  keys(): string[] {
+    return [...this.descriptors].filter(([, descriptor]) => descriptor.enumerable !== false).map(([name]) => name);
+  }
+
+  /** Deletes a configurable property. */
+  deleteProperty(name: string): boolean {
+    const prop = this.descriptors.get(name);
+    if (!prop) return false;
+    if (prop.configurable !== true) throw new Error(`Property '${name}' is not configurable.`);
+    return this.descriptors.delete(name);
+  }
+
+  /** Removes this bridge from the registry. */
+  dispose(): void {
+    if (Bridge.all.get(this.addonId) === this) Bridge.all.delete(this.addonId);
+  }
+
+  static unregister(addonId: string): boolean {
+    return Bridge.all.delete(addonId);
   }
 
   /**
@@ -141,9 +171,29 @@ export class Bridge {
       event.response = result;
       return;
     }
+    if (data.protocolVersion !== undefined && data.protocolVersion !== BRIDGE_PROTOCOL_VERSION) {
+      event.response = {
+        error: true,
+        code: "PROTOCOL_VERSION_MISMATCH",
+        message: `Protocol version ${data.protocolVersion} is not supported.`,
+        protocolVersion: BRIDGE_PROTOCOL_VERSION,
+      };
+      return;
+    }
+    if (data.version && !Bridge.versionsCompatible(data.version, this.options.version as string)) {
+      event.response = {
+        error: true,
+        code: "VERSION_MISMATCH",
+        message: `Bridge version ${this.options.version} is incompatible with requested version ${data.version}.`,
+        version: this.options.version,
+      };
+      return;
+    }
     event.response = {
       error: false,
       addon: this.addonId,
+      version: this.options.version,
+      protocolVersion: BRIDGE_PROTOCOL_VERSION,
       message: `Connected to ${this.addonId}`,
     };
   }
@@ -177,12 +227,10 @@ export class Bridge {
   }
 
   private receive_call(event: PacketReceiveEvent, data: PacketData): void {
-    try {
-      const result = this.call(data.property, data.args);
-      event.response = { error: false, value: result };
-    } catch (err) {
-      event.response = errorPacket(err);
-    }
+    event.response = Promise.resolve()
+      .then(() => this.call(data.property, data.args))
+      .then((value) => ({ error: false, value }))
+      .catch((err) => errorPacket(err));
   }
 
   private receive_docs(event: PacketReceiveEvent, data: PacketData): void {
@@ -221,7 +269,7 @@ export class Bridge {
     ui.title(`${propertyName} Bridge`);
     const type = res.value != undefined ? typeof res.value : "setter / getter";
     ui.body(
-      `${res.description ?? ""}\n\n§lType:§r ${type}\n\n§lWriteable§r: ${res.writeable}\n\n§lEnumerable§r: ${
+      `${res.description ?? ""}\n\n§lWritable§r: ${res.writable ?? res.writeable ?? false}\n\n§lType:§r ${type}\n\n§lEnumerable§r: ${
         res.enumerable
       }\n\n§lConfigurable§r: ${res.configurable}\n\n`,
     );
@@ -233,7 +281,7 @@ export class Bridge {
     ui.title(`${this.addonId} Bridge Properties`);
     ui.body(`All properties for ${this.addonId}`);
 
-    for (const k of this.descriptors.keys()) {
+    for (const k of this.keys()) {
       // for (const [kk, vv] of v) {
       //   ui.button(`${kk} (${k})`);
       //   btns.push([k, kk]);
@@ -245,7 +293,7 @@ export class Bridge {
       .then((event: ActionFormResponse) => {
         if (event.canceled) return;
         // const btn = btns[event.selection as number];
-        const key = [...this.descriptors.keys()][event.selection ?? 0];
+        const key = this.keys()[event.selection ?? 0];
         this.showProperty(player, key);
       })
       .catch((err) => {
@@ -280,13 +328,28 @@ export class Bridge {
     const addonId = event.packet.addon;
     const bridge = Bridge.all.get(addonId);
     if (!bridge) return; // No bridge in this pack.
-    const methodName = `receive_${event.packet.method}`;
-    const func = bridge[methodName as keyof Bridge];
-    if (typeof func === "function") {
-      (func as Function).bind(bridge)(event, event.packet);
-    } else {
-      console.error(`Method "${methodName}" not found or not a function.`);
+    const request = event.packet as BridgeRequest;
+    const dispatch = (): unknown | Promise<unknown> => {
+      const methodName = `receive_${request.method}`;
+      const func = bridge[methodName as keyof Bridge];
+      if (typeof func !== "function") return { error: true, code: "UNKNOWN_METHOD", message: `Unknown method '${request.method}'.` };
+      (func as Function).bind(bridge)(event, request);
+      return event.response;
+    };
+
+    if (!bridge.options.authorize) {
+      event.response = dispatch();
+      return;
     }
+    event.response = Promise.resolve(bridge.options.authorize(request, event.sender)).then((allowed) => {
+      if (!allowed) return { error: true, code: "UNAUTHORIZED", message: "Bridge request was not authorized." };
+      return dispatch();
+    });
+  }
+
+  private static versionsCompatible(requested: string, available: string): boolean {
+    const major = (version: string): string | undefined => version.replace(/^[~^]/, "").match(/^\d+/)?.[0];
+    return major(requested) !== undefined && major(requested) === major(available);
   }
 }
 

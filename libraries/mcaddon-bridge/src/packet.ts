@@ -1,16 +1,33 @@
 import { ScriptEventCommandMessageAfterEvent, system } from "@minecraft/server";
 import { uuid } from "./utils";
 import { DataUtils, EventSignal } from "@lpsmods/mc-common";
+import { BridgeTimeoutError } from "./errors";
 
 /**
  * Packet payload data keyed by string.
  */
-export type pData = { [key: string]: any };
+export type pData = Record<string, unknown>;
 
 /**
  * Structured data for the packet.
  */
-export type PacketData = { [key: string]: any };
+export type PacketData = Record<string, any>;
+
+export interface PacketHeaders {
+  type: "request" | "response";
+  sender: string;
+  target?: string;
+  id: string;
+}
+
+export interface PacketSendOptions {
+  target?: string;
+}
+
+export interface PacketSyncOptions extends PacketSendOptions {
+  /** Number of game ticks before rejecting. Set to 0 to disable the timeout. */
+  timeoutTicks?: number;
+}
 
 /**
  * Event payload for packet callbacks.
@@ -19,9 +36,14 @@ export class PacketEvent {
   readonly id: string;
   readonly packet: PacketData;
 
-  constructor(id: string, packet: PacketData) {
+  readonly sender?: string;
+  readonly target?: string;
+
+  constructor(id: string, packet: PacketData, sender?: string, target?: string) {
     this.id = id;
     this.packet = packet;
+    this.sender = sender;
+    this.target = target;
   }
 }
 
@@ -29,11 +51,11 @@ export class PacketEvent {
  * Event payload for packet receive callbacks.
  */
 export class PacketReceiveEvent extends PacketEvent {
-  response: any;
+  response: unknown | Promise<unknown>;
 
-  constructor(id: string, packet: PacketData, response?: any) {
-    super(id, packet);
-    this.response = response ?? null;
+  constructor(id: string, packet: PacketData, response?: unknown | Promise<unknown>, sender?: string, target?: string) {
+    super(id, packet, sender, target);
+    this.response = response;
   }
 }
 
@@ -48,8 +70,8 @@ export interface PacketReceiveEventOptions {
  * Event payload for packet response callbacks.
  */
 export class PacketResponseEvent extends PacketEvent {
-  constructor(id: string, packet: PacketData) {
-    super(id, packet);
+  constructor(id: string, packet: PacketData, sender?: string, target?: string) {
+    super(id, packet, sender, target);
   }
 }
 
@@ -131,55 +153,101 @@ export class PacketResponseEventSignal extends EventSignal<PacketResponseEvent, 
 export class Packet {
   static readonly sender = uuid(); // per addon
 
-  static send(identifier: string, data: PacketData): void {
+  static send(identifier: string, data: PacketData, options: PacketSendOptions = {}): void {
     const eId = `packet:${uuid()}`; // Don't use identifier because of namespace issues.
     const payload = DataUtils.dumpJson({
-      headers: { type: "request", sender: Packet.sender, id: identifier },
+      headers: { type: "request", sender: Packet.sender, target: options.target, id: identifier },
       body: data,
     });
     system.sendScriptEvent(eId, JSON.stringify(payload));
   }
 
-  // TODO: Timeout
-  static async sendSync(identifier: string, data: PacketData): Promise<PacketData> {
+  static async sendSync<T = PacketData>(identifier: string, data: PacketData, options: PacketSyncOptions = {}): Promise<T> {
     return new Promise((resolve, reject) => {
+      const timeoutTicks = options.timeoutTicks ?? 100;
+      let timeoutId: number | undefined;
+
+      const cleanup = (): void => {
+        PacketEvents.response.unsubscribe(cb);
+        if (timeoutId !== undefined) system.clearRun(timeoutId);
+      };
+
       function cb(event: PacketResponseEvent): void {
         if (event.id !== identifier) return;
-        resolve(event.packet);
-        PacketEvents.response.unsubscribe(cb);
+        if (event.target !== undefined && event.target !== Packet.sender) return;
+        if (options.target !== undefined && event.sender !== undefined && event.sender !== options.target) return;
+        cleanup();
+        resolve(event.packet as T);
       }
 
       PacketEvents.response.subscribe(cb);
-      this.send(identifier, data);
+      if (timeoutTicks > 0) {
+        timeoutId = system.runTimeout(() => {
+          cleanup();
+          reject(new BridgeTimeoutError(identifier, timeoutTicks));
+        }, timeoutTicks);
+      }
+
+      try {
+        this.send(identifier, data, options);
+      } catch (err) {
+        cleanup();
+        reject(err);
+      }
     });
   }
 
   static packetReceive(event: ScriptEventCommandMessageAfterEvent): void {
-    const data = DataUtils.loadJson(JSON.parse(event.message));
-    const id = data.headers.id;
+    let data: unknown;
+    try {
+      data = DataUtils.loadJson(JSON.parse(event.message));
+    } catch {
+      return;
+    }
+    if (!Packet.isEnvelope(data)) return;
+    const { headers, body } = data;
+    if (headers.target !== undefined && headers.target !== Packet.sender) return;
+    const id = headers.id;
 
-    switch (data.headers.type) {
+    switch (headers.type) {
       case "request": // dst
-        const pEvent = new PacketReceiveEvent(id.toString(), data.body);
+        const pEvent = new PacketReceiveEvent(id, body, undefined, headers.sender, headers.target);
         PacketEvents.receive.apply(pEvent);
-        if (!pEvent.response) return;
-        const payload = DataUtils.dumpJson({
-          headers: {
-            type: "response",
-            sender: Packet.sender,
-            id: id.toString(),
-          },
-          body: pEvent.response,
-        });
-        system.sendScriptEvent(event.id, JSON.stringify(payload));
+        if (pEvent.response === undefined) return;
+        if (pEvent.response instanceof Promise) {
+          pEvent.response
+            .then((response) => Packet.sendResponse(event.id, id, headers.sender, response))
+            .catch((err) => Packet.sendResponse(event.id, id, headers.sender, { error: true, message: String(err) }));
+        } else {
+          Packet.sendResponse(event.id, id, headers.sender, pEvent.response);
+        }
         return;
 
       case "response": // src
-        PacketEvents.response.apply(new PacketResponseEvent(id, data.body));
+        PacketEvents.response.apply(new PacketResponseEvent(id, body, headers.sender, headers.target));
         return;
-      default:
-        throw new Error(`'${data.headers.type}' is not a valid packet type!`);
     }
+  }
+
+  private static sendResponse(eventId: string, id: string, target: string, body: unknown): void {
+    const payload = DataUtils.dumpJson({
+      headers: { type: "response", sender: Packet.sender, target, id },
+      body,
+    });
+    system.sendScriptEvent(eventId, JSON.stringify(payload));
+  }
+
+  private static isEnvelope(value: unknown): value is { headers: PacketHeaders; body: PacketData } {
+    if (!value || typeof value !== "object") return false;
+    const headers = (value as { headers?: unknown }).headers;
+    if (!headers || typeof headers !== "object") return false;
+    const candidate = headers as Partial<PacketHeaders>;
+    return (
+      (candidate.type === "request" || candidate.type === "response") &&
+      typeof candidate.sender === "string" &&
+      typeof candidate.id === "string" &&
+      (candidate.target === undefined || typeof candidate.target === "string")
+    );
   }
 }
 

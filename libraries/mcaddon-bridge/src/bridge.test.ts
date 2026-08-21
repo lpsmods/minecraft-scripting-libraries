@@ -87,7 +87,6 @@ describe("Bridge", () => {
   });
 
   it("returns packet errors from failed bridge requests", () => {
-    const error = vi.spyOn(console, "error").mockImplementation(() => {});
     new Bridge("test");
     const event = new PacketReceiveEvent("bridge", {
       addon: "test",
@@ -96,6 +95,52 @@ describe("Bridge", () => {
 
     Bridge.receive(event);
 
-    expect(error).toHaveBeenCalledWith('Method "receive_unknown" not found or not a function.');
+    expect(event.response).toEqual({ error: true, code: "UNKNOWN_METHOD", message: "Unknown method 'unknown'." });
+  });
+
+  it("enforces descriptors and supports lifecycle management", () => {
+    const api = new Bridge("test", { enableDocs: false });
+    api.defineProperty("readonly", { value: 1 });
+    api.defineProperty("temporary", { value: 2, configurable: true, enumerable: false });
+
+    expect(api.options.enableDocs).toBe(false);
+    expect(() => api.set("readonly", 2)).toThrow("not writable");
+    expect(api.keys()).toEqual(["readonly"]);
+    expect(api.deleteProperty("temporary")).toBe(true);
+    api.dispose();
+    expect(Bridge.all.has("test")).toBe(false);
+  });
+
+  it("rejects duplicate bridge registrations", () => {
+    new Bridge("test");
+    expect(() => new Bridge("test")).toThrow("already registered");
+  });
+
+  it("awaits asynchronous bridge calls", async () => {
+    const api = new Bridge("test");
+    api.defineProperty("answer", { value: async () => 42 });
+    const event = new PacketReceiveEvent("bridge", { addon: "test", method: "call", property: "answer", args: [] });
+
+    Bridge.receive(event);
+
+    await expect(event.response).resolves.toEqual({ error: false, value: 42 });
+  });
+
+  it("negotiates versions and supports async authorization", async () => {
+    const api = new Bridge("test", { version: "2.1.0", authorize: async (request) => request.method === "connect" });
+    const compatible = new PacketReceiveEvent("bridge", {
+      addon: "test",
+      method: "connect",
+      version: "^2.0.0",
+      protocolVersion: 1,
+    });
+    Bridge.receive(compatible);
+    await expect(compatible.response).resolves.toMatchObject({ error: false, version: "2.1.0" });
+
+    const denied = new PacketReceiveEvent("bridge", { addon: "test", method: "get", property: "name" });
+    Bridge.receive(denied);
+    await expect(denied.response).resolves.toMatchObject({ error: true, code: "UNAUTHORIZED" });
+
+    api.dispose();
   });
 });
