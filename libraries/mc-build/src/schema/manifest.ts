@@ -41,6 +41,7 @@ export const ManifestHeaderSchema = object({
   base_game_version: optional(ManifestVersionSchema),
   lock_template_options: optional(boolean()),
   allow_random_seed: optional(boolean()),
+  pack_scope: optional(enums(["world", "global", "any"])),
 });
 
 /** Superstruct schema for a manifest module. */

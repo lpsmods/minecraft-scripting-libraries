@@ -116,6 +116,12 @@ export const IngredientSchema = union([
   }),
 ]);
 
+/** Recipe discovery through item acquisition or an explicit context. */
+export const RecipeUnlockSchema = union([
+  object({ context: string() }),
+  array(object({ item: string(), data: optional(number()) })),
+]);
+
 /**
  * Superstruct schema for the item stack.
  */

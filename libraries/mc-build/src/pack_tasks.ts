@@ -123,7 +123,10 @@ export function syncManifestTask(options: PackTaskOptions & { version?: Manifest
       const file = path.join(directory, "manifest.json");
       const data = read(file);
       try { assert(data, ManifestSchema); }
-      catch (cause) { throw new Error(`Invalid manifest '${file}'.`, { cause }); }
+      catch (cause) {
+        const detail = cause instanceof Error ? cause.message : String(cause);
+        throw new Error(`Invalid manifest '${file}': ${detail}`, { cause });
+      }
       return { file, data };
     });
     const uuids = new Set(manifests.map(({ data }) => data.header.uuid));

@@ -99,16 +99,33 @@ describe("pack pipeline tasks", () => {
   it("syncs only linked dependencies and preserves UUIDs and sources", () => {
     stage();
     const manifest = JSON.parse(read(`${bp}/manifest.json`));
+    manifest.header.pack_scope = "world";
+    manifest.metadata = { authors: ["Example"], product_type: "addon" };
     manifest.dependencies.push({ module_name: "@minecraft/server", version: "2.0.0" }, { uuid: "external", version: [1, 0, 0] });
     write(`${bp}/manifest.json`, JSON.stringify(manifest));
     syncManifestTask({ ...options, version: [2, 3, 4] })();
     const updated = JSON.parse(read(`${bp}/manifest.json`));
     expect(updated.header.version).toEqual([2, 3, 4]);
     expect(updated.header.uuid).toBe("bp");
+    expect(updated.header.pack_scope).toBe("world");
+    expect(updated.metadata).toEqual(manifest.metadata);
     expect(updated.modules[0]).toMatchObject({ uuid: "bp-module", version: [2, 3, 4] });
     expect(updated.dependencies).toEqual([{ uuid: "rp", version: [2, 3, 4] }, ...manifest.dependencies.slice(1)]);
     expect(JSON.parse(read("behavior_packs/demo/manifest.json")).header.version).toEqual([1, 0, 0]);
     expect(() => syncManifestTask({ ...options, version: "bad" })()).toThrow("version");
+  });
+
+  it("reports manifest validation details without changing either pack", () => {
+    stage();
+    const original = read(`${bp}/manifest.json`);
+    const invalid = JSON.parse(read(`${rp}/manifest.json`));
+    invalid.header.pack_scope = "invalid";
+    write(`${rp}/manifest.json`, JSON.stringify(invalid));
+    const sync = syncManifestTask({ ...options, version: [2, 0, 0] });
+    expect(sync).toThrow("manifest.json");
+    expect(sync).toThrow("header.pack_scope");
+    expect(read(`${bp}/manifest.json`)).toBe(original);
+    expect(JSON.parse(read(`${rp}/manifest.json`))).toEqual(invalid);
   });
 
   it("checks custom recipe and loot items, loot paths and atlas texture files with exemptions", () => {

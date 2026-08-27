@@ -4,7 +4,7 @@ import ts from "@typescript-eslint/eslint-plugin";
 
 export default [
   {
-    files: ["src/**/*.ts"],
+    files: ["src/**/*.ts", "integration/**/*.ts"],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: "latest",

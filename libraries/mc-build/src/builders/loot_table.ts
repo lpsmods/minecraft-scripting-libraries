@@ -12,7 +12,7 @@ export function defineLootTable(data: LootTable): LootTable {
 /**
  * Creates a loot pool definition.
  */
-export function lootPool(rolls?: number) {
+export function lootPool(rolls?: LootPool["rolls"]) {
   const data: Partial<LootPool> = {
     entries: [],
     rolls,

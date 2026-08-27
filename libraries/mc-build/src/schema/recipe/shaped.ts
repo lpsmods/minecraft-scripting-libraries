@@ -1,5 +1,5 @@
 import { array, boolean, defaulted, Infer, number, object, optional, record, string } from "superstruct";
-import { CommonDescription, IngredientSchema } from "../common";
+import { CommonDescription, IngredientSchema, RecipeUnlockSchema } from "../common";
 
 /**
  * Superstruct schema for the recipe shaped data.
@@ -12,6 +12,7 @@ export const RecipeShapedDataSchema = object({
   priority: optional(number()),
   tags: defaulted(array(string()), ["crafting_table"]),
   assume_symmetry: optional(boolean()),
+  unlock: optional(RecipeUnlockSchema),
 });
 
 /**

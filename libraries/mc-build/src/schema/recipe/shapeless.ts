@@ -1,5 +1,5 @@
 import { array, defaulted, Infer, number, object, optional, string } from "superstruct";
-import { CommonDescription, IngredientSchema } from "../common";
+import { CommonDescription, IngredientSchema, RecipeUnlockSchema } from "../common";
 
 /**
  * Superstruct schema for the recipe shapeless data.
@@ -11,6 +11,7 @@ export const RecipeShapelessDataSchema = object({
 
   tags: defaulted(array(string()), ["crafting_table"]),
   priority: optional(number()),
+  unlock: optional(RecipeUnlockSchema),
 });
 
 /**

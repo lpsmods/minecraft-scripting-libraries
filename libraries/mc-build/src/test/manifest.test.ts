@@ -78,6 +78,13 @@ describe("manifest builder", () => {
     expect(defineManifest(behavior)).toBe(behavior);
   });
 
+  it.each(["world", "global", "any"] as const)("accepts pack_scope %s", (scope) => {
+    const data = resourcePackManifest("Resource", "pack", "module").build();
+    data.header.pack_scope = scope;
+    expect(defineManifest(data).header.pack_scope).toBe(scope);
+    expect(ManifestSchema.is({ ...data, header: { ...data.header, pack_scope: "invalid" } })).toBe(false);
+  });
+
   it("emits manifests and can clean stale pack output", () => {
     fs.mkdirSync(OUT_DIR, { recursive: true });
     fs.writeFileSync(path.join(OUT_DIR, "stale.json"), "{}", "utf8");

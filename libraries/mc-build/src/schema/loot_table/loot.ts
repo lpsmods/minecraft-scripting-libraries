@@ -7,4 +7,5 @@ export const LootLootEntrySchema = object({
   type: literal("loot_table"),
   name: string(),
   quality: optional(number()),
+  weight: optional(number()),
 });

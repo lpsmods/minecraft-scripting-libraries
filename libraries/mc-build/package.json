@@ -20,6 +20,7 @@
     "build": "node build.mjs && tsc -p tsconfig.build.json",
     "prepack": "npm run build",
     "test": "npx vitest run",
+    "test:vanilla": "vitest run --config vitest.vanilla.config.ts",
     "lint": "eslint ."
   },
   "homepage": "https://docs.lpsmods.dev/@lpsmods/mc-build",

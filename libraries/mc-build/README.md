@@ -15,6 +15,25 @@ Utils to help build Minecraft: Bedrock Edition Add-Ons.
 - Support for behavior packs, resource packs, and world generation.
 - Build tasks for minifying JSON and generating changelogs.
 
+## Vanilla schema integration tests
+
+Run `npm run test:vanilla --workspace @lpsmods/mc-build` from the repository root.
+This separate integration suite requires Git and network access to GitHub; normal
+`npm test` runs remain offline. It downloads a shallow checkout of
+[Mojang's bedrock-samples](https://github.com/Mojang/bedrock-samples), pinned by
+`REVISION` in `integration/vanilla.test.ts`, and removes the temporary checkout
+after the run. Update that commit SHA to test a newer vanilla release.
+
+Both packs' JSON files are parsed as JSON5 and passed to the same
+`validateResource` schema validator used by the pack validation task. Every
+supported resource must pass; schema failures are not allowlisted. Unsupported
+resources are reported separately, not counted as successful validation.
+Full per-pack reports are written to `build/vanilla-validation/` inside mc-build,
+including all failures and unsupported paths. A failing run exposes schema
+compatibility gaps (including legacy or vanilla-only formats); it does not
+necessarily mean the upstream sample is invalid. These positive fixtures
+complement, rather than replace, unit tests that reject invalid data.
+
 ## Usage
 
 Creating a block:

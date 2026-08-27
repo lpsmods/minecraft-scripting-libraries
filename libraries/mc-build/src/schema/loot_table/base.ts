@@ -1,11 +1,17 @@
-import { array, defaulted, Infer, number, object, optional, string } from "superstruct";
+import { array, defaulted, Infer, number, object, optional, string, union } from "superstruct";
 import { LootEntrySchema } from "./types";
+import { NumberRangeSchema } from "../common";
+import { LootConditionSchema } from "../loot_condition";
+import { LootFunctionSchema } from "../loot_function";
 
 /**
  * Superstruct schema for the loot pool.
  */
 export const LootPoolSchema = object({
-  rolls: defaulted(number(), 1),
+  rolls: defaulted(union([number(), NumberRangeSchema]), 1),
+  bonus_rolls: optional(union([number(), NumberRangeSchema])),
+  conditions: optional(array(LootConditionSchema)),
+  functions: optional(array(LootFunctionSchema)),
   entries: array(LootEntrySchema),
 });
 
