@@ -3,6 +3,8 @@ import path from "node:path";
 import JSON5 from "json5";
 import { assert } from "superstruct";
 import { ChangelogSchema, type Changelog, type ChangelogRelease } from "./schema";
+import { minifyJson } from "./utils/minify";
+export * from "./pack_tasks";
 
 function findJsonFiles(directory: string): string[] {
   const files: string[] = [];
@@ -32,7 +34,8 @@ function defaultPackDirectories(): string[] {
  * Creates a task that recursively minifies add-on JSON files.
  *
  * Files are parsed as JSON5 so comments, trailing commas, and other JSON5
- * syntax are accepted. Output is written as strict, compact JSON.
+ * syntax are accepted. Output is written as strict, compact JSON, preserving
+ * decimal number literals such as 360.0 for entity float property ranges.
  */
 export function minifyTask(directories?: string | string[]): () => void {
   return () => {
@@ -46,8 +49,8 @@ export function minifyTask(directories?: string | string[]): () => void {
       }
       for (const filepath of findJsonFiles(directory)) {
         try {
-          const data = JSON5.parse(fs.readFileSync(filepath, "utf8"));
-          fs.writeFileSync(filepath, JSON.stringify(data), "utf8");
+          const data = minifyJson(fs.readFileSync(filepath, "utf8"));
+          fs.writeFileSync(filepath, data, "utf8");
         } catch (error) {
           throw new Error(`Unable to minify JSON file '${filepath}'.`, { cause: error });
         }
@@ -235,8 +238,26 @@ export function getManifestVersion(projectName: string): string {
   return version;
 }
 
-export function getPackageVersion(): string {
-  const packagePath = path.resolve(__dirname, `package.json`);
-  const manifest = JSON5.parse(fs.readFileSync(packagePath, "utf8"));
-  return manifest.version ?? "1.0.0";
+/**
+ * Reads the project's package.json version as a Minecraft-compatible major.minor.patch
+ * string, removing prerelease labels and build metadata (e.g. 1.2.3-beta.1+abc -> 1.2.3).
+ * Defaults to the current working directory, not the installed library directory.
+ * Throws when the file cannot be read or the version is missing or invalid.
+ */
+export function getPackageVersion(rootDir: string = process.cwd()): string {
+  const packagePath = path.resolve(rootDir, "package.json");
+  let manifest: unknown;
+  try {
+    manifest = JSON.parse(fs.readFileSync(packagePath, "utf8"));
+  } catch (cause) {
+    throw new Error(`Unable to read package version from '${packagePath}'.`, { cause });
+  }
+  const version = manifest && typeof manifest === "object" && "version" in manifest ? manifest.version : undefined;
+  const match = typeof version === "string"
+    ? /^(\d+)\.(\d+)\.(\d+)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.exec(version)
+    : null;
+  if (!match || !match.slice(1, 4).every((part) => Number.isSafeInteger(Number(part)))) {
+    throw new Error(`Missing or invalid version in '${packagePath}': expected major.minor.patch with optional labels.`);
+  }
+  return match.slice(1, 4).map(Number).join(".");
 }

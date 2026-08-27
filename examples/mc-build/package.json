@@ -6,9 +6,9 @@
     "@lpsmods/mc-build": "file:../../libraries/mc-build",
     "@minecraft/core-build-tasks": "^5.7.0",
     "@types/pako": "^2.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.61.0",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
     "eslint-plugin-minecraft-linting": "^2.0.12",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.6",
     "source-map": "^0.7.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.0.2"
@@ -21,5 +21,9 @@
     "mcaddon": "just-scripts mcaddon",
     "enablemcloopback": "CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-1752920682-3514627264-368642714-62675701-733520436",
     "enablemcpreviewloopback": "CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-424268864-5579737-879501358-346833251-474568803-887069379-4040235476"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.1": true
   }
 }

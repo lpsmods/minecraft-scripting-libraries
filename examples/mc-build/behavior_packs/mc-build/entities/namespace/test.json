@@ -1,0 +1,12 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:entity": {
+    "component_groups": {},
+    "components": {},
+    "description": {
+      "identifier": "namespace:test",
+      "properties": { "namespace:float_property": { "default": 90.0, "range": [0.0, 360.0], "type": "float" } }
+    },
+    "events": {}
+  }
+}

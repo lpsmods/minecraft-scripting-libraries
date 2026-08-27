@@ -260,6 +260,15 @@ export abstract class Pack {
 
   protected abstract supportsResource(filepath: string): boolean;
 
+  /** Validates a supported resource; returns false for unsupported file types. */
+  validateResource(filepath: string, data: unknown): boolean {
+    if (!this.supportsResource(filepath)) return false;
+    const schema = this.getResourceSchema(filepath, data);
+    if (!schema) throw new Error(`Unable to determine the resource schema for '${filepath}'.`);
+    assert(data, schema);
+    return true;
+  }
+
   protected abstract getResourceSchema(filepath: string, data: unknown): Struct<any> | undefined;
 
   private walk(directory: string): string[] {

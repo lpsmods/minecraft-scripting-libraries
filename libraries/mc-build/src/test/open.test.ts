@@ -39,6 +39,7 @@ import {
   templatePool,
   trading,
   behaviorPackManifest,
+  minifyTask,
 } from "@lpsmods/mc-build";
 
 const PACK_DIR = path.join(process.cwd(), "test-open-pack");
@@ -64,6 +65,27 @@ describe("Pack.open", () => {
   afterEach(() => {
     fs.rmSync(PACK_DIR, { recursive: true, force: true });
     fs.rmSync(EMIT_DIR, { recursive: true, force: true });
+  });
+
+  it("emits float property defaults and ranges as floats before minification", () => {
+    const properties = {
+      "namespace:float_property": { type: "float", default: 90, range: [0, 360] },
+      "namespace:int_property": { type: "int", default: 90, range: [0, 360] },
+      "namespace:expression": { type: "float", default: "90.0", range: [-0.5, 360] },
+    };
+    writeResource("entities/namespace/test.json", {
+      "minecraft:entity": { description: { identifier: "namespace:test", properties } },
+    });
+    new BehaviorPack().open(PACK_DIR).emit(EMIT_DIR);
+    const filepath = path.join(EMIT_DIR, "entities/namespace/test.json");
+    const emitted = fs.readFileSync(filepath, "utf8");
+    expect(emitted).toContain('"default": 90.0');
+    minifyTask(EMIT_DIR)();
+    const minified = fs.readFileSync(filepath, "utf8");
+    expect(minified).toContain('"namespace:float_property":{"default":90.0,"range":[0.0,360.0],"type":"float"}');
+    expect(minified).toContain('"namespace:int_property":{"default":90,"range":[0,360],"type":"int"}');
+    expect(minified).toContain('"namespace:expression":{"default":"90.0","range":[-0.5,360.0],"type":"float"}');
+    expect(JSON.parse(minified)["minecraft:entity"].description.properties).toEqual(properties);
   });
 
   it("walks and loads every supported behavior-pack resource", () => {

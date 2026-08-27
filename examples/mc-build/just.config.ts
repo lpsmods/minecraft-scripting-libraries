@@ -1,4 +1,3 @@
-// From: https://github.com/microsoft/minecraft-samples/blob/main/addon_starter/1_hello_world/just.config.ts
 import { argv, parallel, series, task } from "just-scripts";
 import {
   CopyTaskParameters,
@@ -14,19 +13,34 @@ import {
   getOrThrowFromProcess,
   watchTask,
 } from "@minecraft/core-build-tasks";
-import { AddOn, animations, block, changelogTask, getProjectNamespace, item, minifyTask } from "@lpsmods/mc-build";
+import {
+  changelogTask,
+  generateTask,
+  langTask,
+  minifyTask,
+  stagePacksTask,
+  syncManifestTask,
+  validatePacksTask,
+  validateReferencesTask,
+  getPackageVersion,
+} from "@lpsmods/mc-build";
 import path from "path";
+import { buildPacks } from "./build";
 
 // Setup env variables
 setupEnvironment(path.resolve(__dirname, ".env"));
 const projectName = getOrThrowFromProcess("PROJECT_NAME");
-const projectNamespace = getProjectNamespace() ?? projectName;
-const projectVersion = getOrThrowFromProcess("PROJECT_VERSION");
+const projectVersion = getPackageVersion();
+
+const stageDir = path.resolve(__dirname, "build");
+const stageBp = path.join(stageDir, "behavior_packs");
+const stageRp = path.join(stageDir, "resource_packs");
+const packOptions = { rootDir: __dirname, projectName };
 
 const copyTaskOptions: CopyTaskParameters = {
-  copyToBehaviorPacks: [`./behavior_packs/${projectName}`],
+  copyToBehaviorPacks: [path.join(stageBp, projectName)],
   copyToScripts: [],
-  copyToResourcePacks: [`./resource_packs/${projectName}`],
+  copyToResourcePacks: [path.join(stageRp, projectName)],
 };
 
 const mcaddonTaskOptions: ZipTaskParameters = {
@@ -38,41 +52,24 @@ const mcaddonTaskOptions: ZipTaskParameters = {
 task("lint", coreLint(["scripts/**/*.ts"], argv().fix));
 
 // Build
-task("build-packs", () => {
-  const behaviorPackDirectory = path.resolve(__dirname, "behavior_packs", projectName);
-  const resourcePackDirectory = path.resolve(__dirname, "resource_packs", projectName);
-
-  const addon = AddOn.open({
-    behaviorPack: behaviorPackDirectory,
-    resourcePack: resourcePackDirectory,
-  });
-
-  // Create 100 blocks.
-  for (let i = 0; i < 100; i++) {
-    addon.behaviorPack.addBlock(block(`${projectNamespace}:example_block_${i}`).menuCategory("construction").displayName(`Example Block ${i}`).build());
-  }
-
-  // Create 100 items.
-  for (let i = 0; i < 100; i++) {
-    addon.behaviorPack.addItem(item(`${projectNamespace}:example_${i}`).menuCategory("items").displayName(`Example ${i}`).build());
-  }
-
-  // Create 100 animations.
-  for (let i = 0; i < 100; i++) {
-    addon.resourcePack.addAnimation(`example_${i}.animation.json`, animations().build());
-  }
-
-  addon.emit(
-    {
-      behaviorPack: behaviorPackDirectory,
-      resourcePack: resourcePackDirectory,
-    },
-    { clean: true },
-  );
-});
-task("minify", minifyTask());
+task(
+  "generate",
+  generateTask(
+    ({ behaviorPack, resourcePack, namespace }) => buildPacks(behaviorPack, resourcePack, namespace),
+    packOptions,
+  ),
+);
+task("sync-manifests", syncManifestTask({ ...packOptions, version: projectVersion }));
+task("lang", langTask(packOptions));
+task("validate", validatePacksTask(packOptions));
+task("validate-references", validateReferencesTask(packOptions));
+task("minify", minifyTask([path.join(stageBp, projectName), path.join(stageRp, projectName)]));
 task("changelog", changelogTask());
-task("build", series("changelog", "build-packs", "minify"));
+task("stage-packs", stagePacksTask(packOptions));
+task(
+  "build",
+  series("stage-packs", "changelog", "generate", "sync-manifests", "lang", "validate", "validate-references", "minify"),
+);
 
 // Clean
 task("clean-local", cleanTask(DEFAULT_CLEAN_DIRECTORIES));
@@ -87,7 +84,15 @@ task("package", series("clean-collateral", "copyArtifacts"));
 task(
   "local-deploy",
   watchTask(
-    ["scripts/**/*.ts", "behavior_packs/**/*.{json,lang,png}", "resource_packs/**/*.{json,lang,png}"],
+    [
+      "build.ts",
+      "changelog.json",
+      ".env",
+      "scripts/**/*.ts",
+      "!scripts/guide/changelog.ts",
+      "behavior_packs/**/*",
+      "resource_packs/**/*",
+    ],
     series("clean-local", "build", "package"),
   ),
 );
