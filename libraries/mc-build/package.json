@@ -1,6 +1,6 @@
 {
   "name": "@lpsmods/mc-build",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "author": "legopitstop",
   "license": "MIT",
   "description": "Utils to help build Minecraft: Bedrock Edition Add-Ons.",
