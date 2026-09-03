@@ -240,11 +240,15 @@ export class Bridge {
     };
     const player = data.player;
     if (!this.options.enableDocs) {
-      event.response = errorPacket(`${this.options.name ?? this.addonId} docs are disabled.`);
+      event.response = {
+        error: true,
+        code: "DOCS_DISABLED",
+        message: `${this.options.name ?? this.addonId} docs are disabled.`,
+      };
       return;
     }
     if (!player || !(player instanceof Player)) {
-      event.response = errorPacket("Player not found!");
+      event.response = { error: true, code: "PLAYER_NOT_FOUND", message: "Player not found!" };
       return;
     }
     this.showDocs(player);

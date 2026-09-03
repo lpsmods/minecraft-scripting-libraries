@@ -1,3 +1,4 @@
+import { copyFile } from "node:fs/promises";
 import { build } from "esbuild";
 
 const buildOptions = {
@@ -20,3 +21,18 @@ await build({
   outfile: "dist/mcaddon-bridge.min.js",
   minify: true,
 });
+
+await build({
+  entryPoints: ["./src/docs.ts"],
+  outfile: "dist/docs.js",
+  format: "esm",
+  platform: "node",
+  target: "node20",
+  bundle: true,
+  external: ["@lpsmods/docs-generator", "typescript"],
+  loader: {
+    ".mustache": "text",
+  },
+});
+
+await copyFile("src/docs.cjs", "dist/docs.cjs");

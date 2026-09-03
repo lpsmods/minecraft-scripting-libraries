@@ -11,5 +11,5 @@
     "types": ["@minecraft/server", "@minecraft/server-ui"]
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "src/**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "src/docs.ts", "src/**/*.test.ts"]
 }

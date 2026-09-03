@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "package": "scripts",
+  "symbols": [
+    {
+      "name": "assertEqual",
+      "qualifiedName": "test1.assertEqual",
+      "kind": "function",
+      "language": "typescript",
+      "module": "test1",
+      "sourcePath": "test1.ts",
+      "signature": "function assertEqual<T>(actual: T, expected: T, channel: string): void",
+      "description": "",
+      "parameters": [
+        {
+          "name": "actual",
+          "type": "T",
+          "description": "",
+          "signature": "actual: T"
+        },
+        {
+          "name": "expected",
+          "type": "T",
+          "description": "",
+          "signature": "expected: T"
+        },
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "",
+          "signature": "channel: string"
+        }
+      ],
+      "returns": "void",
+      "extends": [],
+      "implements": [],
+      "members": [],
+      "documentationPath": "symbols/functions/test1.assertEqual.md"
+    },
+    {
+      "name": "assertRemoteError",
+      "qualifiedName": "test1.assertRemoteError",
+      "kind": "function",
+      "language": "typescript",
+      "module": "test1",
+      "sourcePath": "test1.ts",
+      "signature": "async function assertRemoteError(action: () => Promise<unknown>, message: string, channel: string): Promise<void",
+      "description": "",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "`() => Promise<unknown>`",
+          "description": "",
+          "signature": "action: () => Promise<unknown>"
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "",
+          "signature": "message: string"
+        },
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "",
+          "signature": "channel: string"
+        }
+      ],
+      "returns": "Promise<void>",
+      "extends": [],
+      "implements": [],
+      "members": [],
+      "documentationPath": "symbols/functions/test1.assertRemoteError.md"
+    },
+    {
+      "name": "waitTicks",
+      "qualifiedName": "test1.waitTicks",
+      "kind": "function",
+      "language": "typescript",
+      "module": "test1",
+      "sourcePath": "test1.ts",
+      "signature": "function waitTicks(ticks: number): Promise<void",
+      "description": "",
+      "parameters": [
+        {
+          "name": "ticks",
+          "type": "number",
+          "description": "",
+          "signature": "ticks: number"
+        }
+      ],
+      "returns": "Promise<void>",
+      "extends": [],
+      "implements": [],
+      "members": [],
+      "documentationPath": "symbols/functions/test1.waitTicks.md"
+    },
+    {
+      "name": "run",
+      "qualifiedName": "test1.run",
+      "kind": "function",
+      "language": "typescript",
+      "module": "test1",
+      "sourcePath": "test1.ts",
+      "signature": "async function run(): Promise<void",
+      "description": "",
+      "parameters": [],
+      "returns": "Promise<void>",
+      "extends": [],
+      "implements": [],
+      "members": [],
+      "documentationPath": "symbols/functions/test1.run.md"
+    }
+  ]
+}

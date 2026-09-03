@@ -1,0 +1,29 @@
+---
+title: {{{frontmatterTitleYaml}}}
+description: {{{packageDescriptionYaml}}}
+---
+
+# {{name}} Properties
+
+{{#properties}}
+## `{{name}}`
+
+{{#description}}{{{description}}}
+{{/description}}
+
+| Attribute | Value |
+| --- | --- |
+| Type | `{{type}}` |
+| Writable | `{{writable}}` |
+| Enumerable | `{{enumerable}}` |
+| Configurable | `{{configurable}}` |
+
+### Example
+
+```ts
+{{{usage}}}
+```
+
+{{/properties}}
+{{^properties}}_No bridge properties found._
+{{/properties}}

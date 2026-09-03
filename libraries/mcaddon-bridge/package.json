@@ -6,6 +6,14 @@
   "description": "A package to communicate between Minecraft Add-Ons.",
   "main": "src/index.ts",
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./docs": {
+      "types": "./src/docs.ts",
+      "import": "./dist/docs.js",
+      "require": "./dist/docs.cjs"
+    }
+  },
   "scripts": {
     "build": "node build.mjs",
     "test": "npx vitest run",
@@ -34,6 +42,7 @@
   "devDependencies": {
     "@lpsmods/minecraft-server-mock": "^0.0.2",
     "@lpsmods/minecraft-server-ui-mock": "^0.0.1",
+    "@types/node": "^22.0.0",
     "@types/pako": "^2.0.4",
     "@typescript-eslint/eslint-plugin": "^8.67.0",
     "esbuild": "^0.27.7",
@@ -41,7 +50,6 @@
     "eslint-plugin-minecraft-linting": "^2.0.12",
     "eslint-plugin-unused-imports": "^4.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3",
     "vitest": "^4.1.11"
   },
   "peerDependencies": {
@@ -49,7 +57,9 @@
     "@minecraft/server-ui": "^2.1.0"
   },
   "dependencies": {
+    "@lpsmods/docs-generator": "^0.0.1-alpha.4",
     "@lpsmods/mc-common": "^0.0.4",
-    "@minecraft/math": "^2.4.0"
+    "@minecraft/math": "^2.4.0",
+    "typescript": "^5.9.3"
   }
 }

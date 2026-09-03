@@ -1,0 +1,156 @@
+# scripts — Complete API Documentation
+
+> Generated API documentation.
+
+<!-- BEGIN FILE: symbols/functions/test1.assertEqual.md -->
+
+---
+name: "assertEqual"
+qualifiedName: "test1.assertEqual"
+kind: "function"
+language: "typescript"
+module: "test1"
+source: "test1.ts"
+visibility: "public"
+---
+
+# assertEqual Function
+
+UNDOCUMENTED
+
+## Signature
+
+```typescript
+function assertEqual<T>(actual: T, expected: T, channel: string): void
+```
+
+## Parameters
+
+- name: `actual`
+  type: `T`
+  required: true
+  description: UNDOCUMENTED
+
+- name: `expected`
+  type: `T`
+  required: true
+  description: UNDOCUMENTED
+
+- name: `channel`
+  type: `string`
+  required: true
+  description: UNDOCUMENTED
+
+## Returns
+
+- type: `void`
+
+<!-- END FILE: symbols/functions/test1.assertEqual.md -->
+
+<!-- BEGIN FILE: symbols/functions/test1.assertRemoteError.md -->
+
+---
+name: "assertRemoteError"
+qualifiedName: "test1.assertRemoteError"
+kind: "function"
+language: "typescript"
+module: "test1"
+source: "test1.ts"
+visibility: "public"
+---
+
+# assertRemoteError Function
+
+UNDOCUMENTED
+
+## Signature
+
+```typescript
+async function assertRemoteError(action: () => Promise<unknown>, message: string, channel: string): Promise<void
+```
+
+## Parameters
+
+- name: `action`
+  type: `&#x60;() &#x3D;&gt; Promise&lt;unknown&gt;&#x60;`
+  required: true
+  description: UNDOCUMENTED
+
+- name: `message`
+  type: `string`
+  required: true
+  description: UNDOCUMENTED
+
+- name: `channel`
+  type: `string`
+  required: true
+  description: UNDOCUMENTED
+
+## Returns
+
+- type: `Promise&lt;void&gt;`
+
+<!-- END FILE: symbols/functions/test1.assertRemoteError.md -->
+
+<!-- BEGIN FILE: symbols/functions/test1.waitTicks.md -->
+
+---
+name: "waitTicks"
+qualifiedName: "test1.waitTicks"
+kind: "function"
+language: "typescript"
+module: "test1"
+source: "test1.ts"
+visibility: "public"
+---
+
+# waitTicks Function
+
+UNDOCUMENTED
+
+## Signature
+
+```typescript
+function waitTicks(ticks: number): Promise<void
+```
+
+## Parameters
+
+- name: `ticks`
+  type: `number`
+  required: true
+  description: UNDOCUMENTED
+
+## Returns
+
+- type: `Promise&lt;void&gt;`
+
+<!-- END FILE: symbols/functions/test1.waitTicks.md -->
+
+<!-- BEGIN FILE: symbols/functions/test1.run.md -->
+
+---
+name: "run"
+qualifiedName: "test1.run"
+kind: "function"
+language: "typescript"
+module: "test1"
+source: "test1.ts"
+visibility: "public"
+---
+
+# run Function
+
+UNDOCUMENTED
+
+## Signature
+
+```typescript
+async function run(): Promise<void
+```
+
+## Returns
+
+- type: `Promise&lt;void&gt;`
+
+<!-- END FILE: symbols/functions/test1.run.md -->

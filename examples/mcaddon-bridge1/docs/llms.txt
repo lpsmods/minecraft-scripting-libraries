@@ -1,0 +1,17 @@
+# scripts
+
+> Generated API documentation.
+
+## Indexes
+
+- [Classes](classes.md)
+- [Interfaces](interfaces.md)
+- [Enums](enums.md)
+- [Functions](functions.md)
+
+## Symbols
+
+- [test2.assertEqual](symbols/functions/test2.assertEqual.md)
+- [test2.assertRemoteError](symbols/functions/test2.assertRemoteError.md)
+- [test2.waitTicks](symbols/functions/test2.waitTicks.md)
+- [test2.run](symbols/functions/test2.run.md)

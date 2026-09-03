@@ -4,6 +4,16 @@ export class BridgeError extends Error {
     super(message);
     this.name = new.target.name;
   }
+
+  /** Preserve useful Error fields when logged with JSON.stringify(). */
+  toJSON(): { name: string; message: string; code: string; details?: Record<string, unknown> } {
+    return {
+      name: this.name,
+      message: this.message,
+      code: this.code,
+      ...(this.details === undefined ? {} : { details: this.details }),
+    };
+  }
 }
 
 export class BridgeTimeoutError extends BridgeError {

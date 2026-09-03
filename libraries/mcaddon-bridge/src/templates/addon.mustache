@@ -1,0 +1,35 @@
+---
+title: {{{frontmatterTitleYaml}}}
+description: {{{packageDescriptionYaml}}}
+---
+
+# {{name}}
+
+{{#description}}{{{description}}}
+{{/description}}
+
+- **Add-on ID:** `{{addonId}}`
+- **Version:** `{{version}}`
+- **Source:** `{{{sourcePath}}}`
+
+## API
+
+{{#hasProperties}}- [Properties](./properties.md)
+{{/hasProperties}}{{#hasFunctions}}- [Functions](./functions.md)
+{{/hasFunctions}}{{^hasProperties}}{{^hasFunctions}}_No bridge members found._
+{{/hasFunctions}}{{/hasProperties}}
+
+## Scripting API example
+
+Connect from a different behavior pack before using the properties and functions in this API:
+
+```ts
+import { world } from "@minecraft/server";
+import { connect } from "@lpsmods/mcaddon-bridge";
+
+world.afterEvents.worldLoad.subscribe(async () => {
+  const api = await connect("{{addonId}}", { version: "^{{version}}" });
+
+  // Use api.get(), api.set(), and api.call() here.
+});
+```

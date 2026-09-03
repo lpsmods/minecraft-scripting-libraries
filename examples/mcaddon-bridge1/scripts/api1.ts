@@ -10,14 +10,15 @@ const api = new Bridge("dev.lpsmods.example1", {
 });
 
 // Read-only value channels, including falsy values.
-api.defineProperty("integer", { value: 2, enumerable: true });
-api.defineProperty("float", { value: 0.25, enumerable: true });
-api.defineProperty("string", { value: "Hello, Legopitstop!", enumerable: true });
-api.defineProperty("boolean", { value: false, enumerable: true });
+api.defineProperty("integer", { value: 2, enumerable: true, description: "An integer value." });
+api.defineProperty("float", { value: 0.25, enumerable: true, description: "A floating-point value." });
+api.defineProperty("string", { value: "Hello, Legopitstop!", enumerable: true, description: "A string value." });
+api.defineProperty("boolean", { value: false, enumerable: true, description: "A boolean value." });
 
 // Writable value channel.
 api.defineProperty("name", {
   value: "Steve1",
+  description: "A writable string value.",
   writable: true,
   enumerable: true,
   configurable: true,
@@ -29,6 +30,7 @@ api.defineProperty("fullName", {
   set: (value: string) => {
     fullName = value;
   },
+  description: "A getter/setter string value.",
   enumerable: true,
   configurable: true,
 });
@@ -36,10 +38,12 @@ api.defineProperty("fullName", {
 // Synchronous call channels.
 api.defineProperty("greet", {
   value: (name: string) => `Hello, ${name}, from example1!`,
+  description: "A synchronous function that returns a greeting.",
   enumerable: true,
 });
 api.defineProperty("sum", {
   value: (num1: number, num2: number) => num1 + num2,
+  description: "A synchronous function that returns the sum of two numbers.",
   enumerable: true,
 });
 
@@ -49,6 +53,7 @@ api.defineProperty("asyncEcho", {
     new Promise<string>((resolve) => {
       system.runTimeout(() => resolve(`example1:${value}`), 1);
     }),
+  description: "An asynchronous function that echoes the input value after a short delay.",
   enumerable: true,
 });
 
@@ -57,5 +62,6 @@ api.defineProperty("fail", {
   value: () => {
     throw new Error("example1 intentional failure");
   },
+  description: "A synchronous function that throws an error.",
   enumerable: true,
 });

@@ -52,4 +52,24 @@ describe("Connection", () => {
     connection.disconnect();
     expect(connection.isConnected).toBe(false);
   });
+
+  it("preserves useful error fields when serialized for production logs", async () => {
+    vi.spyOn(Packet, "sendSync").mockResolvedValue({
+      error: true,
+      code: "PLAYER_NOT_FOUND",
+      message: "Player not found!",
+    });
+
+    try {
+      await new Connection("example").docs({} as never);
+      throw new Error("Expected docs to reject");
+    } catch (err) {
+      expect(JSON.parse(JSON.stringify(err))).toEqual({
+        name: "BridgeRemoteError",
+        message: "Player not found!",
+        code: "REMOTE_ERROR",
+        details: expect.objectContaining({ addonId: "example", method: "docs", remoteCode: "PLAYER_NOT_FOUND" }),
+      });
+    }
+  });
 });

@@ -1,0 +1,20 @@
+[
+  {
+    "text": "API Reference",
+    "collapsed": false,
+    "items": [
+      {
+        "text": "Overview",
+        "link": "index"
+      },
+      {
+        "text": "Properties",
+        "link": "properties"
+      },
+      {
+        "text": "Functions",
+        "link": "functions"
+      }
+    ]
+  }
+]

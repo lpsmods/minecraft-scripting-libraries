@@ -1,9 +1,7 @@
-// From: https://github.com/microsoft/minecraft-samples/blob/main/addon_starter/1_hello_world/just.config.ts
-import { argv, parallel, series, task, tscTask } from "just-scripts";
+import { getPackageVersion, langTask, minifyTask, stagePacksTask, syncManifestTask } from "@lpsmods/mc-build";
+import { addonDocsTask } from "@lpsmods/mcaddon-bridge/docs";
 import {
-  BundleTaskParameters,
   CopyTaskParameters,
-  bundleTask,
   cleanTask,
   cleanCollateralTask,
   copyTask,
@@ -16,33 +14,20 @@ import {
   getOrThrowFromProcess,
   watchTask,
 } from "@minecraft/core-build-tasks";
-import path from "path";
-import fs from "fs";
-import JSON5 from "json5";
 
-function getManifestVersion(): string {
-  const manifestPath = path.resolve(__dirname, `./behavior_packs/${projectName}/manifest.json`);
-  const manifest = JSON5.parse(fs.readFileSync(manifestPath, "utf8"));
-  const version = manifest.header?.version;
-  if (!version) {
-    throw new Error(`Missing header.version in ${manifestPath}`);
-  }
-  return version;
-}
+import { argv, parallel, series, task } from "just-scripts";
+import path from "path";
 
 // Setup env variables
 setupEnvironment(path.resolve(__dirname, ".env"));
 const projectName = getOrThrowFromProcess("PROJECT_NAME");
-const projectVersion = getManifestVersion();
+const projectVersion = getPackageVersion();
 
-const bundleTaskOptions: BundleTaskParameters = {
-  entryPoint: path.join(__dirname, "./scripts/main.ts"),
-  external: ["@minecraft/server", "@minecraft/server-ui"],
-  outfile: path.resolve(__dirname, "./dist/scripts/main.js"),
-  minifyWhitespace: true,
-  sourcemap: true,
-  outputSourcemapPath: path.resolve(__dirname, "./dist/debug"),
-};
+// Build a staging copy of behavior_packs/resource_packs so source files stay pretty-printed while packaged assets are minified.
+const stageDir = path.resolve(__dirname, "build");
+const stageBp = path.join(stageDir, "behavior_packs");
+const stageRp = path.join(stageDir, "resource_packs");
+const packOptions = { rootDir: __dirname, projectName };
 
 const copyTaskOptions: CopyTaskParameters = {
   copyToBehaviorPacks: [`./behavior_packs/${projectName}`],
@@ -59,9 +44,11 @@ const mcaddonTaskOptions: ZipTaskParameters = {
 task("lint", coreLint(["scripts/**/*.ts"], argv().fix));
 
 // Build
-task("typescript", tscTask());
-task("bundle", bundleTask(bundleTaskOptions));
-task("build", series("typescript", "bundle"));
+task("sync-manifests", syncManifestTask({ ...packOptions, version: projectVersion }));
+task("lang", langTask(packOptions));
+task("minify", minifyTask([path.join(stageBp, projectName), path.join(stageRp, projectName)]));
+task("stage-packs", stagePacksTask(packOptions));
+task("build", series("stage-packs", "sync-manifests", "lang", "minify"));
 
 // Clean
 task("clean-local", cleanTask(DEFAULT_CLEAN_DIRECTORIES));
@@ -84,3 +71,6 @@ task(
 // Mcaddon
 task("createMcaddonFile", mcaddonTask(mcaddonTaskOptions));
 task("mcaddon", series("clean-local", "build", "createMcaddonFile"));
+
+// Docs
+task("docs", addonDocsTask({ vitepress: { sidebar: true }, agentDocs: true }));

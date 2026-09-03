@@ -1,0 +1,26 @@
+---
+title: {{{frontmatterTitleYaml}}}
+description: {{{packageDescriptionYaml}}}
+---
+
+# {{name}} Functions
+
+{{#functions}}
+## `{{name}}`
+
+{{#description}}{{{description}}}
+{{/description}}
+
+```ts
+{{{signature}}}
+```
+
+### Example
+
+```ts
+{{{usage}}}
+```
+
+{{/functions}}
+{{^functions}}_No bridge functions found._
+{{/functions}}
